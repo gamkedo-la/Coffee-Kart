@@ -70,9 +70,11 @@ function carClass() {
     if(this.keyHeld_Reverse) {
       this.carSpeed -= REVERSE_POWER;
     }
+
+    var heading = Vec2Init(Math.cos(this.carAng), Math.sin(this.carAng));
     
-    var nextX = this.carX + Math.cos(this.carAng) * this.carSpeed;
-    var nextY = this.carY + Math.sin(this.carAng) * this.carSpeed;
+    var nextX = this.carX + heading.x * this.carSpeed;
+    var nextY = this.carY + heading.y * this.carSpeed;
     
     var drivingIntoTileType = getTrackAtPixelCoord(nextX,nextY);
     

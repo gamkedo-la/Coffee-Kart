@@ -1,6 +1,7 @@
 // track constants and variables
-const TRACK_W = 40;
-const TRACK_H = 40;
+const TILE_SIZE = 32;
+const TRACK_W = 80;
+const TRACK_H = 80;
 const TRACK_COLS = 20;
 const TRACK_ROWS = 15;
 var trackGrid =
@@ -61,8 +62,8 @@ function drawTracks() {
 
       var trackTypeHere = trackGrid[ trackIndex ]; // getting the track code for this tile        
       canvasContext.drawImage(trackSheet,
-        trackTypeHere * TRACK_W, 0, // top-left corner of tile art, multiple of tile width
-        TRACK_W, TRACK_H, // get full tile size from source
+        trackTypeHere * TILE_SIZE, 0, // top-left corner of tile art, multiple of tile width
+        TILE_SIZE, TILE_SIZE, // get full tile size from source
         trackLeftEdgeX, trackTopEdgeY, // x,y top-left corner for image destination
         TRACK_W, TRACK_H); // draw full full tile size for destination
       

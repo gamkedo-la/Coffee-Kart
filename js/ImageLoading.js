@@ -21,7 +21,7 @@ function loadImages() {
   var imageList = [
     {varName:carPic, theFile:"player1.png"},
     {varName:car2Pic, theFile:"player2.png"},
-    {varName:trackSheet, theFile:"track_all_sheet.png"}
+    {varName:trackSheet, theFile:"spritesheet.png"}
     ];
 
   picsToLoad = imageList.length;
