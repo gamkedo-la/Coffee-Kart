@@ -7,8 +7,10 @@ const MIN_TURN_SPEED = 0.5;
 
 function carClass() {
   // variables to keep track of car position
-  this.carX = 75;
-  this.carY = 75;
+
+  // todo
+  // add RPM to wheels
+  this.position = Vec2Init(75, 75);
 
   // keyboard hold state variables, to use keys more like buttons
   this.keyHeld_Gas = false;
@@ -46,9 +48,8 @@ function carClass() {
         } // end of if
       } // end of for
     } // end of if car position not saved yet
-    
-    this.carX = this.homeX;
-    this.carY = this.homeY;
+
+    this.position = Vec2Init(this.homeX, this.homeY);
 
   } // end of carReset
   
@@ -70,17 +71,15 @@ function carClass() {
     if(this.keyHeld_Reverse) {
       this.carSpeed -= REVERSE_POWER;
     }
-
+    // function call overhead might actually be an issue?
     var heading = Vec2Init(Math.cos(this.carAng), Math.sin(this.carAng));
     
-    var nextX = this.carX + heading.x * this.carSpeed;
-    var nextY = this.carY + heading.y * this.carSpeed;
+    var nextPos = Vec2Add(this.position, Vec2Scale(heading, this.carSpeed));
     
-    var drivingIntoTileType = getTrackAtPixelCoord(nextX,nextY);
+    var drivingIntoTileType = getTrackAtPixelCoord(nextPos.x,nextPos.y);
     
     if( drivingIntoTileType == TRACK_ROAD ) {
-      this.carX = nextX;
-      this.carY = nextY;
+      this.position = nextPos;
     } else if( drivingIntoTileType == TRACK_GOAL ) {
       document.getElementById("debugText").innerHTML = this.myName + " won the race";
       p1.carReset();
@@ -93,7 +92,8 @@ function carClass() {
   }
   
   this.carDraw = function() {
-    drawBitmapCenteredAtLocationWithRotation( this.myBitmap, this.carX, this.carY, this.carAng );
+    // drawBitmapCenteredAtLocationWithRotation( this.myBitmap, this.carX, this.carY, this.carAng );
+    drawBitmapCenteredAtLocationWithRotation( this.myBitmap, this.position.x, this.position.y, this.carAng );
   }
 
 } // end of car class

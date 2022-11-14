@@ -34,9 +34,16 @@ function Vec2Mag(v) {
 }
 
 function Vec2AngleBetween(v1, v2) {
-    // potential for div-zero 
-    cosTheta = Vec2Dot(v1, v2) / (Vec2Mag(v1) * Vec2Mag(v2));
-    theta = acosDeg();
+    // check for
+    // potential div-zero 
+    var v1Mag = Vec2Mag(v1);
+    var v2Mag = Vec2Mag(v2);
+    if (v1Mag < epsilon || v2Mag < epsilon) {
+        return 0.0;
+    }
+    var cosTheta = Vec2Dot(v1, v2) / (Vec2Mag(v1) * Vec2Mag(v2));
+    var theta = acosDeg(cosTheta);
+    return theta;
 }
 
 
