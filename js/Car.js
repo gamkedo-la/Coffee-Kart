@@ -37,8 +37,9 @@ function carClass() {
   
   this.carReset = function() {
     this.carSpeed = 0;
+    this.wheelSpeed = 0; // rpm of wheels, inherently 1-dimensional
     this.carAng = -90; // currently in radians. why -ve? because 'up' is negative
-    this.wheelAng = -90;
+    this.wheelAng = 0;
     if(this.homeX == undefined) {
       for(var i=0; i<trackGrid.length; i++) {
         if( trackGrid[i] == TRACK_PLAYER) {
@@ -55,23 +56,37 @@ function carClass() {
     this.position = Vec2Init(this.homeX, this.homeY);
     this.carHeading = Vec2Init(0,1);
     this.wheelHeading = Vec2Init(0,1);
-    
+    this.wheelBase = 1;
 
 
   } // end of carReset
   
   this.carMove = function() {
-    const turnSpeed = 5.25;
+    const turnSpeed = 360.0;
+    const wheelDeadSpot = 15;
+    const wheelDecayRate = 0.5;
+    const wheelAngleMin = -45;
+    const wheelAngleMax = 45;
+    const fixedDt = 30.0/1000.0;
+    
     // only allow the car to turn while it's rolling
-    //if(Math.abs(this.carSpeed) > MIN_TURN_SPEED) {
-      if(this.keyHeld_TurnLeft) {
-        this.carAng -= turnSpeed;
+    
+    if(this.keyHeld_TurnLeft) {
+        if (this.wheelAng > wheelAngleMin) {
+          this.wheelAng -= turnSpeed * fixedDt;
+        }
+    } else if(this.keyHeld_TurnRight) {
+        if (this.wheelAng < wheelAngleMax) {
+          this.wheelAng += turnSpeed * fixedDt;
+        }
+    } else {
+      if (Math.abs(this.wheelAng) < wheelDeadSpot) {
+        this.wheelAng *= wheelDecayRate;
+      } else {
+        this.wheelAng = 0;
       }
-
-      if(this.keyHeld_TurnRight) {
-        this.carAng += turnSpeed;
-      }
-    //}
+    }
+    
     
     if(this.keyHeld_Gas) {
       this.carSpeed += DRIVE_POWER;
@@ -79,7 +94,17 @@ function carClass() {
     if(this.keyHeld_Reverse) {
       this.carSpeed -= REVERSE_POWER;
     }
-    
+    var angularVelocityRad;
+    if (sinDeg(this.wheelAng) == 0) {
+      angularVelocityRad = 0;
+    } else {
+      var circleRadius = this.wheelBase / sinDeg(this.wheelAng);
+      angularVelocityRad = this.carSpeed / circleRadius;
+    }
+
+    var angularVelocityDeg = radToDeg(angularVelocityRad);
+    this.carAng += (angularVelocityDeg * fixedDt);
+
     //var heading = Vec2PolarInit(this.carAng, 1);
     Vec2Update(this.carHeading, cosDeg(this.carAng), sinDeg(this.carAng));
     
