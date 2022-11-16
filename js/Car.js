@@ -1,7 +1,8 @@
 // car tuning constants
 const GROUNDSPEED_DECAY_MULT = 0.94;
-const DRIVE_POWER = 0.5;
-const REVERSE_POWER = 0.2;
+const DRIVE_POWER = 50;
+const DRIVE_POWER_MAX = 300;
+const REVERSE_POWER = 1;
 const TURN_RATE = 1.0;
 const MIN_TURN_SPEED = 0.5;
 
@@ -56,21 +57,25 @@ function carClass() {
     this.position = Vec2Init(this.homeX, this.homeY);
     this.carHeading = Vec2Init(0,1);
     this.wheelHeading = Vec2Init(0,1);
-    this.wheelBase = 1;
+    this.wheelBase = 1.2;
+    this.carVelocity = Vec2Init(0, 0);
+    this.engineForce = 0;
+    this.carMass = 2;
 
 
   } // end of carReset
   
   this.carMove = function() {
-    const turnSpeed = 360.0;
+    const turnSpeed = 720.0;
     const wheelDeadSpot = 15;
     const wheelDecayRate = 0.5;
     const wheelAngleMin = -45;
     const wheelAngleMax = 45;
-    const fixedDt = 30.0/1000.0;
-    
-    // only allow the car to turn while it's rolling
-    
+    const fixedDt = 30.0/1000.0;    
+    const roadFriction = 1.0;
+    const engineDecayRate = 500;
+
+
     if(this.keyHeld_TurnLeft) {
         if (this.wheelAng > wheelAngleMin) {
           this.wheelAng -= turnSpeed * fixedDt;
@@ -87,31 +92,66 @@ function carClass() {
       }
     }
     
-    
+    // engine stuff
     if(this.keyHeld_Gas) {
-      this.carSpeed += DRIVE_POWER;
+      this.engineForce += DRIVE_POWER;
+      //this.carSpeed += DRIVE_POWER;
+    } else if(this.keyHeld_Reverse) {
+      this.engineForce -= DRIVE_POWER;
+      //this.carSpeed -= REVERSE_POWER;
+    } else {
+      if (this.engineForce > 0) {
+        this.engineForce -= (engineDecayRate*fixedDt);
+      } 
+      if (this.engineForce < 0) {
+        this.engineForce += (engineDecayRate*fixedDt);
+      }
+      if (Math.abs(this.engineForce) < 5) {
+        this.engineForce = 0;
+      }
     }
-    if(this.keyHeld_Reverse) {
-      this.carSpeed -= REVERSE_POWER;
+
+    if (this.engineForce > DRIVE_POWER_MAX) {
+      this.engineForce = DRIVE_POWER_MAX;
     }
+    if (this.engineForce < -DRIVE_POWER_MAX) {
+      this.engineForce = -DRIVE_POWER_MAX;
+    }
+
+    var tractionForce = Vec2Scale(this.carHeading, this.engineForce);
+    var rollingResistanceForce = Vec2Scale(this.carVelocity, -1.0*roadFriction);
+    var longForce = Vec2Add(tractionForce, rollingResistanceForce);
+    var accel = Vec2Scale(longForce , 1.0 / this.carMass);
+    this.carVelocity = Vec2Add(this.carVelocity, Vec2Scale(accel, fixedDt));
+    if (Vec2Mag(this.carVelocity) < 1) {
+      Vec2Update(this.carVelocity, 0, 0);
+    }
+    var nextPos = Vec2Add(this.position, Vec2Scale(this.carVelocity, fixedDt));
+
+
+    var carSpeed = Vec2Mag(this.carVelocity);
+    // this.carPosition 
+    // turning stuff
     var angularVelocityRad;
     if (sinDeg(this.wheelAng) == 0) {
       angularVelocityRad = 0;
     } else {
       var circleRadius = this.wheelBase / sinDeg(this.wheelAng);
-      angularVelocityRad = this.carSpeed / circleRadius;
+      angularVelocityRad = (carSpeed * fixedDt) / circleRadius;
     }
-
+    
     var angularVelocityDeg = radToDeg(angularVelocityRad);
+    console.log("engine force is " + this.engineForce);
+    console.log("angular vel is " + angularVelocityDeg);
     this.carAng += (angularVelocityDeg * fixedDt);
 
     //var heading = Vec2PolarInit(this.carAng, 1);
     Vec2Update(this.carHeading, cosDeg(this.carAng), sinDeg(this.carAng));
     
-    console.log("angle is" + this.carAng);
+    console.log("car speed is " + this.carSpeed);
     
     
-    var nextPos = Vec2Add(this.position, Vec2Scale(this.carHeading, this.carSpeed));
+    // var nextPos = Vec2Add(this.position, Vec2Scale(this.carHeading, this.carSpeed));
     
     var drivingIntoTileType = getTrackAtPixelCoord(nextPos.x,nextPos.y);
     
