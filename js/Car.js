@@ -2,7 +2,7 @@
 const GROUNDSPEED_DECAY_MULT = 0.94;
 const DRIVE_POWER = 0.5;
 const REVERSE_POWER = 0.2;
-const TURN_RATE = 0.03;
+const TURN_RATE = 1.0;
 const MIN_TURN_SPEED = 0.5;
 
 function carClass() {
@@ -10,7 +10,10 @@ function carClass() {
 
   // todo
   // add RPM to wheels
-  this.position = Vec2Init(75, 75);
+  //this.position = Vec2Init(75, 75);
+  //this.carHeading = Vec2Init(0,1);
+  //this.wheelHeading = Vec2Init(0,1);
+  //this.carAng = -90;
 
   // keyboard hold state variables, to use keys more like buttons
   this.keyHeld_Gas = false;
@@ -34,8 +37,8 @@ function carClass() {
   
   this.carReset = function() {
     this.carSpeed = 0;
-    this.carAng = -0.5 * Math.PI;
-  
+    this.carAng = -90; // currently in radians. why -ve? because 'up' is negative
+    this.wheelAng = -90;
     if(this.homeX == undefined) {
       for(var i=0; i<trackGrid.length; i++) {
         if( trackGrid[i] == TRACK_PLAYER) {
@@ -50,20 +53,25 @@ function carClass() {
     } // end of if car position not saved yet
 
     this.position = Vec2Init(this.homeX, this.homeY);
+    this.carHeading = Vec2Init(0,1);
+    this.wheelHeading = Vec2Init(0,1);
+    
+
 
   } // end of carReset
   
   this.carMove = function() {
+    const turnSpeed = 5.25;
     // only allow the car to turn while it's rolling
-    if(Math.abs(this.carSpeed) > MIN_TURN_SPEED) {
+    //if(Math.abs(this.carSpeed) > MIN_TURN_SPEED) {
       if(this.keyHeld_TurnLeft) {
-        this.carAng -= TURN_RATE*Math.PI;
+        this.carAng -= turnSpeed;
       }
 
       if(this.keyHeld_TurnRight) {
-        this.carAng += TURN_RATE*Math.PI;
+        this.carAng += turnSpeed;
       }
-    }
+    //}
     
     if(this.keyHeld_Gas) {
       this.carSpeed += DRIVE_POWER;
@@ -71,10 +79,14 @@ function carClass() {
     if(this.keyHeld_Reverse) {
       this.carSpeed -= REVERSE_POWER;
     }
-    // function call overhead might actually be an issue?
-    var heading = Vec2Init(Math.cos(this.carAng), Math.sin(this.carAng));
     
-    var nextPos = Vec2Add(this.position, Vec2Scale(heading, this.carSpeed));
+    //var heading = Vec2PolarInit(this.carAng, 1);
+    Vec2Update(this.carHeading, cosDeg(this.carAng), sinDeg(this.carAng));
+    
+    console.log("angle is" + this.carAng);
+    
+    
+    var nextPos = Vec2Add(this.position, Vec2Scale(this.carHeading, this.carSpeed));
     
     var drivingIntoTileType = getTrackAtPixelCoord(nextPos.x,nextPos.y);
     
@@ -85,6 +97,7 @@ function carClass() {
       p1.carReset();
       p2.carReset();
     } else {
+      // TODO: extra collision handling here
       this.carSpeed = 0.0;
     }
 
@@ -93,7 +106,7 @@ function carClass() {
   
   this.carDraw = function() {
     // drawBitmapCenteredAtLocationWithRotation( this.myBitmap, this.carX, this.carY, this.carAng );
-    drawBitmapCenteredAtLocationWithRotation( this.myBitmap, this.position.x, this.position.y, this.carAng );
+    drawBitmapCenteredAtLocationWithRotation( this.myBitmap, this.position.x, this.position.y, degToRad(this.carAng) );
   }
 
 } // end of car class

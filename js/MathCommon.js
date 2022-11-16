@@ -14,17 +14,22 @@ function asinDeg(rad) {
     return radToDeg(Math.asin(rad));
 }
 
-function cosDeg(rad) {
-    return Math.cos(rad_to_deg(rad));
+function cosDeg(deg) {
+    return Math.cos(degToRad(deg));
 }
 
-function sinDeg(rad) {
-    return Math.sin(rad_to_deg(rad));
+function sinDeg(deg) {
+    return Math.sin(degToRad(deg));
 }
 
 function Vec2Init(xVal, yVal) {
     var result = {x : xVal, y : yVal};        
     return result;
+}
+
+function Vec2Update(v, xVal, yVal) {        
+    v.x = xVal;
+    v.y = yVal;
 }
 
 function Vec2PolarInit(angle, length) {
@@ -34,6 +39,7 @@ function Vec2PolarInit(angle, length) {
 
 function Vec2Angle(v) {     
     const length = Vec2Mag(v);
+    const epsilon = 0.0001;
     if (length < epsilon) {
         return 0.0;
     }
@@ -64,6 +70,11 @@ function Vec2Scale(v1, s) {
     return result;
 }
 
+function Vec2ScaleSelf(v1, s) {
+    v1.x = v1.x*s;
+    v1.y = v1.y*s;
+}
+
 function Vec2Mag(v) {
     return Math.sqrt(v.x*v.x + v.y*v.y);
 }
@@ -82,5 +93,19 @@ function Vec2AngleBetween(v1, v2) {
     return theta;
 }
 
+function Vec2Rotate(v, rotationAmount) {
+    const currentAngle = Vec2Angle(v);
+    const currentMag = Vec2Mag(v);
+    const newAngle = currentAngle + rotationAmount;
+    result = Vec2PolarInit(newAngle, currentMag);
+    return result;
+}
 
+function Vec2RotateSelf(v, rotationAmount) {
+    const currentAngle = Vec2Angle(v);
+    const currentMag = Vec2Mag(v);
+    const newAngle = currentAngle + rotationAmount;
+    v.x = currentMag * cosDeg(newAngle);
+    v.y = currentMag * sinDeg(newAngle);        
+}
 

@@ -33,5 +33,5 @@ function drawEverything() {
   drawTracks();
   
   p1.carDraw();
-  p2.carDraw();
+  p2.carDraw();    
 }
