@@ -65,6 +65,11 @@ function Vec2Add(v1, v2) {
     return result;
 }
 
+function Vec2Sub(v1, v2) {
+    var result = Vec2Init(v1.x - v2.x, v1.y - v2.y);
+    return result;
+}
+
 function Vec2Scale(v1, s) {
     var result = Vec2Init(v1.x*s, v1.y*s);
     return result;
@@ -107,5 +112,22 @@ function Vec2RotateSelf(v, rotationAmount) {
     const newAngle = currentAngle + rotationAmount;
     v.x = currentMag * cosDeg(newAngle);
     v.y = currentMag * sinDeg(newAngle);        
+}
+
+function Vec2Distance(v1, v2) {
+    var v1ToV2 = Vec2Sub(v1, v2);
+    var result = Vec2Mag(v1ToV2);
+    return result;
+}
+
+function Vec2Normalize(v) {
+    var result = Vec2Init(1,0);
+    var mag = Vec2Mag(v);
+    // not sure what epsilon to use here
+    if (mag > 0.0001) {
+        result.x = v.x / mag;
+        result.y = v.y / mag;
+    }
+    return result;
 }
 

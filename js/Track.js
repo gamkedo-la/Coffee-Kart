@@ -64,7 +64,7 @@ function drawTracks() {
       canvasContext.drawImage(trackSheet,
         trackTypeHere * TILE_SIZE, 0, // top-left corner of tile art, multiple of tile width
         TILE_SIZE, TILE_SIZE, // get full tile size from source
-        trackLeftEdgeX, trackTopEdgeY, // x,y top-left corner for image destination
+        trackLeftEdgeX - camera.drawPosition.x, trackTopEdgeY - camera.drawPosition.y, // x,y top-left corner for image destination
         TRACK_W, TRACK_H); // draw full full tile size for destination
       
       trackIndex++; // increment which index we're going to next check for in the track        
