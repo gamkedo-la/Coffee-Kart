@@ -81,7 +81,7 @@ function Vec2ScaleSelf(v1, s) {
 }
 
 function Vec2Mag(v) {
-    return Math.sqrt(v.x*v.x + v.y*v.y);
+    return Math.sqrt((v.x*v.x) + (v.y*v.y));
 }
 
 function Vec2AngleBetween(v1, v2) {

@@ -19,8 +19,8 @@ function beginLoadingImage(imgVar, fileName) {
 function loadImages() {
 
   var imageList = [
-    {varName:carPic, theFile:"player1.png"},
-    {varName:car2Pic, theFile:"player2.png"},
+    {varName:carPic, theFile:"car_top.png"},
+    {varName:car2Pic, theFile:"car_top.png"},
     {varName:trackSheet, theFile:"spritesheet.png"}
     ];
 

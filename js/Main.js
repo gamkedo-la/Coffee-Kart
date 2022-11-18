@@ -28,7 +28,7 @@ function loadingDoneSoStartGame() {
   camera.InitCamera(SCREEN_WIDTH/2, SCREEN_HEIGHT/2, 
        SCREEN_WIDTH, SCREEN_HEIGHT, Vec2Init((TRACK_COLS * TRACK_W) - SCREEN_WIDTH/2.0,
        TRACK_ROWS * TRACK_H - SCREEN_HEIGHT/2.0),
-       Vec2Init(SCREEN_WIDTH/2.0, SCREEN_HEIGHT/2.0), 5.0); // end InitCamera
+       Vec2Init(SCREEN_WIDTH/2.0, SCREEN_HEIGHT/2.0), 1.0); // end InitCamera
   initInput();  
 }
 
