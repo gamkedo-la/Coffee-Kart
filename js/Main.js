@@ -1,7 +1,7 @@
 // save the canvas for dimensions, and its 2d context for drawing to it
 var canvas, canvasContext;
-const SCREEN_WIDTH = 800;
-const SCREEN_HEIGHT = 600;
+const SCREEN_WIDTH = 1280;
+const SCREEN_HEIGHT = 720;
 
 
 var p1 = new carClass();
@@ -34,7 +34,7 @@ function loadingDoneSoStartGame() {
 
 function moveEverything() {
   p1.carMove();
-  p2.carMove();
+  //p2.carMove();
   camera.UpdateCamera(p1.position);
 }
 
@@ -42,5 +42,5 @@ function drawEverything() {
   drawTracks();
   
   p1.carDraw();
-  p2.carDraw();    
+  //p2.carDraw();    
 }

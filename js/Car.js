@@ -1,4 +1,3 @@
-// car tuning constants
 
 
 function carClass() {
@@ -68,11 +67,12 @@ function carClass() {
     const wheelAngleMin = -45;
     const wheelAngleMax = 45;
     const fixedDt = 30.0/1000.0;    
-    const roadFriction = 1.28;
-    const engineDecayRate = 500;
+    const roadFriction = 12.8;
+    const engineDecayRate = 2000;
     const dragCoefficient = 0.04;
-    const drivePower = 500;
-    const drivePowerMax = 3000;
+    const drivePower = 300;
+    const reversePower = 200;
+    const drivePowerMax = 7000;
     const drivePowerMaxReverse = -3000;
 
 
@@ -95,10 +95,10 @@ function carClass() {
     // engine stuff
     if(this.keyHeld_Gas) {
       this.engineForce += drivePower;
-      //this.carSpeed += DRIVE_POWER;
+    
     } else if(this.keyHeld_Reverse) {
-      this.engineForce -= drivePower;
-      //this.carSpeed -= REVERSE_POWER;
+      this.engineForce -= reversePower;
+    
     } else {
       if (this.engineForce > 0) {
         this.engineForce -= (engineDecayRate*fixedDt);
@@ -137,7 +137,7 @@ function carClass() {
 
     var carSpeed = Vec2Mag(this.carVelocity);
     this.carSpeed = carSpeed;
-    // this.carPosition 
+    
     // turning stuff
     var angularVelocityRad;
     if (sinDeg(this.wheelAng) == 0) {
@@ -155,8 +155,7 @@ function carClass() {
     
     
     
-    Vec2Update(this.carHeading, cosDeg(this.carAng), sinDeg(this.carAng));
-    //Vec2Update(this.carVelocity, carSpeed * cosDeg(this.carAng), carSpeed * sinDeg(this.carAng));
+    Vec2Update(this.carHeading, cosDeg(this.carAng), sinDeg(this.carAng));    
     
     
     
