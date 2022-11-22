@@ -5,10 +5,7 @@ function carClass() {
 
   // todo
   // add RPM to wheels
-  //this.position = Vec2Init(75, 75);
-  //this.carHeading = Vec2Init(0,1);
-  //this.wheelHeading = Vec2Init(0,1);
-  //this.carAng = -90;
+  
 
   // keyboard hold state variables, to use keys more like buttons
   this.keyHeld_Gas = false;
@@ -57,6 +54,9 @@ function carClass() {
     this.engineForce = 0;
     this.carMass = 2;        
 
+    this.reverseTimer = 0;
+    this.reversing = false;
+
 
   } // end of carReset
   
@@ -68,10 +68,10 @@ function carClass() {
     const wheelAngleMax = 45;
     const fixedDt = 30.0/1000.0;    
     const roadFriction = 12.8;
-    const engineDecayRate = 2000;
+    const engineDecayRate = 6000;
     const dragCoefficient = 0.04;
     const drivePower = 300;
-    const reversePower = 200;
+    const reversePower = 300;
     const drivePowerMax = 7000;
     const drivePowerMaxReverse = -3000;
 
@@ -93,11 +93,39 @@ function carClass() {
     }
     
     // engine stuff
+
+    
+    const brakingConst = -1000.0;
+    var brakingForce = Vec2Init(0, 0);
+
     if(this.keyHeld_Gas) {
+      // make this * fixedDt ?
+      if (this.reversing) {
+        this.reversing = false;
+      }
       this.engineForce += drivePower;
     
     } else if(this.keyHeld_Reverse) {
-      this.engineForce -= reversePower;
+      if (!this.reversing) {
+        
+        
+        const revEpsilon = 10;
+        const reverseTimerMax = 0.25;
+        if (this.engineForce > revEpsilon) {
+          this.engineForce -= reversePower;
+          brakingForce = Vec2Scale(this.carHeading, brakingConst);
+        } else {
+          this.engineForce = 0;
+          this.reverseTimer += fixedDt;
+          if (this.reverseTimer > reverseTimerMax) {
+            this.reversing = true;
+            this.reverseTimer = 0;
+          }
+        }
+      }
+      if (this.reversing) {
+        this.engineForce -= reversePower;
+      }
     
     } else {
       if (this.engineForce > 0) {
@@ -118,14 +146,19 @@ function carClass() {
       this.engineForce = drivePowerMaxReverse;
     }
     
+
+
     
     var tractionForce = Vec2Scale(this.carHeading, this.engineForce);
+    
     
     var rollingResistanceForce = Vec2Scale(this.carVelocity, -1.0*roadFriction);
     
     var dragForce = Vec2Scale(this.carVelocity, -1.0 * Vec2Mag(this.carVelocity) * dragCoefficient);
     
-    var longForce = Vec2Add(Vec2Add(tractionForce, rollingResistanceForce), dragForce);
+    var longForce = Vec2Add(Vec2Add(Vec2Add(tractionForce, rollingResistanceForce), dragForce), brakingForce);
+
+
     var accel = Vec2Scale(longForce , 1.0 / this.carMass);
     this.carVelocity = Vec2Add(this.carVelocity, Vec2Scale(accel, fixedDt));
     console.log("velocity mag " + Vec2Mag(this.carVelocity));
@@ -159,8 +192,8 @@ function carClass() {
     
     
     
-    
-    
+    // todo
+    // wrap below into a collision function
     
     var drivingIntoTileType = getTrackAtPixelCoord(nextPos.x,nextPos.y);
     
@@ -201,7 +234,7 @@ function carClass() {
         this.engineForce = 0;
       }
 
-      //this.carSpeed = 0.0;
+      
     }
 
     
