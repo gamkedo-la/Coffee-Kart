@@ -1,6 +1,7 @@
 var carPic = document.createElement("img");
 var car2Pic = document.createElement("img");
 var trackSheet = document.createElement("img");
+var tireTracksPic = document.createElement("img");
 
 var picsToLoad = 0;
 
@@ -21,7 +22,8 @@ function loadImages() {
   var imageList = [
     {varName:carPic, theFile:"car_top.png"},
     {varName:car2Pic, theFile:"car_top.png"},
-    {varName:trackSheet, theFile:"tiles_four.png"}
+    {varName:trackSheet, theFile:"tiles_four.png"},
+    {varName:tireTracksPic, theFile:"tire_tracks.png"}
     ];
 
   picsToLoad = imageList.length;

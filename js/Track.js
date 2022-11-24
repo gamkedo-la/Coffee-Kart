@@ -75,4 +75,5 @@ function drawTracks() {
     trackTopEdgeY += TRACK_H; // jump horizontal draw position down by one full tile height
     
   } // end of for eachRow    
+
 } // end of drawTracks()

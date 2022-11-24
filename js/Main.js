@@ -40,6 +40,8 @@ function moveEverything() {
 
 function drawEverything() {
   drawTracks();
+
+  decals.draw(-camera.drawPosition.x,-camera.drawPosition.y); // tire tracks etc
   
   p1.carDraw();
   //p2.carDraw();    

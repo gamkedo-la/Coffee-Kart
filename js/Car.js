@@ -161,7 +161,7 @@ function carClass() {
 
     var accel = Vec2Scale(longForce , 1.0 / this.carMass);
     this.carVelocity = Vec2Add(this.carVelocity, Vec2Scale(accel, fixedDt));
-    console.log("velocity mag " + Vec2Mag(this.carVelocity));
+    //console.log("velocity mag " + Vec2Mag(this.carVelocity));
     if (Vec2Mag(this.carVelocity) < 1) {
       Vec2Update(this.carVelocity, 0, 0);
     }
@@ -243,6 +243,14 @@ function carClass() {
   this.carDraw = function() {      
     drawBitmapCenteredAtLocationWithRotation( this.myBitmap, this.position.x - camera.drawPosition.x, this.position.y - camera.drawPosition.y, degToRad(this.carAng + 90) );        
     
+    // draw tire tracks
+    // todo: only when accel is max, when we are drifting, or brakes are on
+    if (this.lastTireTrackX != this.position.x || this.lastTireTrackY != this.position.y) {
+        decals.add(this.position.x,this.position.y,degToRad(this.carAng + 90),0.1,tireTracksPic);
+        this.lastTireTrackX = this.position.x;
+        this.lastTireTrackY = this.position.y;
+    }
+
   }
 
 } // end of car class
