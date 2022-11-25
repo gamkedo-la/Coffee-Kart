@@ -12,13 +12,15 @@ function carClass() {
   this.keyHeld_Reverse = false;
   this.keyHeld_TurnLeft = false;
   this.keyHeld_TurnRight = false;
+  this.keyHeld_Handbrake = false;
 
   // key controls used for this car 
-  this.setupControls = function(forwardKey,backKey,leftKey,rightKey) {
+  this.setupControls = function(forwardKey,backKey,leftKey,rightKey, spaceKey) {
     this.controlKeyForGas = forwardKey;
     this.controlKeyForReverse = backKey;
     this.controlKeyForTurnLeft = leftKey;
     this.controlKeyForTurnRight = rightKey;
+    this.controlKeyForHandbrake = spaceKey;
   }
 
   this.carInit = function(whichGraphic,whichName, isPlayerVal) {
@@ -56,16 +58,17 @@ function carClass() {
 
     this.reverseTimer = 0;
     this.reversing = false;
+    this.handBrake = false;
 
 
   } // end of carReset
   
   this.carMove = function() {
-    const turnSpeed = 720.0;
+    const turnSpeed = 360.0;
     const wheelDeadSpot = 15;
     const wheelDecayRate = 0.5;
-    const wheelAngleMin = -45;
-    const wheelAngleMax = 45;
+    const wheelAngleMin = -30;
+    const wheelAngleMax = 30;
     const fixedDt = 30.0/1000.0;    
     const roadFriction = 12.8;
     const engineDecayRate = 6000;
@@ -74,6 +77,7 @@ function carClass() {
     const reversePower = 300;
     const drivePowerMax = 7000;
     const drivePowerMaxReverse = -3000;
+    const collisionDecay = 0.97;
 
 
     if(this.keyHeld_TurnLeft) {
@@ -97,6 +101,12 @@ function carClass() {
     
     const brakingConst = -1000.0;
     var brakingForce = Vec2Init(0, 0);
+
+    this.handBrake = false;
+
+    if (this.keyHeld_Handbrake) {      
+      this.handBrake = true;
+    }
 
     if(this.keyHeld_Gas) {
       // make this * fixedDt ?
@@ -150,7 +160,9 @@ function carClass() {
 
     
     var tractionForce = Vec2Scale(this.carHeading, this.engineForce);
-    
+    if (this.handBrake) {
+      tractionForce = Vec2Scale(Vec2Normalize(this.carVelocity), this.engineForce);
+    }
     
     var rollingResistanceForce = Vec2Scale(this.carVelocity, -1.0*roadFriction);
     
@@ -172,6 +184,7 @@ function carClass() {
     this.carSpeed = carSpeed;
     
     // turning stuff
+    // low speed assumption?
     var angularVelocityRad;
     if (sinDeg(this.wheelAng) == 0) {
       angularVelocityRad = 0;
@@ -189,6 +202,9 @@ function carClass() {
     
     
     Vec2Update(this.carHeading, cosDeg(this.carAng), sinDeg(this.carAng));    
+
+    // high speed scenario
+
     
     
     
@@ -219,13 +235,13 @@ function carClass() {
       if (trackHorizontal == TRACK_ROAD) {
     
         this.position = Vec2Add(this.position, Vec2Scale(headingHorizontal, fixedDt * this.carSpeed));
-        this.carVelocity = Vec2Scale(this.carVelocity, 0.97);
-        this.engineForce *= 0.97;
+        this.carVelocity = Vec2Scale(this.carVelocity, collisionDecay);
+        this.engineForce *= collisionDecay;
       } else if (trackVertical == TRACK_ROAD) {
     
         this.position = Vec2Add(this.position, Vec2Scale(headingVertical, fixedDt * this.carSpeed));
-        this.carVelocity = Vec2Scale(this.carVelocity, 0.97);
-        this.engineForce *= 0.97;
+        this.carVelocity = Vec2Scale(this.carVelocity, collisionDecay);
+        this.engineForce *= collisionDecay;
       } else if (trackVertical != TRACK_ROAD && trackHorizontal != TRACK_ROAD) {
     
     

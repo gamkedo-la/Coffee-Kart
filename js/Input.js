@@ -7,13 +7,14 @@ const KEY_LETTER_W = 87;
 const KEY_LETTER_A = 65;
 const KEY_LETTER_S = 83;
 const KEY_LETTER_D = 68;
+const KEY_LETTER_SPACE = 32;
 
 function initInput() {
   document.addEventListener("keydown", keyPressed);
   document.addEventListener("keyup", keyReleased);
   
-  p1.setupControls(KEY_UP_ARROW,KEY_DOWN_ARROW,KEY_LEFT_ARROW,KEY_RIGHT_ARROW);
-  p2.setupControls(KEY_LETTER_W,KEY_LETTER_S,KEY_LETTER_A,KEY_LETTER_D);
+  p1.setupControls(KEY_UP_ARROW,KEY_DOWN_ARROW,KEY_LEFT_ARROW,KEY_RIGHT_ARROW, KEY_LETTER_SPACE);
+  //p2.setupControls(KEY_LETTER_W,KEY_LETTER_S,KEY_LETTER_A,KEY_LETTER_D);
 }
 
 function setKeyHoldState(thisKey, thisCar, setTo) {
@@ -29,15 +30,18 @@ function setKeyHoldState(thisKey, thisCar, setTo) {
   if(thisKey == thisCar.controlKeyForReverse) {
     thisCar.keyHeld_Reverse = setTo;
   }
+  if(thisKey == thisCar.controlKeyForHandbrake) {
+    thisCar.keyHeld_Handbrake = setTo;
+  }
 }
 
 function keyPressed(evt) {
   setKeyHoldState(evt.keyCode, p1, true);
-  setKeyHoldState(evt.keyCode, p2, true);
+  //setKeyHoldState(evt.keyCode, p2, true);
   evt.preventDefault(); // without this, arrow keys scroll the browser!
 }
 
 function keyReleased(evt) {
   setKeyHoldState(evt.keyCode, p1, false);
-  setKeyHoldState(evt.keyCode, p2, false);
+  //setKeyHoldState(evt.keyCode, p2, false);
 }
