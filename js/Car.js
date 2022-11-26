@@ -73,8 +73,8 @@ function carClass() {
     const roadFriction = 12.8;
     const engineDecayRate = 6000;
     const dragCoefficient = 0.04;
-    const drivePower = 300;
-    const reversePower = 300;
+    const drivePower = 4000;
+    const reversePower = 7000;
     const drivePowerMax = 7000;
     const drivePowerMaxReverse = -3000;
     const collisionDecay = 0.97;
@@ -99,7 +99,7 @@ function carClass() {
     // engine stuff
 
     
-    const brakingConst = -1000.0;
+    const brakingConst = -30000.0;
     var brakingForce = Vec2Init(0, 0);
 
     this.handBrake = false;
@@ -113,7 +113,9 @@ function carClass() {
       if (this.reversing) {
         this.reversing = false;
       }
-      this.engineForce += drivePower;
+      if (!this.handBrake) {
+        this.engineForce += (drivePower * fixedDt);
+      }
     
     } else if(this.keyHeld_Reverse) {
       if (!this.reversing) {
@@ -122,8 +124,8 @@ function carClass() {
         const revEpsilon = 10;
         const reverseTimerMax = 0.25;
         if (this.engineForce > revEpsilon) {
-          this.engineForce -= reversePower;
-          brakingForce = Vec2Scale(this.carHeading, brakingConst);
+          this.engineForce -= (reversePower * fixedDt);
+          brakingForce = Vec2Scale(this.carHeading, brakingConst * fixedDt);
         } else {
           this.engineForce = 0;
           this.reverseTimer += fixedDt;
@@ -134,10 +136,12 @@ function carClass() {
         }
       }
       if (this.reversing) {
-        this.engineForce -= reversePower;
+        this.engineForce -= (reversePower * fixedDt);
       }
     
-    } else {
+    } 
+    if (this.handBrake || ((!this.keyHeld_Gas) && (!this.keyHeld_Reverse))) {
+      console.log("reducing engine speed");
       if (this.engineForce > 0) {
         this.engineForce -= (engineDecayRate*fixedDt);
       } 
