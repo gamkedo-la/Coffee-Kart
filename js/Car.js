@@ -59,6 +59,7 @@ function carClass() {
     this.reverseTimer = 0;
     this.reversing = false;
     this.handBrake = false;
+    this.drawTireTracks = false;
 
 
   } // end of carReset
@@ -79,14 +80,17 @@ function carClass() {
     const drivePowerMaxReverse = -3000;
     const collisionDecay = 0.97;
 
+    this.drawTireTracks = false;
 
     if(this.keyHeld_TurnLeft) {
         if (this.wheelAng > wheelAngleMin) {
           this.wheelAng -= turnSpeed * fixedDt;
+          this.drawTireTracks = true;
         }
     } else if(this.keyHeld_TurnRight) {
         if (this.wheelAng < wheelAngleMax) {
           this.wheelAng += turnSpeed * fixedDt;
+          this.drawTireTracks = true;
         }
     } else {
       if (Math.abs(this.wheelAng) < wheelDeadSpot) {
@@ -106,6 +110,7 @@ function carClass() {
 
     if (this.keyHeld_Handbrake) {      
       this.handBrake = true;
+      this.drawTireTracks = true;
     }
 
     if(this.keyHeld_Gas) {
@@ -155,12 +160,13 @@ function carClass() {
 
     if (this.engineForce > drivePowerMax) {
       this.engineForce = drivePowerMax;
+      this.drawTireTracks = true;
     }
     if (this.engineForce < (drivePowerMaxReverse)) {
       this.engineForce = drivePowerMaxReverse;
+      this.drawTireTracks = true;
     }
     
-
 
     
     var tractionForce = Vec2Scale(this.carHeading, this.engineForce);
@@ -265,12 +271,13 @@ function carClass() {
     
     // draw tire tracks
     // todo: only when accel is max, when we are drifting, or brakes are on
+    if (!this.drawTireTracks) return
+    
     if (this.lastTireTrackX != this.position.x || this.lastTireTrackY != this.position.y) {
-        decals.add(this.position.x,this.position.y,degToRad(this.carAng + 90),0.1,tireTracksPic);
-        this.lastTireTrackX = this.position.x;
-        this.lastTireTrackY = this.position.y;
+      decals.add(this.position.x,this.position.y,degToRad(this.carAng + 90),0.1,tireTracksPic);
+      this.lastTireTrackX = this.position.x;
+      this.lastTireTrackY = this.position.y;
     }
-
   }
 
 } // end of car class
