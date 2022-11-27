@@ -2,11 +2,12 @@
 var canvas, canvasContext;
 const SCREEN_WIDTH = 1280;
 const SCREEN_HEIGHT = 720;
-
+const framesPerSecond = 30;
 
 var p1 = new carClass();
 var p2 = new carClass();
 var camera = new CameraClass();
+var timer = new CountdownTimer();
 
 window.onload = function() {
   canvas = document.getElementById('gameCanvas');
@@ -17,12 +18,12 @@ window.onload = function() {
 
 function loadingDoneSoStartGame() {
   // these next few lines set up our game logic and render to happen 30 times per second
-  var framesPerSecond = 30;
   setInterval(function() {
+      updateEverything();
       moveEverything();
       drawEverything();
     }, 1000/framesPerSecond);
-  
+  timer.resume();
   p2.carInit(car2Pic, "Green Car", false);
   p1.carInit(carPic, "Blue Car", true);
   camera.InitCamera(SCREEN_WIDTH/2, SCREEN_HEIGHT/2, 
@@ -31,7 +32,9 @@ function loadingDoneSoStartGame() {
        Vec2Init(SCREEN_WIDTH/2.0, SCREEN_HEIGHT/2.0), 1.0); // end InitCamera
   initInput();  
 }
-
+function updateEverything() {
+  timer.update();
+}
 function moveEverything() {
   p1.carMove();
   //p2.carMove();
@@ -42,7 +45,9 @@ function drawEverything() {
   drawTracks();
 
   decals.draw(-camera.drawPosition.x,-camera.drawPosition.y); // tire tracks etc
-  
+
   p1.carDraw();
-  //p2.carDraw();    
+  //p2.carDraw();
+
+  timer.draw();
 }
