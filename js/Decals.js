@@ -118,9 +118,22 @@ if (DECAL_EDITOR_MODE) {
     
     console.log("DECAL_EDITOR_MODE is on: recording clicks to console.log for you to copy n paste.");
 
+    let decalpics = [
+        decal_oilstain,
+        decal_crack,
+        decal_pebbles,
+        decal_grass,
+        decal_barrel,
+        decal_tire,
+        decal_cone,
+        decal_skidmarks,
+        decal_stripes];
+    
     var decalClickBuffer = "var decals = [";
+    var decalNumber = 0;
     
     function rememberThisClick(e) {
+        
         let x = Math.round(camera.drawPosition.x) + Math.round(e.clientX);
         let y = Math.round(camera.drawPosition.y) + Math.round(e.clientY);
         decalClickBuffer += x+","+y+","; 
@@ -129,20 +142,16 @@ if (DECAL_EDITOR_MODE) {
         // add it visually right now!
         let alpha = 1;
         
-        let decalpics = [
-            decal_oilstain,
-            decal_crack,
-            decal_pebbles,
-            decal_grass,
-            decal_barrel,
-            decal_tire,
-            decal_cone,
-            decal_skidmarks,
-            decal_stripes];
-        
-        let pic = decalpics[0];
-        let rot = degToRad(Math.random()*Math.PI*2);
+        let pic = decalpics[decalNumber];
+        let rot = degToRad(Math.random()*360);
         decals.add(x,y,rot,alpha,pic);
+
+        // TEST TEMP MODE: cycle through them all sequentially lol
+        decalNumber++;
+        if (decalNumber >= decalpics.length) decalNumber = 0;
+        console.log("Next DECAL number:" + decalNumber + " is " + decalpics[decalNumber].src);
+        
+
     }
  
     document.addEventListener("click",rememberThisClick);
