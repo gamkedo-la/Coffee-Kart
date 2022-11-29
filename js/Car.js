@@ -146,7 +146,7 @@ function carClass() {
     
     } 
     if (this.handBrake || ((!this.keyHeld_Gas) && (!this.keyHeld_Reverse))) {
-      console.log("reducing engine speed");
+      //console.log("reducing engine speed");
       if (this.engineForce > 0) {
         this.engineForce -= (engineDecayRate*fixedDt);
       } 

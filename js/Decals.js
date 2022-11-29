@@ -1,3 +1,5 @@
+const DECAL_EDITOR_MODE = true; // if true, we record mouse clicks to the console log for later copy/pasting
+
 // decals by @mcfunkypants
 // this is one large offscreen canvas that we can draw onto
 // which only needs a single draw call each frame to render
@@ -105,4 +107,43 @@ function randomInteger(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-var decals = new Decalmanager(); // initialized immadiately
+var decals = new Decalmanager(); // initialized immediately
+
+
+
+
+
+
+if (DECAL_EDITOR_MODE) {
+    
+    console.log("DECAL_EDITOR_MODE is on: recording clicks to console.log for you to copy n paste.");
+
+    var decalClickBuffer = "var decals = [";
+    
+    function rememberThisClick(e) {
+        let x = Math.round(camera.drawPosition.x) + Math.round(e.clientX);
+        let y = Math.round(camera.drawPosition.y) + Math.round(e.clientY);
+        decalClickBuffer += x+","+y+","; 
+        console.log(decalClickBuffer.substring(0,decalClickBuffer.length-1)+"];"); // remove trailing comma
+
+        // add it visually right now!
+        let alpha = 1;
+        
+        let decalpics = [
+            decal_oilstain,
+            decal_crack,
+            decal_pebbles,
+            decal_grass,
+            decal_barrel,
+            decal_tire,
+            decal_cone,
+            decal_skidmarks,
+            decal_stripes];
+        
+        let pic = decalpics[0];
+        let rot = degToRad(Math.random()*Math.PI*2);
+        decals.add(x,y,rot,alpha,pic);
+    }
+ 
+    document.addEventListener("click",rememberThisClick);
+}
