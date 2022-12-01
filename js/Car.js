@@ -67,8 +67,16 @@ function carClass() {
 
 
   } // end of carReset
-  
+
   this.carMove = function() {
+    if (this.isPlayer) {
+      this.carMovePlayer();
+    } else {
+      this.carMoveAi();
+    }
+  }
+  
+  this.carMovePlayer = function() {
     const turnSpeed = 360.0;
     const wheelDeadSpot = 15;
     const wheelDecayRate = 0.5;
