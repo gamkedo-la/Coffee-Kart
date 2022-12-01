@@ -5,7 +5,11 @@ function carClass() {
 
   // todo
   // add RPM to wheels
-  
+
+  // to be used later
+  this.gearRatios = [2.5, 1.8, 1.4, 1.0, 0.75];
+  this.diffRatio = 3.4;
+  this.wheelRadius = 0.3;
 
   // keyboard hold state variables, to use keys more like buttons
   this.keyHeld_Gas = false;
