@@ -1,6 +1,12 @@
-
+const DEBUG_DRAW = true;
 
 function carClass() {
+  // waypoints for ai.
+  this.waypoints = [Vec2Init(150, 300), Vec2Init(500, 200)];
+  this.waypointCounter = 0;
+  // todo : visualize these
+
+
   // variables to keep track of car position
 
   // todo
@@ -75,6 +81,31 @@ function carClass() {
       this.carMoveAi();
     }
   }
+
+  this.carMoveAi = function() {
+    const turnSpeed = 360.0;
+    const wheelDeadSpot = 15;
+    const wheelDecayRate = 0.5;
+    const wheelAngleMin = -30;
+    const wheelAngleMax = 30;
+    const fixedDt = 30.0/1000.0;    
+    const roadFriction = 12.8;
+    const engineDecayRate = 6000;
+    const dragCoefficient = 0.04;
+    const drivePower = 4000;
+    const reversePower = 7000;
+    const drivePowerMax = 7000;
+    const drivePowerMaxReverse = -3000;
+    const collisionDecay = 0.97;
+
+
+    // todo: 
+    // get heading to next waypoint
+    // update angle of current heading by rotation
+    // apply acceleration in that direction
+    // when within a certain distance of the waypoint, update to a new waypoint
+
+  }
   
   this.carMovePlayer = function() {
     const turnSpeed = 360.0;
@@ -83,7 +114,7 @@ function carClass() {
     const wheelAngleMin = -30;
     const wheelAngleMax = 30;
     const fixedDt = 30.0/1000.0;    
-    const roadFriction = 12.8;
+    const roadFriction = 2.8;
     const engineDecayRate = 6000;
     const dragCoefficient = 0.04;
     const drivePower = 4000;
@@ -161,9 +192,15 @@ function carClass() {
       //console.log("reducing engine speed");
       if (this.engineForce > 0) {
         this.engineForce -= (engineDecayRate*fixedDt);
+        if (this.engineForce < 0) { // don't oscilate
+          this.engineForce = 0;
+        }
       } 
       if (this.engineForce < 0) {
         this.engineForce += (engineDecayRate*fixedDt);
+        if (this.engineForce > 0) { // don't oscilate
+          this.engineForce = 0;
+        }
       }
       if (Math.abs(this.engineForce) < 5) {
         this.engineForce = 0;
@@ -279,8 +316,14 @@ function carClass() {
   }
   
   this.carDraw = function() {      
-    drawBitmapCenteredAtLocationWithRotation( this.myBitmap, this.position.x - camera.drawPosition.x, this.position.y - camera.drawPosition.y, degToRad(this.carAng + 90) );        
     
+    if (DEBUG_DRAW) {
+      for (let i = 0; i < this.waypoints.length; i++) {
+        wayPoint = this.waypoints[i];
+        colorCircle(wayPoint.x - camera.drawPosition.x, wayPoint.y - camera.drawPosition.y, 40, "blue");
+      }
+    }
+    drawBitmapCenteredAtLocationWithRotation( this.myBitmap, this.position.x - camera.drawPosition.x, this.position.y - camera.drawPosition.y, degToRad(this.carAng + 90) );        
     // draw tire tracks
     // todo: only when accel is max, when we are drifting, or brakes are on
     if (!this.drawTireTracks) return

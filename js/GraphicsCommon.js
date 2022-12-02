@@ -1,13 +1,17 @@
 function colorRect(topLeftX, topLeftY, boxWidth, boxHeight, fillColor) {
+  canvasContext.save();
   canvasContext.fillStyle = fillColor;
   canvasContext.fillRect(topLeftX, topLeftY, boxWidth, boxHeight);
+  canvasContext.restore();
 }
 
 function colorCircle(centerX, centerY, radius, fillColor) {
+  canvasContext.save();
   canvasContext.fillStyle = fillColor;
   canvasContext.beginPath();
   canvasContext.arc(centerX, centerY, radius, 0, Math.PI*2, true);
   canvasContext.fill();
+  canvasContext.restore();
 }
   
 function drawBitmapCenteredAtLocationWithRotation(graphic, atX, atY,withAngle) {
