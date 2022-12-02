@@ -1,4 +1,4 @@
-const DEBUG_DRAW = true;
+const DEBUG_DRAW = false;
 
 function carClass() {
   // waypoints for ai.

@@ -1,6 +1,6 @@
 class CountdownTimer{
     constructor(){
-        this.remainingTime = 60;
+        this.remainingTime = 10;
         this.paused = true;
         this.timerColor = 'red';
         this.font = '48px serif';
@@ -8,7 +8,7 @@ class CountdownTimer{
         this.yLocation = 60;
     }
     update(){
-        if(!this.paused) {
+        if(!this.paused && this.remainingTime > 0) {
             this.remainingTime -= framesPerSecond/1000;
         }
     }
