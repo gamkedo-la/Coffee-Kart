@@ -1,5 +1,7 @@
 var carPic = document.createElement("img");
 var car2Pic = document.createElement("img");
+var car3Pic = document.createElement("img");
+var carSportPic = document.createElement("img");
 var trackSheet = document.createElement("img");
 
 // decals
@@ -32,7 +34,9 @@ function loadImages() {
 
   var imageList = [
     {varName:carPic, theFile:"car_top.png"},
-    {varName:car2Pic, theFile:"car_top.png"},
+    {varName:car2Pic, theFile:"car_green_top.png"},
+    {varName:car3Pic, theFile:"car_red_top.png"},
+    {varName:carSportPic, theFile:"car_red_sport_top.png"},
     {varName:trackSheet, theFile:"tiles_four.png"},
     {varName:tireTracksPic, theFile:"tire_tracks.png"},
     {varName:decal_oilstain, theFile:"decal_oilstain.png"},
