@@ -1,8 +1,8 @@
-const DEBUG_DRAW = false;
+const DEBUG_DRAW = true;
 
 function carClass() {
   // waypoints for ai.
-  this.waypoints = [Vec2Init(150, 300), Vec2Init(500, 200)];
+  this.waypoints = [waypointInit(175, 300, 0, 20), waypointInit(500, 150, 20, 20)];
   this.waypointCounter = 0;
   // todo : visualize these
 
