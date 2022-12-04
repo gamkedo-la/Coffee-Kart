@@ -278,6 +278,7 @@ function carClass() {
       document.getElementById("debugText").innerHTML = this.myName + " won the race";
       p1.carReset();
       p2.carReset();
+      timer.setTime(TIME_DEFAULT);
     } else {
     
       var actualHeading = Vec2Init(0, 0);

@@ -1,6 +1,8 @@
+const TIME_DEFAULT = 30;
+
 class CountdownTimer{
     constructor(){
-        this.remainingTime = 10;
+        this.remainingTime = TIME_DEFAULT;
         this.paused = true;
         this.timerColor = 'red';
         this.font = '48px serif';

@@ -1,8 +1,4 @@
-function WaypointClass() {
-    this.initWaypoint = function(xPos, yPos, angle, width) {
-        this.x = xPos;
-        this.y = yPos;
-        this.angle = angle;
-        this.width = width;
-    }
+function waypointInit(xPos, yPos, angleVal, widthVal) {
+    var result = {x : xPos, y : yPos, angle : angleVal, width : widthVal};
+    return result;
 }
