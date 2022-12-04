@@ -8,29 +8,39 @@ var p1 = new carClass();
 var p2 = new carClass();
 var camera = new CameraClass();
 var timer = new CountdownTimer();
+var pauseUI = new PauseUI();
+var paused = false;
 
-window.onload = function() {
-  canvas = document.getElementById('gameCanvas');
-  canvasContext = canvas.getContext('2d');
-  
+window.onload = function () {
+  canvas = document.getElementById("gameCanvas");
+  canvasContext = canvas.getContext("2d");
+
   loadImages();
-}
+};
 
 function loadingDoneSoStartGame() {
   // these next few lines set up our game logic and render to happen 30 times per second
-  setInterval(function() {
-      updateEverything();
-      moveEverything();
-      drawEverything();
-    }, 1000/framesPerSecond);
+  setInterval(function () {
+    updateEverything();
+    moveEverything();
+    drawEverything();
+  }, 1000 / framesPerSecond);
   timer.resume();
   p2.carInit(car2Pic, "Green Car", false);
   p1.carInit(carPic, "Blue Car", true);
-  camera.InitCamera(SCREEN_WIDTH/2, SCREEN_HEIGHT/2, 
-       SCREEN_WIDTH, SCREEN_HEIGHT, Vec2Init((TRACK_COLS * TRACK_W) - SCREEN_WIDTH/2.0,
-       TRACK_ROWS * TRACK_H - SCREEN_HEIGHT/2.0),
-       Vec2Init(SCREEN_WIDTH/2.0, SCREEN_HEIGHT/2.0), 1.0); // end InitCamera
-  initInput();  
+  camera.InitCamera(
+    SCREEN_WIDTH / 2,
+    SCREEN_HEIGHT / 2,
+    SCREEN_WIDTH,
+    SCREEN_HEIGHT,
+    Vec2Init(
+      TRACK_COLS * TRACK_W - SCREEN_WIDTH / 2.0,
+      TRACK_ROWS * TRACK_H - SCREEN_HEIGHT / 2.0
+    ),
+    Vec2Init(SCREEN_WIDTH / 2.0, SCREEN_HEIGHT / 2.0),
+    1.0
+  ); // end InitCamera
+  initInput();
 }
 function updateEverything() {
   timer.update();
@@ -44,10 +54,14 @@ function moveEverything() {
 function drawEverything() {
   drawTracks();
 
-  decals.draw(-camera.drawPosition.x,-camera.drawPosition.y); // tire tracks etc
+  decals.draw(-camera.drawPosition.x, -camera.drawPosition.y); // tire tracks etc
 
   p1.carDraw();
   //p2.carDraw();
 
   timer.draw();
+
+  if (paused) {
+    pauseUI.draw();
+  }
 }
