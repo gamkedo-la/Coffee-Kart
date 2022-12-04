@@ -8,6 +8,7 @@ var p1 = new carClass();
 var p2 = new carClass();
 var camera = new CameraClass();
 var timer = new CountdownTimer();
+var speedometer = new Speedometer();
 var pauseUI = new PauseUI();
 var paused = false;
 
@@ -44,6 +45,7 @@ function loadingDoneSoStartGame() {
 }
 function updateEverything() {
   timer.update();
+  speedometer.setSpeed(p1.carSpeed);
 }
 function moveEverything() {
   p1.carMove();
@@ -58,7 +60,7 @@ function drawEverything() {
 
   p1.carDraw();
   //p2.carDraw();
-
+  speedometer.draw();
   timer.draw();
 
   if (paused) {
