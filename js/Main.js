@@ -27,7 +27,7 @@ function loadingDoneSoStartGame() {
   }, 1000 / framesPerSecond);
   timer.resume();
   p2.carInit(car2Pic, "Green Car", false);
-  p1.carInit(carPic, "Blue Car", true);
+  p1.carInit(carSportPic, "Blue Car", true);
   camera.InitCamera(
     SCREEN_WIDTH / 2,
     SCREEN_HEIGHT / 2,

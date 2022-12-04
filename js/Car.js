@@ -265,7 +265,14 @@ function carClass() {
     // high speed scenario
 
     
-    
+    if (timer.getTime <= 0) {
+      // out of time!
+      document.getElementById("debugText").innerHTML = "out of time!";
+      p1.carReset();
+      p2.carReset();
+      timer.setTime(TIME_DEFAULT);
+      return;
+    }
     
     // todo
     // wrap below into a collision function

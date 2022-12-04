@@ -24,6 +24,9 @@ class CountdownTimer{
     setTime(timeToSet){
         this.remainingTime = timeToSet;
     }
+    getTime() {
+        return this.remainingTime;
+    }
     pause(){
         this.paused = true;
     }
