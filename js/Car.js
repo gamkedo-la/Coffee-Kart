@@ -17,7 +17,7 @@ const collisionDecay = 0.97;
 
 function carClass() {
   // waypoints for ai.
-  this.waypoints = [waypointInit(175, 300, 0, 20), waypointInit(500, 150, 20, 20)];
+  this.waypoints = [waypointInit(175, 300, 0, 20), waypointInit(500, 150, 20, 20), waypointInit(700, 150, 20, 20), waypointInit(900, 150, 20, 20), waypointInit(1100, 150, 20, 20)];
   this.waypointCounter = 0;
   // todo : visualize these
 
@@ -108,17 +108,17 @@ function carClass() {
     var currentWaypoint = this.waypoints[this.waypointCounter];    
     var headingToWaypoint = Vec2Normalize(Vec2Sub(currentWaypoint.position, this.position)); 
     var distanceToWaypoint = Vec2Distance(this.position, currentWaypoint.position);
-    const waypointEpsilon = 5.0;
-    const headingEpsilon = 2.0;
-    if (distanceToWaypoint < waypointEpsilon) {
+    const waypointEpsilon = 20.0;
+    const headingEpsilon = 1.0;
+    if (distanceToWaypoint < waypointEpsilon && this.waypointCounter < (this.waypoints.length - 1)) {
       // update our waypoint to the next
       this.waypointCounter++;
       currentWaypoint = this.waypoints[this.waypointCounter];    
       headingToWaypoint = Vec2Normalize((Vec2Sub(currentWaypoint.position, this.position)));           
     }    
     var headingDifference = Vec2Angle(headingToWaypoint) - Vec2Angle(this.carHeading);
-    console.log("ai heading is off by " + headingDifference);
-    //console.log("heading to waypoint is " + headingToWaypoint.x + headingToWaypoint.y);
+    
+    console.log("ai heading to waypoint " + this.waypointCounter);
     if (Math.abs(headingDifference) > headingEpsilon) {
       if (headingDifference > 0) {
         // to the right?
