@@ -1,3 +1,6 @@
+// todo:
+// refactor to include camera.drawPosition in these calls
+
 function colorRect(topLeftX, topLeftY, boxWidth, boxHeight, fillColor) {
   canvasContext.save();
   canvasContext.fillStyle = fillColor;
@@ -11,6 +14,16 @@ function colorCircle(centerX, centerY, radius, fillColor) {
   canvasContext.beginPath();
   canvasContext.arc(centerX, centerY, radius, 0, Math.PI*2, true);
   canvasContext.fill();
+  canvasContext.restore();
+}
+
+function colorLine(startX, startY, endX, endY, fillColor) {
+  canvasContext.save();
+  canvasContext.fillStyle = fillColor;
+  canvasContext.beginPath();
+  canvasContext.moveTo(startX, startY);
+  canvasContext.lineTo(endX, endY);
+  canvasContext.stroke();
   canvasContext.restore();
 }
   

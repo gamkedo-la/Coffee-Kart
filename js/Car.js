@@ -1,5 +1,20 @@
 const DEBUG_DRAW = true;
 
+const turnSpeed = 360.0;
+const wheelDeadSpot = 15;
+const wheelDecayRate = 0.5;
+const wheelAngleMin = -30;
+const wheelAngleMax = 30;
+const fixedDt = 30.0/1000.0;    
+const roadFriction = 2.8;
+const engineDecayRate = 6000;
+const dragCoefficient = 0.04;
+const drivePower = 4000;
+const reversePower = 7000;
+const drivePowerMax = 7000;
+const drivePowerMaxReverse = -3000;
+const collisionDecay = 0.97;
+
 function carClass() {
   // waypoints for ai.
   this.waypoints = [waypointInit(175, 300, 0, 20), waypointInit(500, 150, 20, 20)];
@@ -83,45 +98,170 @@ function carClass() {
   }
 
   this.carMoveAi = function() {
-    const turnSpeed = 360.0;
-    const wheelDeadSpot = 15;
-    const wheelDecayRate = 0.5;
-    const wheelAngleMin = -30;
-    const wheelAngleMax = 30;
-    const fixedDt = 30.0/1000.0;    
-    const roadFriction = 12.8;
-    const engineDecayRate = 6000;
-    const dragCoefficient = 0.04;
-    const drivePower = 4000;
-    const reversePower = 7000;
-    const drivePowerMax = 7000;
-    const drivePowerMaxReverse = -3000;
-    const collisionDecay = 0.97;
-
-
+    
     // todo: 
     // get heading to next waypoint
     // update angle of current heading by rotation
     // apply acceleration in that direction
     // when within a certain distance of the waypoint, update to a new waypoint
 
+    var currentWaypoint = this.waypoints[this.waypointCounter];    
+    var headingToWaypoint = Vec2Normalize(Vec2Sub(this.position, currentWaypoint.position)); 
+    var distanceToWaypoint = Vec2Distance(this.position, currentWaypoint.position);
+    const waypointEpsilon = 5.0;
+    const headingEpsilon = 3.0;
+    if (distanceToWaypoint < waypointEpsilon) {
+      // update our waypoint to the next
+      this.waypointCounter++;
+      currentWaypoint = this.waypoints[this.waypointCounter];    
+      headingToWaypoint = (Vec2Sub(this.position, currentWaypoint.position));           
+    }    
+    var headingDifference = Vec2Angle(headingToWaypoint) - Vec2Angle(this.carHeading);
+    //console.log("ai heading is off by " + headingDifference);
+    //console.log("heading to waypoint is " + headingToWaypoint.x + headingToWaypoint.y);
+    if (Math.abs(headingDifference) > headingEpsilon) {
+      if (headingDifference < 0) {
+        // to the right?
+        if (this.wheelAng < wheelAngleMax) {
+          this.wheelAng += turnSpeed * fixedDt;
+          this.drawTireTracks = true;
+        }
+      } else {
+        // to the left?
+        if (this.wheelAng > wheelAngleMin) {
+          this.wheelAng -= turnSpeed * fixedDt;
+          this.drawTireTracks = true;
+        }
+      }
+    }
+
+    const brakingConst = -30000.0;
+    var brakingForce = Vec2Init(0, 0);
+
+    this.handBrake = false;
+    var hitTheGas = true;
+    var hitReverse = false;
+    if (hitTheGas) {
+      if (this.reversing) {
+        this.reversing = false;
+      }
+      if (!this.handBrake) {
+        this.engineForce += (drivePower * fixedDt);
+      }
+    } else if (hitReverse) {
+
+    }
+
+    if (this.engineForce > drivePowerMax) {
+      this.engineForce = drivePowerMax;
+      this.drawTireTracks = true;
+    }
+    if (this.engineForce < (drivePowerMaxReverse)) {
+      this.engineForce = drivePowerMaxReverse;
+      this.drawTireTracks = true;
+    }
+
+    var tractionForce = Vec2Scale(this.carHeading, this.engineForce);
+    if (this.handBrake) {
+      tractionForce = Vec2Scale(Vec2Normalize(this.carVelocity), this.engineForce);
+    }
+    
+    var rollingResistanceForce = Vec2Scale(this.carVelocity, -1.0*roadFriction);
+    
+    var dragForce = Vec2Scale(this.carVelocity, -1.0 * Vec2Mag(this.carVelocity) * dragCoefficient);
+    
+    var longForce = Vec2Add(Vec2Add(Vec2Add(tractionForce, rollingResistanceForce), dragForce), brakingForce);
+
+
+    var accel = Vec2Scale(longForce , 1.0 / this.carMass);
+    this.carVelocity = Vec2Add(this.carVelocity, Vec2Scale(accel, fixedDt));
+    
+    if (Vec2Mag(this.carVelocity) < 1) {
+      Vec2Update(this.carVelocity, 0, 0);
+    }
+    var nextPos = Vec2Add(this.position, Vec2Scale(this.carVelocity, fixedDt));
+
+
+    var carSpeed = Vec2Mag(this.carVelocity);
+    console.log("ai speed is " + carSpeed);
+    this.carSpeed = carSpeed;
+    
+    // turning stuff
+    // low speed assumption?
+    var angularVelocityRad;
+    if (sinDeg(this.wheelAng) == 0) {
+      angularVelocityRad = 0;
+    } else {
+      var circleRadius = this.wheelBase / sinDeg(this.wheelAng);
+      angularVelocityRad = (carSpeed * fixedDt) / circleRadius;
+    }
+    
+    var angularVelocityDeg = radToDeg(angularVelocityRad);
+    
+    
+    this.carAng += (angularVelocityDeg * fixedDt);
+
+    
+    
+    
+    Vec2Update(this.carHeading, cosDeg(this.carAng), sinDeg(this.carAng));    
+
+    // high speed scenario
+
+    
+    
+    
+    // todo
+    // wrap below into a collision function
+    
+    var drivingIntoTileType = getTrackAtPixelCoord(nextPos.x,nextPos.y);
+    
+    if( drivingIntoTileType == TRACK_ROAD ) {
+      this.position = nextPos;
+    } else if( drivingIntoTileType == TRACK_GOAL ) {
+      document.getElementById("debugText").innerHTML = this.myName + " won the race";
+      p1.carReset();
+      p2.carReset();
+      timer.setTime(TIME_DEFAULT);
+    } else {
+    
+      var actualHeading = Vec2Init(0, 0);
+      if (Vec2Mag(this.carVelocity) > 1) {
+        actualHeading = Vec2Normalize(this.carVelocity);
+      }
+      var headingHorizontal = Vec2Init(actualHeading.x, 0);
+      var headingVertical = Vec2Init(0, actualHeading.y);
+      var nextPosHorizontal = Vec2Add(this.position, Vec2Scale(headingHorizontal, fixedDt * this.carSpeed));
+      var nextPosVertical = Vec2Add(this.position, Vec2Scale(headingVertical, fixedDt * this.carSpeed));
+      var trackHorizontal = getTrackAtPixelCoord(nextPosHorizontal.x, nextPosHorizontal.y);
+      var trackVertical = getTrackAtPixelCoord(nextPosVertical.x, nextPosVertical.y);
+    
+      if (trackHorizontal == TRACK_ROAD) {
+    
+        this.position = Vec2Add(this.position, Vec2Scale(headingHorizontal, fixedDt * this.carSpeed));
+        this.carVelocity = Vec2Scale(this.carVelocity, collisionDecay);
+        this.engineForce *= collisionDecay;
+      } else if (trackVertical == TRACK_ROAD) {
+    
+        this.position = Vec2Add(this.position, Vec2Scale(headingVertical, fixedDt * this.carSpeed));
+        this.carVelocity = Vec2Scale(this.carVelocity, collisionDecay);
+        this.engineForce *= collisionDecay;
+      } else if (trackVertical != TRACK_ROAD && trackHorizontal != TRACK_ROAD) {
+    
+    
+        this.position = Vec2Add(this.position, Vec2Scale(actualHeading, -0.1*this.carSpeed*fixedDt));
+        this.carVelocity = Vec2Scale(this.carVelocity, -0.5);
+        this.engineForce = 0;
+      }
+
+      
+    }
+
+
   }
   
   this.carMovePlayer = function() {
-    const turnSpeed = 360.0;
-    const wheelDeadSpot = 15;
-    const wheelDecayRate = 0.5;
-    const wheelAngleMin = -30;
-    const wheelAngleMax = 30;
-    const fixedDt = 30.0/1000.0;    
-    const roadFriction = 2.8;
-    const engineDecayRate = 6000;
-    const dragCoefficient = 0.04;
-    const drivePower = 4000;
-    const reversePower = 7000;
-    const drivePowerMax = 7000;
-    const drivePowerMaxReverse = -3000;
-    const collisionDecay = 0.97;
+    
 
     this.drawTireTracks = false;
 
@@ -328,7 +468,7 @@ function carClass() {
     if (DEBUG_DRAW) {
       for (let i = 0; i < this.waypoints.length; i++) {
         wayPoint = this.waypoints[i];
-        colorCircle(wayPoint.x - camera.drawPosition.x, wayPoint.y - camera.drawPosition.y, 40, "blue");
+        colorCircle(wayPoint.position.x - camera.drawPosition.x, wayPoint.position.y - camera.drawPosition.y, 40, "blue");
       }
     }
     drawBitmapCenteredAtLocationWithRotation( this.myBitmap, this.position.x - camera.drawPosition.x, this.position.y - camera.drawPosition.y, degToRad(this.carAng + 90) );        

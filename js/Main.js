@@ -49,7 +49,7 @@ function updateEverything() {
 }
 function moveEverything() {
   p1.carMove();
-  //p2.carMove();
+  p2.carMove();
   camera.UpdateCamera(p1.position);
 }
 
@@ -59,7 +59,7 @@ function drawEverything() {
   decals.draw(-camera.drawPosition.x, -camera.drawPosition.y); // tire tracks etc
 
   p1.carDraw();
-  //p2.carDraw();
+  p2.carDraw();
   speedometer.draw();
   timer.draw();
 
