@@ -15,9 +15,11 @@ const drivePowerMax = 7000;
 const drivePowerMaxReverse = -3000;
 const collisionDecay = 0.97;
 
+const waypointEps = 20.0;
+
 function carClass() {
   // waypoints for ai.
-  this.waypoints = [waypointInit(175, 300, 0, 20), waypointInit(500, 150, 20, 20), waypointInit(700, 150, 20, 20), waypointInit(900, 150, 20, 20), waypointInit(1100, 150, 20, 20)];
+  this.waypoints = [waypointInit(175, 300, 0, 20, waypointEps), waypointInit(500, 150, 20, 20, waypointEps), waypointInit(700, 150, 20, 20, waypointEps), waypointInit(900, 150, 20, 20, waypointEps), waypointInit(1100, 150, 20, 20, 10)];
   this.waypointCounter = 0;
   // todo : visualize these
 
@@ -106,10 +108,10 @@ function carClass() {
     // when within a certain distance of the waypoint, update to a new waypoint
 
     var currentWaypoint = this.waypoints[this.waypointCounter];    
-    var headingToWaypoint = Vec2Normalize(Vec2Sub(currentWaypoint.position, this.position)); 
+    var headingToWaypoint = (Vec2Sub(currentWaypoint.position, this.position)); 
     var distanceToWaypoint = Vec2Distance(this.position, currentWaypoint.position);
-    const waypointEpsilon = 20.0;
-    const headingEpsilon = 1.0;
+    waypointEpsilon = currentWaypoint.radius;
+    const headingEpsilon = 0.5;
     if (distanceToWaypoint < waypointEpsilon && this.waypointCounter < (this.waypoints.length - 1)) {
       // update our waypoint to the next
       this.waypointCounter++;
@@ -139,7 +141,10 @@ function carClass() {
     var brakingForce = Vec2Init(0, 0);
 
     this.handBrake = false;
-    var hitTheGas = true;
+    var hitTheGas = false;
+    if (distanceToWaypoint > 100) {
+      hitTheGas = true;
+    }
     var hitReverse = false;
     if (hitTheGas) {
       if (this.reversing) {
@@ -467,8 +472,8 @@ function carClass() {
     
     if (DEBUG_DRAW) {
       for (let i = 0; i < this.waypoints.length; i++) {
-        wayPoint = this.waypoints[i];
-        colorCircle(wayPoint.position.x - camera.drawPosition.x, wayPoint.position.y - camera.drawPosition.y, 40, "blue");
+        waypoint = this.waypoints[i];
+        colorCircle(waypoint.position.x - camera.drawPosition.x, waypoint.position.y - camera.drawPosition.y, waypoint.radius, "blue");
       }
     }
     drawBitmapCenteredAtLocationWithRotation( this.myBitmap, this.position.x - camera.drawPosition.x, this.position.y - camera.drawPosition.y, degToRad(this.carAng + 90) );        
