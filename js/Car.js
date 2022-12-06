@@ -106,21 +106,21 @@ function carClass() {
     // when within a certain distance of the waypoint, update to a new waypoint
 
     var currentWaypoint = this.waypoints[this.waypointCounter];    
-    var headingToWaypoint = Vec2Normalize(Vec2Sub(this.position, currentWaypoint.position)); 
+    var headingToWaypoint = Vec2Normalize(Vec2Sub(currentWaypoint.position, this.position)); 
     var distanceToWaypoint = Vec2Distance(this.position, currentWaypoint.position);
     const waypointEpsilon = 5.0;
-    const headingEpsilon = 3.0;
+    const headingEpsilon = 2.0;
     if (distanceToWaypoint < waypointEpsilon) {
       // update our waypoint to the next
       this.waypointCounter++;
       currentWaypoint = this.waypoints[this.waypointCounter];    
-      headingToWaypoint = (Vec2Sub(this.position, currentWaypoint.position));           
+      headingToWaypoint = Vec2Normalize((Vec2Sub(currentWaypoint.position, this.position)));           
     }    
     var headingDifference = Vec2Angle(headingToWaypoint) - Vec2Angle(this.carHeading);
-    //console.log("ai heading is off by " + headingDifference);
+    console.log("ai heading is off by " + headingDifference);
     //console.log("heading to waypoint is " + headingToWaypoint.x + headingToWaypoint.y);
     if (Math.abs(headingDifference) > headingEpsilon) {
-      if (headingDifference < 0) {
+      if (headingDifference > 0) {
         // to the right?
         if (this.wheelAng < wheelAngleMax) {
           this.wheelAng += turnSpeed * fixedDt;
@@ -183,7 +183,7 @@ function carClass() {
 
 
     var carSpeed = Vec2Mag(this.carVelocity);
-    console.log("ai speed is " + carSpeed);
+    //console.log("ai speed is " + carSpeed);
     this.carSpeed = carSpeed;
     
     // turning stuff
