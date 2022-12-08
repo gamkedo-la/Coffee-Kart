@@ -18,7 +18,8 @@ const collisionDecay = 0.97;
 const waypointEps = 20.0;
 
 function carClass() {
-  // waypoints for ai.
+    
+    // waypoints for ai.
   this.waypoints = [waypointInit(175, 300, 0, 20, waypointEps), waypointInit(500, 150, 20, 20, waypointEps), waypointInit(700, 150, 20, 20, waypointEps), waypointInit(900, 150, 20, 20, waypointEps), waypointInit(1100, 150, 20, 20, 10)];
   this.waypointCounter = 0;
   // todo : visualize these
@@ -92,11 +93,16 @@ function carClass() {
   } // end of carReset
 
   this.carMove = function() {
+
     if (this.isPlayer) {
       this.carMovePlayer();
     } else {
       this.carMoveAi();
     }
+
+    if (this.engineSound) this.engineSound.playbackRate = 0.25 + 4* (this.carSpeed/500);
+
+
   }
 
   this.carMoveAi = function() {
@@ -265,6 +271,19 @@ function carClass() {
 
   }
   
+  this.startEngineSound = function() {
+    
+    // note: the user MUST have already clicked mouse or keyboard
+    // or the browser will NOT let the sound play! won't work on frame 1
+
+    this.engineSound = new Audio('sounds/engine_loop.ogg');
+    this.engineSound.loop = true;
+    this.engineSound.volume = 0.1;
+    this.engineSound.playbackRate = 2;
+    this.engineSound.preservesPitch = false;
+    this.engineSound.play();
+  }
+
   this.carMovePlayer = function() {
     
 
@@ -302,7 +321,10 @@ function carClass() {
     }
 
     if(this.keyHeld_Gas) {
-      // make this * fixedDt ?
+      
+      if (!this.engineSound) this.startEngineSound();
+      
+        // make this * fixedDt ?
       if (this.reversing) {
         this.reversing = false;
       }
