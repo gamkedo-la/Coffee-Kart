@@ -4,6 +4,7 @@ const SCREEN_WIDTH = 1280;
 const SCREEN_HEIGHT = 720;
 const framesPerSecond = 30;
 
+var courseIndex = 0;
 var p1 = new carClass();
 var p2 = new carClass();
 var camera = new CameraClass();

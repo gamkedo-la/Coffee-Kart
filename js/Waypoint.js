@@ -4,6 +4,17 @@ function waypointInit(xPos, yPos, angleVal, widthVal, radiusVal) {
     return result;
 }
 
+function waypointInitWithConfig(config) {
+    var result = {
+        position: Vec2Init(config.xPos, config.yPos),
+        angle: config.angleVal,
+        width: config.widthVal,
+        radius: config.radiusVal
+    };
+
+    return result;
+}
+
 function drawWaypoint(waypoint) {
 
 }

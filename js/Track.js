@@ -4,7 +4,9 @@ const TRACK_W = 80;
 const TRACK_H = 80;
 const TRACK_COLS = 20;
 const TRACK_ROWS = 15;
-var trackGrid =
+const TRACKS = [
+  {
+    grid:
     [ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
       1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1,
       1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
@@ -19,7 +21,33 @@ var trackGrid =
       1, 1, 1, 1, 0, 0, 1, 1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1,
       0, 3, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 1,
       0, 3, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1,
-      1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1];
+      1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+    waypoints:
+    [
+      {xPos: 175, yPos: 300, angleVal: 0, widthVal: 20, radiusVal: 20,},
+      {xPos: 500, yPos: 150, angleVal: 20, widthVal: 20, radiusVal: 20},
+      {xPos: 700, yPos: 150, angleVal: 20, widthVal: 20, radiusVal: 20},
+      {xPos: 900, yPos: 150, angleVal: 20, widthVal: 20, radiusVal: 20},
+      {xPos: 1100, yPos: 150, angleVal: 20, widthVal: 20, radiusVal: 10}
+    ]
+  }
+];
+// var trackGrid =
+//     [ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+//       1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1,
+//       1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+//       1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1,
+//       1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1,
+//       1, 0, 0, 1, 1, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 0, 0, 1,
+//       1, 0, 0, 1, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 1, 0, 0, 1,
+//       1, 0, 0, 1, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 1, 0, 0, 1,
+//       1, 2, 2, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1,
+//       1, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1,
+//       1, 1, 1, 1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1,
+//       1, 1, 1, 1, 0, 0, 1, 1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1,
+//       0, 3, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 1,
+//       0, 3, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1,
+//       1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1];
 const TRACK_ROAD = 0;
 const TRACK_WALL = 1;
 const TRACK_PLAYER = 2;
@@ -46,7 +74,7 @@ function getTrackAtPixelCoord(pixelX,pixelY) {
   }
   
   var trackIndex = trackTileToIndex(tileCol, tileRow);
-  return trackGrid[trackIndex];
+  return TRACKS[courseIndex].grid[trackIndex];
 }
 
 function drawTracks() {
@@ -60,7 +88,7 @@ function drawTracks() {
     
     for(var eachCol=0; eachCol<TRACK_COLS; eachCol++) { // left to right in each row
 
-      var trackTypeHere = trackGrid[ trackIndex ]; // getting the track code for this tile        
+      var trackTypeHere = TRACKS[courseIndex].grid[ trackIndex ]; // getting the track code for this tile        
       canvasContext.drawImage(trackSheet,
         trackTypeHere * TILE_SIZE, 0, // top-left corner of tile art, multiple of tile width
         TILE_SIZE, TILE_SIZE, // get full tile size from source

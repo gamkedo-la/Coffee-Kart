@@ -20,7 +20,10 @@ const waypointEps = 20.0;
 function carClass() {
     
     // waypoints for ai.
-  this.waypoints = [waypointInit(175, 300, 0, 20, waypointEps), waypointInit(500, 150, 20, 20, waypointEps), waypointInit(700, 150, 20, 20, waypointEps), waypointInit(900, 150, 20, 20, waypointEps), waypointInit(1100, 150, 20, 20, 10)];
+  this.waypoints = [];
+  for (const config of TRACKS[courseIndex].waypoints) {
+    this.waypoints.push(waypointInitWithConfig(config));
+  }
   this.waypointCounter = 0;
   // todo : visualize these
 
@@ -64,13 +67,13 @@ function carClass() {
     this.carAng = -90; // currently in radians. why -ve? because 'up' is negative
     this.wheelAng = 0;
     if(this.homeX == undefined) {
-      for(var i=0; i<trackGrid.length; i++) {
-        if( trackGrid[i] == TRACK_PLAYER) {
+      for(var i=0; i<TRACKS[courseIndex].grid.length; i++) {
+        if( TRACKS[courseIndex].grid[i] == TRACK_PLAYER) {
           var tileRow = Math.floor(i/TRACK_COLS);
           var tileCol = i%TRACK_COLS;
           this.homeX = tileCol * TRACK_W + 0.5*TRACK_W;
           this.homeY = tileRow * TRACK_H + 0.5*TRACK_H;
-          trackGrid[i] = TRACK_ROAD;
+          TRACKS[courseIndex].grid[i] = TRACK_ROAD;
           break; // found it, so no need to keep searching 
         } // end of if
       } // end of for
