@@ -15,6 +15,8 @@ var decal_tire = document.createElement("img");
 var decal_cone = document.createElement("img");
 var decal_skidmarks = document.createElement("img");
 var decal_stripes = document.createElement("img");
+var decal_coffee_cup = document.createElement("img");
+var decal_coffee_takeaway = document.createElement("img");
 
 var picsToLoad = 0;
 
@@ -48,6 +50,8 @@ function loadImages() {
     {varName:decal_cone, theFile:"decal_cone.png"},
     {varName:decal_skidmarks, theFile:"decal_skidmarks.png"},
     {varName:decal_stripes, theFile:"decal_stripes.png"},
+    {varName:decal_coffee_cup, theFile:"coffee_cup--1.png"},
+    {varName:decal_coffee_takeaway, theFile:"coffee_cup--2.png"},
     
   ];
 
