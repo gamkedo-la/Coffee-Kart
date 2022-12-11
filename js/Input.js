@@ -9,6 +9,7 @@ const KEY_LETTER_S = 83;
 const KEY_LETTER_D = 68;
 const KEY_LETTER_SPACE = 32;
 const KEY_LETTER_P = 80;
+const KEY_LETTER_E = 69;
 
 function initInput() {
   document.addEventListener("keydown", keyPressed);
@@ -33,6 +34,9 @@ function setKeyHoldState(thisKey, thisCar, setTo) {
   }
   if(thisKey == thisCar.controlKeyForHandbrake) {
     thisCar.keyHeld_Handbrake = setTo;
+  }
+  if(thisKey == controlKeyForEditor) {
+    keyHeld_Editor = setTo;
   }
 }
 

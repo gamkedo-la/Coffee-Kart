@@ -135,7 +135,9 @@ if (DECAL_EDITOR_MODE) {
     var decalNumber = 0;
     
     function rememberThisClick(e) {
-        
+        if (trackEditorOn) {
+          return;
+        }
         let x = Math.round(camera.drawPosition.x) + Math.round(e.clientX);
         let y = Math.round(camera.drawPosition.y) + Math.round(e.clientY);
         decalClickBuffer += x+","+y+","; 
