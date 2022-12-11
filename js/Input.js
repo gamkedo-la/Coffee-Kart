@@ -34,7 +34,6 @@ function setKeyHoldState(thisKey, thisCar, setTo) {
   if(thisKey == thisCar.controlKeyForHandbrake) {
     thisCar.keyHeld_Handbrake = setTo;
   }
-  
 }
 
 function keyPressed(evt) {
