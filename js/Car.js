@@ -1,5 +1,6 @@
 const DEBUG_DRAW = true;
-const AI_DEBUG_MODE = false; // console.log spam
+const AI_DEBUG_MODE = true; // console.log spam
+const AI_WAYPOINT_TRIGGER_DISTANCE = 350; // how close we need to get to each waypoint
 
 const turnSpeed = 360.0;
 const wheelDeadSpot = 15;
@@ -122,15 +123,21 @@ function carClass() {
     var distanceToWaypoint = Vec2Distance(this.position, currentWaypoint.position);
     waypointEpsilon = currentWaypoint.radius;
     const headingEpsilon = 0.5;
+
     if (distanceToWaypoint < waypointEpsilon && this.waypointCounter < (this.waypoints.length - 1)) {
+      
+      if (AI_DEBUG_MODE) console.log("AI REACHED ("+Math.round(distanceToWaypoint)+" away) waypoint "+this.waypointCounter+" of " +this.waypoints.length);
+
       // update our waypoint to the next
       this.waypointCounter++;
       currentWaypoint = this.waypoints[this.waypointCounter];    
       headingToWaypoint = Vec2Normalize((Vec2Sub(currentWaypoint.position, this.position)));           
     }    
+
     var headingDifference = Vec2Angle(headingToWaypoint) - Vec2Angle(this.carHeading);
     
-    if (AI_DEBUG_MODE) console.log("ai heading to waypoint " + this.waypointCounter);
+    if (AI_DEBUG_MODE) console.log("ai heading to waypoint " + this.waypointCounter+" of " +this.waypoints.length + " (dist:"+Math.round(distanceToWaypoint)+" headingDifference:"+Math.round(headingDifference)+")");
+    
     if (Math.abs(headingDifference) > headingEpsilon) {
       if (headingDifference > 0) {
         // to the right?
@@ -152,8 +159,11 @@ function carClass() {
 
     this.handBrake = false;
     var hitTheGas = false;
-    if (distanceToWaypoint > 100) {
-      hitTheGas = true;
+    if (distanceToWaypoint > AI_WAYPOINT_TRIGGER_DISTANCE) {
+        //if (AI_DEBUG_MODE) console.log("we are "+Math.round(distanceToWaypoint)+" away from wp "+this.waypointCounter+" of " +this.waypoints.length);
+        hitTheGas = true;
+    } else {
+        // we are near to the next waypoint - maybe slow down?
     }
     var hitReverse = false;
     if (hitTheGas) {
@@ -167,7 +177,7 @@ function carClass() {
 
     }
 
-    if (this.engineForce > drivePowerMax) {
+    if (hitTheGas && this.engineForce > drivePowerMax) {
       this.engineForce = drivePowerMax;
       this.drawTireTracks = true;
     }
