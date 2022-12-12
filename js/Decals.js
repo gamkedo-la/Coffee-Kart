@@ -131,7 +131,8 @@ if (DECAL_EDITOR_MODE) {
         decal_stripes,
         decal_stripes_vertical,
         decal_coffee_cup,
-        decal_coffee_takeaway
+        decal_coffee_takeaway,
+        decal_lights,
     ];
     
     var decalClickBuffer = ""; //"var decals = [";
