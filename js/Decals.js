@@ -127,9 +127,12 @@ if (DECAL_EDITOR_MODE) {
         decal_tire,
         decal_cone,
         decal_skidmarks,
+        decal_skidmarks_left,
         decal_stripes,
+        decal_stripes_vertical,
         decal_coffee_cup,
-        decal_coffee_takeaway];
+        decal_coffee_takeaway
+    ];
     
     var decalClickBuffer = ""; //"var decals = [";
     var decalNumber = 0;
