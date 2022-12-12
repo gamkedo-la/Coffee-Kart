@@ -134,7 +134,12 @@ function carClass() {
       headingToWaypoint = Vec2Normalize((Vec2Sub(currentWaypoint.position, this.position)));           
     }    
 
+    // I think this is where the bug was, not taking the "short way around"
     var headingDifference = Vec2Angle(headingToWaypoint) - Vec2Angle(this.carHeading);
+
+    // let's try normalizing the range to +/- 180 degrees - woo hoo I THINK this fixes it!
+    if (headingDifference > 180)        { headingDifference -= 2 * 180; }
+    else if (headingDifference <= -180) { headingDifference += 2 * 180; }
     
     if (AI_DEBUG_MODE) console.log("ai heading to waypoint " + this.waypointCounter+" of " +this.waypoints.length + " (dist:"+Math.round(distanceToWaypoint)+" headingDifference:"+Math.round(headingDifference)+")");
     
@@ -165,7 +170,12 @@ function carClass() {
     } else {
         // we are near to the next waypoint - maybe slow down?
     }
+    
+    // let off the gas if we are turning really sharply? (trying to avoid looping around waypoints)
+    if (Math.abs(headingDifference) > 60) hitTheGas = false;
+
     var hitReverse = false;
+    
     if (hitTheGas) {
       if (this.reversing) {
         this.reversing = false;
