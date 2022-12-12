@@ -1,4 +1,5 @@
 const DEBUG_DRAW = true;
+const AI_DEBUG_MODE = false; // console.log spam
 
 const turnSpeed = 360.0;
 const wheelDeadSpot = 15;
@@ -129,7 +130,7 @@ function carClass() {
     }    
     var headingDifference = Vec2Angle(headingToWaypoint) - Vec2Angle(this.carHeading);
     
-    console.log("ai heading to waypoint " + this.waypointCounter);
+    if (AI_DEBUG_MODE) console.log("ai heading to waypoint " + this.waypointCounter);
     if (Math.abs(headingDifference) > headingEpsilon) {
       if (headingDifference > 0) {
         // to the right?

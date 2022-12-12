@@ -131,32 +131,58 @@ if (DECAL_EDITOR_MODE) {
         decal_coffee_cup,
         decal_coffee_takeaway];
     
-    var decalClickBuffer = "var decals = [";
+    var decalClickBuffer = ""; //"var decals = [";
     var decalNumber = 0;
     
     function rememberThisClick(e) {
         if (trackEditorOn) {
+          // FIXME this is wrong, we need the track editor to accept decal clicks
           return;
         }
+
         let x = Math.round(camera.drawPosition.x) + Math.round(e.clientX);
         let y = Math.round(camera.drawPosition.y) + Math.round(e.clientY);
         decalClickBuffer += x+","+y+","; 
-        console.log(decalClickBuffer.substring(0,decalClickBuffer.length-1)+"];"); // remove trailing comma
+        
+        let imagename = decalpics[decalNumber].src.split("/").pop().split(".")[0]; // remove url
+        console.log('"'+imagename+'":['+decalClickBuffer.substring(0,decalClickBuffer.length-1)+"],"); // remove trailing comma
 
         // add it visually right now!
         let alpha = 1;
         
         let pic = decalpics[decalNumber];
-        let rot = degToRad(Math.random()*360);
+        //let rot = degToRad(Math.random()*360);
+        let rot = 0;
         decals.add(x,y,rot,alpha,pic);
-
-        // TEST TEMP MODE: cycle through them all sequentially lol
-        decalNumber++;
-        if (decalNumber >= decalpics.length) decalNumber = 0;
-        console.log("Next DECAL number:" + decalNumber + " is " + decalpics[decalNumber].src);
-        
 
     }
  
+    // mouse click places a decal
     document.addEventListener("click",rememberThisClick);
+
+    // scroll wheel advances decal number
+    document.addEventListener("wheel",
+        function(e) {
+            if (e.deltaY>0) decalNumber++; else decalNumber--;
+            if (decalNumber < 0) decalNumber = decalpics.length-1;
+            if (decalNumber >= decalpics.length) decalNumber = 0;
+            console.log("Next DECAL number:" + decalNumber + " is " + decalpics[decalNumber].src);
+        }
+    );
+
+}
+
+// spawns multiple decals using an array of x,y coords captured above
+function spawn_decals(img,xy) {
+    
+    if (!img) return;
+    if (!img.src) return;
+    if (!xy) return;
+    if (xy.length<2) return;
+
+    console.log("spawning "+(xy.length/2)+" decals of "+img.src);
+    
+    for (let n=0; n<xy.length; n+=2) {
+        decals.add(xy[n],xy[n+1],0,1,img);
+    }
 }
