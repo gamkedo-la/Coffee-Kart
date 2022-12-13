@@ -46,6 +46,7 @@ function loadingDoneSoStartGame() {
 }
 function updateEverything() {
   updateEditor();
+  updateWaypointEditor();
   timer.update();
   speedometer.setSpeed(p1.carSpeed);
 }

@@ -1,5 +1,5 @@
 const DEBUG_DRAW = true;
-const AI_DEBUG_MODE = true; // console.log spam
+const AI_DEBUG_MODE = false; // console.log spam
 const AI_WAYPOINT_TRIGGER_DISTANCE = 350; // how close we need to get to each waypoint
 
 const turnSpeed = 360.0;
@@ -61,6 +61,14 @@ function carClass() {
     this.myName = whichName;
     this.isPlayer = isPlayerVal;
     this.carReset();
+  }
+
+  this.resetWaypoints = function() {
+    this.waypoints = [];
+    for (const config of TRACKS[courseIndex].waypoints) {
+      this.waypoints.push(waypointInitWithConfig(config));
+    }
+    this.waypointCounter = 0;
   }
   
   this.carReset = function() {
