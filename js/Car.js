@@ -56,11 +56,26 @@ function carClass() {
     this.controlKeyForHandbrake = spaceKey;
   }
 
-  this.carInit = function(whichGraphic,whichName, isPlayerVal) {
+  this.carInit = function(whichGraphic, isPlayerVal = false) {
     this.myBitmap = whichGraphic;
-    this.myName = whichName;
+    this.myName = this.nameFromGraphic();
     this.isPlayer = isPlayerVal;
     this.carReset();
+  }
+
+  this.nameFromGraphic = function() {
+    switch (this.myBitmap) {
+      case carPic:
+        return 'Blue Car';
+      case car2Pic:
+        return 'Green Car';
+      case car3Pic:
+        return 'Red Car';
+      case carSportPic:
+        return 'Red Sports Car';
+      default:
+        return 'Unknown Car';
+    }
   }
 
   this.resetWaypoints = function() {
