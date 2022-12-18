@@ -1,7 +1,7 @@
 class PauseUI {
   constructor() {
     this.text = "PAUSED";
-    this.font = "48px serif";
+    this.font = "48px PressStart2P";
   }
 
   update() {}
