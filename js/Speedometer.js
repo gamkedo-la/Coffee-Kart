@@ -5,9 +5,15 @@ class Speedometer {
         this.radius = 80;
 
         //Needle Options
-        this.needleLength = this.radius-5;
+        this.needleLength = this.radius-9;
         this.needleWidth = 5;
         this.needleColor = "red";
+
+        //speed ticks options
+        this.numberSmallTicks = 50;
+        this.smallTickLength = 20;
+        this.numberBigTicks = 11;
+        this.bigTickLength = 30;
 
         //Location (Currently Bottom Left)
         this.screenEdgePadding = 30;
@@ -42,11 +48,22 @@ class Speedometer {
         canvasContext.save(); // allows us to undo translate movement and rotate spin
         canvasContext.translate(this.xLocation,this.yLocation); // sets the point where our graphic will go
 
-        //start draw Background
-        //TODO: probably replace this with an image
+        //start draw Grey Background
         canvasContext.beginPath();
         canvasContext.arc(0, 0, this.radius, 0, 2 * Math.PI);
+        canvasContext.fillStyle = "grey";
         canvasContext.fill();
+
+        //draw white inner
+        canvasContext.beginPath();
+        canvasContext.arc(0, 0, this.radius-10, 0, 2 * Math.PI);
+        canvasContext.fillStyle = "white";
+        canvasContext.fill();
+
+        //draw the speed ticks
+        let rotationAmount = ((this.maxAngle - this.minAngle)/this.numberSmallTicks) * Math.PI/180;
+        this.drawSpeedTicks(this.numberSmallTicks,this.smallTickLength,rotationAmount);
+        this.drawSpeedTicks(this.numberBigTicks,this.bigTickLength,rotationAmount*5);
 
         //start draw needle
         canvasContext.rotate(rotation*Math.PI/180 - Math.PI); // sets the rotation (converting to radians)
@@ -55,5 +72,21 @@ class Speedometer {
 
         //restore canvas
         canvasContext.restore();
+    }
+    drawSpeedTicks(numberOfTicks,tickLength,rotationPerTick){
+        //draw small speed ticks lines
+        canvasContext.save();
+        canvasContext.rotate(this.minAngle * Math.PI/180 - Math.PI);
+        for (let i = 0; i < numberOfTicks; i++){
+            canvasContext.fillStyle = "black";
+            canvasContext.fillRect(0, 0, 2, this.needleLength);
+            canvasContext.rotate(rotationPerTick);
+        }
+        canvasContext.restore();
+        // draw white inner
+        canvasContext.beginPath();
+        canvasContext.arc(0, 0, this.radius-tickLength, 0, 2 * Math.PI);
+        canvasContext.fillStyle = "white";
+        canvasContext.fill();
     }
 }
