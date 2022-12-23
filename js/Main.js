@@ -69,4 +69,8 @@ function drawEverything() {
   if (paused) {
     pauseUI.draw();
   }
+
+  if (trackEditorOn) {
+    drawEditor();
+  }
 }
