@@ -7,5 +7,3 @@ fontFace.load().then((font) => {
   document.fonts.add(font);
   console.log("Font loaded");
 });
-
-canvasContext.font = "8px PressStart2P";
