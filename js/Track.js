@@ -67,9 +67,9 @@ const TRACKS = [
     },
 
     grid:
-    [ 6, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7,
-      6, 6, 7, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 7,
-      6, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 7,
+    [ 6, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4,
+      6, 6, 4, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 4,
+      6, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 4,
       5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5,
       5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5,
       5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5,
@@ -113,12 +113,11 @@ const TRACK_ROAD = 0;
 const TRACK_WALL = 1;
 const TRACK_PLAYER = 2;
 const TRACK_GOAL = 3;
-const TRACK_TREE = 4;
-
+//const TRACK_TREE = 4;
+const TRACK_SNOW_ICE = 4;
 const TRACK_SNOW_ROAD = 5;
 const TRACK_SNOW_WALL = 6;
-const TRACK_SNOW_ICE = 7;
-const TRACK_FLAG = 8;
+//const TRACK_FLAG = 8;
 
 function trackTileToIndex(tileCol, tileRow) {
   return (tileCol + TRACK_COLS*tileRow);
