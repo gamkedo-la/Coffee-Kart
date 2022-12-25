@@ -124,6 +124,19 @@ function trackTileToIndex(tileCol, tileRow) {
   return (tileCol + TRACK_COLS*tileRow);
 }
 
+function tileIsDriveable(tileType) {
+  if (tileType == TRACK_ROAD) {
+    return true;
+  }
+  if (tileType == TRACK_SNOW_ROAD) {
+    return true;
+  }
+  if (tileType == TRACK_SNOW_ICE) {
+    return true;
+  }
+  return false;
+}
+
 function getTrackAtPixelCoord(pixelX,pixelY) { 
   var tileCol = pixelX / TRACK_W;
   var tileRow = pixelY / TRACK_H;

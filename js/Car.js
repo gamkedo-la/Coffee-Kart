@@ -274,7 +274,7 @@ function carClass() {
     
     var drivingIntoTileType = getTrackAtPixelCoord(nextPos.x,nextPos.y);
     
-    if( drivingIntoTileType == TRACK_ROAD ) {
+    if( tileIsDriveable(drivingIntoTileType) ) {
       this.position = nextPos;
     } else if( drivingIntoTileType == TRACK_GOAL ) {
       document.getElementById("debugText").innerHTML = this.myName + " won the race";
@@ -493,7 +493,7 @@ function carClass() {
     
     var drivingIntoTileType = getTrackAtPixelCoord(nextPos.x,nextPos.y);
     
-    if( drivingIntoTileType == TRACK_ROAD ) {
+    if( tileIsDriveable(drivingIntoTileType) ) {
       this.position = nextPos;
     } else if( drivingIntoTileType == TRACK_GOAL ) {
       document.getElementById("debugText").innerHTML = this.myName + " won the race";

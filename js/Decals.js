@@ -132,6 +132,7 @@ if (DECAL_EDITOR_MODE) {
         decal_stripes_vertical,
         decal_coffee_cup,
         decal_coffee_takeaway,
+        decal_muffin,
         decal_lights,
     ];
     
