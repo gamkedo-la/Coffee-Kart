@@ -12,6 +12,7 @@ var timer = new CountdownTimer();
 var speedometer = new Speedometer();
 var pauseUI = new PauseUI();
 var paused = false;
+var canChangePauseState = true;
 
 window.onload = function () {
   canvas = document.getElementById("gameCanvas");
@@ -45,12 +46,17 @@ function loadingDoneSoStartGame() {
   initInput();
 }
 function updateEverything() {
+  if (paused) {
+    pauseUI.update();
+    return;
+  }
   updateEditor();
   updateWaypointEditor();
   timer.update();
   speedometer.setSpeed(p1.carSpeed);
 }
 function moveEverything() {
+  if (paused) return;
   p1.carMove();
   p2.carMove();
   camera.UpdateCamera(p1.position);
