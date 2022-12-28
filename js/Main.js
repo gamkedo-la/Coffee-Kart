@@ -8,6 +8,7 @@ var courseIndex = 1;
 var p1 = new carClass();
 var p2 = new carClass();
 var camera = new CameraClass();
+let editorCamera = new EditorCamera();
 var timer = new CountdownTimer();
 var speedometer = new Speedometer();
 var pauseUI = new PauseUI();
@@ -59,10 +60,20 @@ function moveEverything() {
   if (paused) return;
   p1.carMove();
   p2.carMove();
-  camera.UpdateCamera(p1.position);
+
+  if (trackEditorOn) {
+    editorCamera.moveEditorCamera();
+    camera.UpdateEditorCamera(editorCamera.position);
+  } else {
+    camera.UpdateCamera(p1.position);
+  }
 }
 
 function drawEverything() {
+  if (trackEditorOn) {
+    colorRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, 'black');
+  }
+
   drawTracks();
 
   decals.draw(-camera.drawPosition.x, -camera.drawPosition.y); // tire tracks etc
