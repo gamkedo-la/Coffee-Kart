@@ -117,6 +117,7 @@ const TRACK_GOAL = 3;
 const TRACK_SNOW_ICE = 4;
 const TRACK_SNOW_ROAD = 5;
 const TRACK_SNOW_WALL = 6;
+const TRACK_TILE_MAX = 7; // will have to update this as extra tiles are added
 //const TRACK_FLAG = 8;
 
 function trackTileToIndex(tileCol, tileRow) {

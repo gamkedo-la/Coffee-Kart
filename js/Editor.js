@@ -23,6 +23,8 @@ let controlKeyForEditor = KEY_LETTER_E;
 var keyHeld_Editor = false;
 let trackEditorOn = false;
 
+let trackTileCounter = 0;
+
 let exportButtonRect = new Rect(1100, 650, 100, 50);
 
 function updateEditor() {
@@ -57,7 +59,11 @@ function editorClick(e) {
   const trackPos = trackCol + TRACK_COLS * trackRow;
 
   // TODO: enable user to select tile type
-  TRACKS[courseIndex].grid[trackPos] = TRACK_ROAD;
+  TRACKS[courseIndex].grid[trackPos] = trackTileCounter;
+  trackTileCounter++;
+  if (trackTileCounter >= TRACK_TILE_MAX) {
+    trackTileCounter = 0;
+  }
 }
 
 document.addEventListener('click', editorClick);
