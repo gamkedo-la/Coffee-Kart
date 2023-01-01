@@ -70,6 +70,10 @@ class PauseUI {
     gradient.addColorStop(1, this.text_color_2);
     gradient.textBaseline = "top";
 
+    // pause text shadow
+    canvasContext.fillStyle = "#00000088";
+    canvasContext.fillText(this.text, pause_text_x + 16, pause_text_y + 15);
+
     canvasContext.fillStyle = gradient;
     canvasContext.shadowColor = "black";
     canvasContext.shadowBlur = 0;
