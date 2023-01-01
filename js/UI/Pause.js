@@ -4,7 +4,7 @@ class PauseUI {
     this.text_color_2 = "#F87F7F";
     this.text = "PAUSED";
     this.font = "48px PressStart2P";
-    this.menu_start_y = 280;
+    this.menu_start_y = 400;
     this.margin_y = 80;
     this.options = [
       { text: "Resume", onSelect: () => {} },
@@ -26,10 +26,20 @@ class PauseUI {
     canvasContext.fillRect(0, 0, canvas.width, canvas.height);
     canvasContext.globalAlpha = 1;
 
+    // background flag image
+    canvasContext.drawImage(background_flag, 0, 64);
+
     // pause text dimensions + position
     let text_width = canvasContext.measureText(this.text).width;
     let pause_text_x = canvas.width / 2 - text_width / 2;
-    let pause_text_y = 85;
+    let pause_text_y = 164;
+
+    // cursor flag
+    canvasContext.drawImage(
+      cursor_flag,
+      canvas.width / 2 - 300,
+      this.menu_start_y
+    );
 
     // pause text color
     var gradient = canvasContext.createLinearGradient(
