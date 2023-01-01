@@ -134,6 +134,7 @@ if (DECAL_EDITOR_MODE) {
         decal_coffee_takeaway,
         decal_muffin,
         decal_lights,
+        decal_french_press,
     ];
     
     var decalClickBuffer = ""; //"var decals = [";

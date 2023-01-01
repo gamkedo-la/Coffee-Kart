@@ -18,6 +18,7 @@ var decal_stripes = document.createElement("img");
 var decal_coffee_cup = document.createElement("img");
 var decal_coffee_takeaway = document.createElement("img");
 var decal_muffin = document.createElement("img");
+var decal_french_press = document.createElement("img");
 var decal_skidmarks_left = document.createElement("img");
 var decal_stripes_vertical = document.createElement("img");
 var decal_lights = document.createElement("img");
@@ -58,6 +59,7 @@ function loadImages() {
     { varName: decal_stripes, theFile: "decal_stripes.png" },
     { varName: decal_coffee_cup, theFile: "coffee_cup--1.png" },
     { varName: decal_coffee_takeaway, theFile: "coffee_cup--2.png" },
+    { varName: decal_french_press, theFile: "French-Press.png" },
     { varName: decal_muffin, theFile: "muffin.png" },
     { varName: decal_skidmarks_left, theFile: "decal_skidmarks_left.png" },
     { varName: decal_stripes_vertical, theFile: "decal_stripes_vertical.png" },

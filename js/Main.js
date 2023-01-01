@@ -58,13 +58,14 @@ function updateEverything() {
 }
 function moveEverything() {
   if (paused) return;
-  p1.carMove();
-  p2.carMove();
+  
 
   if (trackEditorOn) {
     editorCamera.moveEditorCamera();
     camera.UpdateEditorCamera(editorCamera.position);
   } else {
+    p1.carMove();
+    p2.carMove();
     camera.UpdateCamera(p1.position);
   }
 }
