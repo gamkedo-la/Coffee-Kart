@@ -3,7 +3,8 @@ class PauseUI {
     this.text_color_1 = "#FCEC5B";
     this.text_color_2 = "#F87F7F";
     this.text = "PAUSED";
-    this.font = "48px PressStart2P";
+    this.font_size = 48;
+    this.font = `${this.font_size}px PressStart2P`;
     this.menu_start_y = 400;
     this.margin_y = 80;
     this.options = [
@@ -18,7 +19,7 @@ class PauseUI {
   update() {}
 
   draw() {
-    canvasContext.font = this.font;
+    canvasContext.font = `96px PressStart2P`;
 
     // dark transparent overlay on the game
     canvasContext.globalAlpha = 0.5;
@@ -32,7 +33,7 @@ class PauseUI {
     // pause text dimensions + position
     let text_width = canvasContext.measureText(this.text).width;
     let pause_text_x = canvas.width / 2 - text_width / 2;
-    let pause_text_y = 164;
+    let pause_text_y = 116 + 96;
 
     // cursor flag
     canvasContext.drawImage(
@@ -61,6 +62,7 @@ class PauseUI {
     canvasContext.fillText(this.text, pause_text_x, pause_text_y);
 
     // pause menu options
+    canvasContext.font = this.font;
     this.options.forEach((option, i) => {
       canvasContext.fillStyle = this.text_color_1;
       let width = canvasContext.measureText(option.text).width;
