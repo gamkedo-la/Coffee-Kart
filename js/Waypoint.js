@@ -35,7 +35,7 @@ function updateWaypointEditor() {
     waypointEditorOn = true;
     canToggleWaypointEditor = false;
   }
-  if (keyHeld_WaypointEditor && canToggleWaypointEditor && waypointWaypointEditorOn) {
+  if (keyHeld_WaypointEditor && canToggleWaypointEditor && waypointEditorOn) {
     console.log('Exiting waypoint WaypointEditor');
     waypointEditorOn = false;
     canToggleWaypointEditor = false;
