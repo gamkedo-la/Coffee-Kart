@@ -43,19 +43,29 @@ function updateEditor() {
   }
 }
 
+function getXOnScreen(e) {
+  return Math.round(e.clientX) - e.target.getBoundingClientRect().x;
+}
+
+function getYOnScreen(e) {
+  return Math.round(e.clientY) - e.target.getBoundingClientRect().y;
+}
+
 function editorClick(e) {
   if (!trackEditorOn) {
     return;
   }
 
-  if (isXYinRect(e.clientX, e.clientY, exportButtonRect)) {
+  const xOnScreen = getXOnScreen(e);
+  const yOnScreen = getYOnScreen(e);
+  if (isXYinRect(xOnScreen, yOnScreen, exportButtonRect)) {
     exportTrack();
     return;
   }
-  const x = Math.round(camera.drawPosition.x) + Math.round(e.clientX);
-  const y = Math.round(camera.drawPosition.y) + Math.round(e.clientY);
-  const trackCol = Math.floor(x / TRACK_W);
-  const trackRow = Math.floor(y / TRACK_H);
+  const xOnTrack = xOnScreen + Math.round(camera.drawPosition.x);
+  const yOnTrack = yOnScreen + Math.round(camera.drawPosition.y);
+  const trackCol = Math.floor(xOnTrack / TRACK_W);
+  const trackRow = Math.floor(yOnTrack / TRACK_H);
   const trackPos = trackCol + TRACK_COLS * trackRow;
 
   // TODO: enable user to select tile type
@@ -68,7 +78,37 @@ function editorClick(e) {
 
 document.addEventListener('click', editorClick);
 
+let hoverTrackCol;
+let hoverTrackRow;
+
+function editorHover(e) {
+  if (!trackEditorOn) {
+    return;
+  }
+
+  const xOnScreen = getXOnScreen(e);
+  const yOnScreen = getYOnScreen(e);
+  if (isXYinRect(xOnScreen, yOnScreen, exportButtonRect)) {
+    hoverTrackCol = undefined;
+    hoverTrackRow = undefined;
+  }
+  else {
+    const xOnTrack = xOnScreen + Math.round(camera.drawPosition.x);
+    const yOnTrack = yOnScreen + Math.round(camera.drawPosition.y);
+    hoverTrackCol = Math.floor(xOnTrack / TRACK_W);
+    hoverTrackRow = Math.floor(yOnTrack / TRACK_H);
+  }
+}
+
+document.addEventListener('mousemove', editorHover, false);
+
 function drawEditor() {
+  if (hoverTrackCol != undefined && hoverTrackRow != undefined) {
+    const hoverX = hoverTrackCol * TRACK_W - Math.round(camera.drawPosition.x);
+    const hoverY = hoverTrackRow * TRACK_H - Math.round(camera.drawPosition.y);
+    const hoverTileColor = 'rgba(255, 255, 0, 0.5)';
+    colorRect(hoverX, hoverY, TRACK_W, TRACK_H, hoverTileColor);
+  }
 
   colorRect(exportButtonRect.x, exportButtonRect.y, exportButtonRect.width, exportButtonRect.height, 'gray');
 
