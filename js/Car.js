@@ -42,6 +42,7 @@ function carClass() {
   this.tireTrackAlpha = 0.1; // default: very faint
   this.tireTrackAlphaDRIFT = 0.4; // dark when handbrake skidding
   this.tireTrackAlphaACCEL = 0.25; // medium when pedal to the metal
+  this.driftVol = 0; // current bvolume of drifting sound, used to fade in and out
 
   // keyboard hold state variables, to use keys more like buttons
   this.keyHeld_Gas = false;
@@ -138,6 +139,19 @@ function carClass() {
             this.engineSound.volume = 0.25 * this.carSpeed/10; // silence as we slow
         else 
             this.engineSound.volume = 0.25; // default
+    }
+
+    // drifting skid sound
+    if (this.driftSound) {
+        if (!this.handBrake) { // fade out the sound
+            this.driftVol -= 0.01;
+            if (this.driftVol<0) this.driftVol=0;
+            this.driftSound.volume = Math.min(this.driftVol,this.carSpeed/500);
+        } else { // fade in the sound
+            this.driftVol += 0.01;
+            if (this.driftVol>0.1) this.driftVol=0.1;
+            this.driftSound.volume = Math.min(this.driftVol,this.carSpeed/500);
+        }
     }
 
 
@@ -339,7 +353,17 @@ function carClass() {
     this.engineSound.playbackRate = 2;
     this.engineSound.preservesPitch = false;
     this.engineSound.play();
+
+    // a sound for when we are skidding / drifting / handbrake
+    this.driftSound = new Audio('sounds/drifting_loop.ogg');
+    this.driftSound.loop = true;
+    this.driftSound.volume = 0;
+    this.driftSound.playbackRate = 1;
+    this.driftSound.preservesPitch = false;
+    this.driftSound.play();
+
   }
+ 
 
   this.carMovePlayer = function() {
     
