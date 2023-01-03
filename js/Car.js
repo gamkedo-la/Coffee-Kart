@@ -131,7 +131,14 @@ function carClass() {
       this.carMoveAi();
     }
 
-    if (this.engineSound) this.engineSound.playbackRate = 0.25 + 4* (this.carSpeed/500);
+    // change the pitch of the motor sound loop
+    if (this.engineSound) {
+        this.engineSound.playbackRate = 0.25 + 4* (this.carSpeed/500);
+        if (this.carSpeed < 10) // almost stopped: fade sound out
+            this.engineSound.volume = 0.25 * this.carSpeed/10; // silence as we slow
+        else 
+            this.engineSound.volume = 0.25; // default
+    }
 
 
   }
