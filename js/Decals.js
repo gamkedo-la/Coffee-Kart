@@ -21,7 +21,7 @@ function Decalmanager() {
   var decalContext;
 
   // draw any image you want - once, not every frame
-  this.add = function (x, y, rot = 0, alpha = 0.025, spritePic) {
+  this.add = function (x, y, rot = 0, alpha = 0.03, spritePic) {
     if (!spritePic) return;
     
     if (!decalCanvas) {

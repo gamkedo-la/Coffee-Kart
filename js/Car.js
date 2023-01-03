@@ -39,6 +39,9 @@ function carClass() {
   this.gearRatios = [2.5, 1.8, 1.4, 1.0, 0.75];
   this.diffRatio = 3.4;
   this.wheelRadius = 0.3;
+  this.tireTrackAlpha = 0.1; // default: very faint
+  this.tireTrackAlphaDRIFT = 0.4; // dark when handbrake skidding
+  this.tireTrackAlphaACCEL = 0.25; // medium when pedal to the metal
 
   // keyboard hold state variables, to use keys more like buttons
   this.keyHeld_Gas = false;
@@ -365,6 +368,9 @@ function carClass() {
     if (this.keyHeld_Handbrake) {      
       this.handBrake = true;
       this.drawTireTracks = true;
+      this.tireTrackAlpha = this.tireTrackAlphaDRIFT;
+    } else {
+      this.tireTrackAlpha = this.tireTrackAlphaACCEL;
     }
 
     if(this.keyHeld_Gas) {
@@ -551,7 +557,7 @@ function carClass() {
     if (!this.drawTireTracks) return
     
     if (this.lastTireTrackX != this.position.x || this.lastTireTrackY != this.position.y) {
-      decals.add(this.position.x,this.position.y,degToRad(this.carAng + 90),0.1,tireTracksPic);
+      decals.add(this.position.x,this.position.y,degToRad(this.carAng + 90),this.tireTrackAlpha,tireTracksPic);
       this.lastTireTrackX = this.position.x;
       this.lastTireTrackY = this.position.y;
     }
