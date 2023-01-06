@@ -297,7 +297,13 @@ function carClass() {
     
     // todo
     // wrap below into a collision function
+    this.carCollidesTrack(nextPos);
     
+
+
+  }
+
+  this.carCollidesTrack = function(nextPos) {
     var drivingIntoTileType = getTrackAtPixelCoord(nextPos.x,nextPos.y);
     
     if( tileIsDriveable(drivingIntoTileType) ) {
@@ -320,17 +326,17 @@ function carClass() {
       var trackHorizontal = getTrackAtPixelCoord(nextPosHorizontal.x, nextPosHorizontal.y);
       var trackVertical = getTrackAtPixelCoord(nextPosVertical.x, nextPosVertical.y);
     
-      if (trackHorizontal == TRACK_ROAD) {
+      if (tileIsDriveable(trackHorizontal)) {
     
         this.position = Vec2Add(this.position, Vec2Scale(headingHorizontal, fixedDt * this.carSpeed));
         this.carVelocity = Vec2Scale(this.carVelocity, collisionDecay);
         this.engineForce *= collisionDecay;
-      } else if (trackVertical == TRACK_ROAD) {
+      } else if (tileIsDriveable(trackVertical)) {
     
         this.position = Vec2Add(this.position, Vec2Scale(headingVertical, fixedDt * this.carSpeed));
         this.carVelocity = Vec2Scale(this.carVelocity, collisionDecay);
         this.engineForce *= collisionDecay;
-      } else if (trackVertical != TRACK_ROAD && trackHorizontal != TRACK_ROAD) {
+      } else if (!tileIsDriveable(trackVertical) && !tileIsDriveable(trackHorizontal)) {
     
     
         this.position = Vec2Add(this.position, Vec2Scale(actualHeading, -0.1*this.carSpeed*fixedDt));
@@ -340,8 +346,6 @@ function carClass() {
 
       
     }
-
-
   }
 
   this.carCollides = function(otherCar) {
@@ -503,8 +507,8 @@ function carClass() {
       Vec2Update(this.carVelocity, 0, 0);
     }
     var nextPos = Vec2Add(this.position, Vec2Scale(this.carVelocity, fixedDt));
-
-
+    
+    
     var carSpeed = Vec2Mag(this.carVelocity);
     this.carSpeed = carSpeed;
     
@@ -542,49 +546,10 @@ function carClass() {
     
     // todo
     // wrap below into a collision function
-    
-    var drivingIntoTileType = getTrackAtPixelCoord(nextPos.x,nextPos.y);
-    
-    if( tileIsDriveable(drivingIntoTileType) ) {
-      this.position = nextPos;
-    } else if( drivingIntoTileType == TRACK_GOAL ) {
-      document.getElementById("debugText").innerHTML = this.myName + " won the race";
-      p1.carReset();
-      p2.carReset();
-      timer.setTime(TIME_DEFAULT);
-    } else {
-    
-      var actualHeading = Vec2Init(0, 0);
-      if (Vec2Mag(this.carVelocity) > 1) {
-        actualHeading = Vec2Normalize(this.carVelocity);
-      }
-      var headingHorizontal = Vec2Init(actualHeading.x, 0);
-      var headingVertical = Vec2Init(0, actualHeading.y);
-      var nextPosHorizontal = Vec2Add(this.position, Vec2Scale(headingHorizontal, fixedDt * this.carSpeed));
-      var nextPosVertical = Vec2Add(this.position, Vec2Scale(headingVertical, fixedDt * this.carSpeed));
-      var trackHorizontal = getTrackAtPixelCoord(nextPosHorizontal.x, nextPosHorizontal.y);
-      var trackVertical = getTrackAtPixelCoord(nextPosVertical.x, nextPosVertical.y);
-    
-      if (trackHorizontal == TRACK_ROAD) {
-    
-        this.position = Vec2Add(this.position, Vec2Scale(headingHorizontal, fixedDt * this.carSpeed));
-        this.carVelocity = Vec2Scale(this.carVelocity, collisionDecay);
-        this.engineForce *= collisionDecay;
-      } else if (trackVertical == TRACK_ROAD) {
-    
-        this.position = Vec2Add(this.position, Vec2Scale(headingVertical, fixedDt * this.carSpeed));
-        this.carVelocity = Vec2Scale(this.carVelocity, collisionDecay);
-        this.engineForce *= collisionDecay;
-      } else if (trackVertical != TRACK_ROAD && trackHorizontal != TRACK_ROAD) {
-    
-    
-        this.position = Vec2Add(this.position, Vec2Scale(actualHeading, -0.1*this.carSpeed*fixedDt));
-        this.carVelocity = Vec2Scale(this.carVelocity, -0.5);
-        this.engineForce = 0;
-      }
+    this.carCollidesTrack(nextPos);
 
-      
-    }
+
+    
 
     
   }
