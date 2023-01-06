@@ -64,6 +64,8 @@ function carClass() {
     this.myBitmap = whichGraphic;
     this.myName = this.nameFromGraphic();
     this.isPlayer = isPlayerVal;
+    this.carWidth = this.myBitmap.width;
+    this.carHeight = this.myBitmap.height;
     this.carReset();
   }
 
@@ -341,6 +343,19 @@ function carClass() {
 
 
   }
+
+  this.carCollides = function(otherCar) {
+    // WIP
+    topLeftInitial = Vec2Add(this.position, Vec2Init(-this.carWidth/4, -this.carHeight/2));
+    topRightInitial = Vec2Add(this.position, Vec2Init(this.carWidth/4, -this.carHeight/2));
+    bottomLeftInitial = Vec2Add(this.position, Vec2Init(-this.carWidth/4, this.carHeight/2));
+    bottomRightInitial = Vec2Add(this.position, Vec2Init(this.carWidth/4, this.carHeight/2));
+    // debug draw this to check that locations are correct
+    colorCircle(topLeftInitial.x - camera.drawPosition.x, topLeftInitial.y - camera.drawPosition.y, 5, "blue");
+    colorCircle(topRightInitial.x - camera.drawPosition.x, topRightInitial.y - camera.drawPosition.y, 5, "red");
+    colorCircle(bottomLeftInitial.x - camera.drawPosition.x, bottomLeftInitial.y - camera.drawPosition.y, 5, "blue");
+    colorCircle(bottomRightInitial.x - camera.drawPosition.x, bottomRightInitial.y - camera.drawPosition.y, 5, "red");
+  }
   
   this.startEngineSound = function() {
     
@@ -576,13 +591,17 @@ function carClass() {
   
   this.carDraw = function() {      
     
-    if (DEBUG_DRAW) {
+    if (DEBUG_DRAW) {      
       for (let i = 0; i < this.waypoints.length; i++) {
         waypoint = this.waypoints[i];
         colorCircle(waypoint.position.x - camera.drawPosition.x, waypoint.position.y - camera.drawPosition.y, waypoint.radius, "blue");
       }
     }
     drawBitmapCenteredAtLocationWithRotation( this.myBitmap, this.position.x - camera.drawPosition.x, this.position.y - camera.drawPosition.y, degToRad(this.carAng + 90) );        
+    if (DEBUG_DRAW) {
+      this.carCollides(0);
+    }
+
     // draw tire tracks
     // todo: only when accel is max, when we are drifting, or brakes are on
     if (!this.drawTireTracks) return
@@ -592,6 +611,9 @@ function carClass() {
       this.lastTireTrackX = this.position.x;
       this.lastTireTrackY = this.position.y;
     }
+
+    // debug drawing the corners of the car
+    
   }
 
 } // end of car class
