@@ -348,17 +348,23 @@ function carClass() {
     }
   }
 
-  this.carCollides = function(otherCar) {
+  this.carCollidesCar = function(otherCar) {
     // WIP
     topLeftInitial = Vec2Add(this.position, Vec2Init(-this.carWidth/4, -this.carHeight/2));
     topRightInitial = Vec2Add(this.position, Vec2Init(this.carWidth/4, -this.carHeight/2));
     bottomLeftInitial = Vec2Add(this.position, Vec2Init(-this.carWidth/4, this.carHeight/2));
     bottomRightInitial = Vec2Add(this.position, Vec2Init(this.carWidth/4, this.carHeight/2));
+
+    topLeftRotated = Vec2Add(Vec2Rotate(Vec2Sub(topLeftInitial, this.position), this.carAng + 90), this.position);
+    topRightRotated = Vec2Add(Vec2Rotate(Vec2Sub(topRightInitial, this.position), this.carAng + 90), this.position);
+    bottomLeftRotated = Vec2Add(Vec2Rotate(Vec2Sub(bottomLeftInitial, this.position), this.carAng + 90), this.position);
+    bottomRightRotated = Vec2Add(Vec2Rotate(Vec2Sub(bottomRightInitial, this.position), this.carAng + 90), this.position);
+
     // debug draw this to check that locations are correct
-    colorCircle(topLeftInitial.x - camera.drawPosition.x, topLeftInitial.y - camera.drawPosition.y, 5, "blue");
-    colorCircle(topRightInitial.x - camera.drawPosition.x, topRightInitial.y - camera.drawPosition.y, 5, "red");
-    colorCircle(bottomLeftInitial.x - camera.drawPosition.x, bottomLeftInitial.y - camera.drawPosition.y, 5, "blue");
-    colorCircle(bottomRightInitial.x - camera.drawPosition.x, bottomRightInitial.y - camera.drawPosition.y, 5, "red");
+    colorCircle(topLeftRotated.x - camera.drawPosition.x, topLeftRotated.y - camera.drawPosition.y, 5, "blue");
+    colorCircle(topRightRotated.x - camera.drawPosition.x, topRightRotated.y - camera.drawPosition.y, 5, "red");
+    colorCircle(bottomLeftRotated.x - camera.drawPosition.x, bottomLeftRotated.y - camera.drawPosition.y, 5, "green");
+    colorCircle(bottomRightRotated.x - camera.drawPosition.x, bottomRightRotated.y - camera.drawPosition.y, 5, "yellow");
   }
   
   this.startEngineSound = function() {
@@ -564,7 +570,7 @@ function carClass() {
     }
     drawBitmapCenteredAtLocationWithRotation( this.myBitmap, this.position.x - camera.drawPosition.x, this.position.y - camera.drawPosition.y, degToRad(this.carAng + 90) );        
     if (DEBUG_DRAW) {
-      this.carCollides(0);
+      this.carCollidesCar(0);
     }
 
     // draw tire tracks
