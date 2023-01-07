@@ -26,9 +26,36 @@ class PauseUI {
     // background flag
     this.background_flag_y = 64;
     this.background_flag_height = 208;
+
+    // controls
+    this.keyHeld_Down = false;
+    this.keyHeld_Up = false;
+    this.downKey = 0;
+    this.upKey = 0;
   }
 
-  update() {}
+  setMenuControls(controls) {
+    this.downKey = controls.downKey;
+    this.upKey = controls.upKey;
+  }
+
+  setKeyHoldState(thisKey, setTo) {
+    if (thisKey === this.downKey) {
+      this.keyHeld_Down = setTo;
+    }
+    if (thisKey === this.upKey) {
+      this.keyHeld_Up = setTo;
+    }
+  }
+
+  update() {
+    if (this.keyHeld_Down) {
+      this.cursor++;
+    }
+    if (this.keyHeld_Up) {
+      this.cursor--;
+    }
+  }
 
   draw() {
     canvasContext.font = `${this.pause_text_size}px PressStart2P`;

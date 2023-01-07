@@ -25,7 +25,14 @@ function initInput() {
   );
   //p2.setupControls(KEY_LETTER_W,KEY_LETTER_S,KEY_LETTER_A,KEY_LETTER_D);
 
-  editorCamera.setupControls(KEY_LEFT_ARROW, KEY_RIGHT_ARROW, KEY_UP_ARROW, KEY_DOWN_ARROW);
+  pauseUI.setMenuControls({ downKey: KEY_DOWN_ARROW, upKey: KEY_UP_ARROW });
+
+  editorCamera.setupControls(
+    KEY_LEFT_ARROW,
+    KEY_RIGHT_ARROW,
+    KEY_UP_ARROW,
+    KEY_DOWN_ARROW
+  );
 }
 
 function setKeyHoldState(thisKey, thisCar, setTo) {
@@ -56,6 +63,7 @@ function keyPressed(evt) {
   setKeyHoldState(evt.keyCode, p1, true);
   //setKeyHoldState(evt.keyCode, p2, true);
   editorCamera.setKeyHoldState(evt.keyCode, true);
+  pauseUI.setKeyHoldState(evt.keyCode, true);
   evt.preventDefault(); // without this, arrow keys scroll the browser!
 
   // we've pressed the pause key, so pause the game and only listen to this first press
@@ -69,6 +77,7 @@ function keyReleased(evt) {
   setKeyHoldState(evt.keyCode, p1, false);
   //setKeyHoldState(evt.keyCode, p2, false);
   editorCamera.setKeyHoldState(evt.keyCode, false);
+  pauseUI.setKeyHoldState(evt.keyCode, false);
   // prevents player from toggling pause on and off while holding pause key
 
   // we've released the pause key, so allow us to unpause on the next press
