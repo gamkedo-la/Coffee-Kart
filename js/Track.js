@@ -137,6 +137,21 @@ function tileIsDriveable(tileType) {
   return false;
 }
 
+function tileFriction(tileType) {
+  if (tileType == TRACK_ROAD) {
+    return 2.8;
+  }
+  if (tileType == TRACK_SNOW_ROAD) {    
+    return 1.8;
+  }
+  if (tileType == TRACK_SNOW_ICE) {
+    return 0.4;
+  }
+
+  // this shouldn't happen but...  
+  return 2.8;
+}
+
 function getTrackAtPixelCoord(pixelX,pixelY) { 
   var tileCol = pixelX / TRACK_W;
   var tileRow = pixelY / TRACK_H;

@@ -8,7 +8,7 @@ const wheelDecayRate = 0.5;
 const wheelAngleMin = -30;
 const wheelAngleMax = 30;
 const fixedDt = 30.0/1000.0;    
-const roadFriction = 2.8;
+const roadFriction = 2.8; // pulled from the track now, only used as default
 const engineDecayRate = 6000;
 const dragCoefficient = 0.04;
 const drivePower = 4000;
@@ -65,7 +65,7 @@ function carClass() {
     this.myName = this.nameFromGraphic();
     this.isPlayer = isPlayerVal;
     this.carWidth = this.myBitmap.width;
-    this.carHeight = this.myBitmap.height;
+    this.carHeight = this.myBitmap.height;    
     this.carReset();
   }
 
@@ -117,7 +117,7 @@ function carClass() {
     this.carVelocity = Vec2Init(0, 0);
     this.engineForce = 0;
     this.carMass = 2;        
-
+    this.carFriction = roadFriction;
     this.reverseTimer = 0;
     this.reversing = false;
     this.handBrake = false;
@@ -245,12 +245,15 @@ function carClass() {
       this.drawTireTracks = true;
     }
 
-    var tractionForce = Vec2Scale(this.carHeading, this.engineForce);
+    // I probably need to use friction here too
+    var tractionToApply = Math.min(this.carFriction, 1.0);
+    var tractionForce = Vec2Scale(this.carHeading, this.engineForce * tractionToApply);
     if (this.handBrake) {
+      
       tractionForce = Vec2Scale(Vec2Normalize(this.carVelocity), this.engineForce);
     }
     
-    var rollingResistanceForce = Vec2Scale(this.carVelocity, -1.0*roadFriction);
+    var rollingResistanceForce = Vec2Scale(this.carVelocity, -1.0*this.carFriction);
     
     var dragForce = Vec2Scale(this.carVelocity, -1.0 * Vec2Mag(this.carVelocity) * dragCoefficient);
     
@@ -298,7 +301,9 @@ function carClass() {
     // todo
     // wrap below into a collision function
     this.carCollidesTrack(nextPos);
-    
+
+    // now that we've updated, check the friction of the tile to use next update
+    this.carFriction = tileFriction(getTrackAtPixelCoord(this.position.x, this.position.y));
 
 
   }
@@ -492,14 +497,15 @@ function carClass() {
       this.drawTireTracks = true;
     }
     
-
     
-    var tractionForce = Vec2Scale(this.carHeading, this.engineForce);
+    // I probably need to use friction here too
+    var tractionToApply = Math.min(this.carFriction, 1.0);
+    var tractionForce = Vec2Scale(this.carHeading, this.engineForce * tractionToApply);
     if (this.handBrake) {
       tractionForce = Vec2Scale(Vec2Normalize(this.carVelocity), this.engineForce);
     }
     
-    var rollingResistanceForce = Vec2Scale(this.carVelocity, -1.0*roadFriction);
+    var rollingResistanceForce = Vec2Scale(this.carVelocity, -1.0*this.carFriction);
     
     var dragForce = Vec2Scale(this.carVelocity, -1.0 * Vec2Mag(this.carVelocity) * dragCoefficient);
     
@@ -554,7 +560,7 @@ function carClass() {
     // wrap below into a collision function
     this.carCollidesTrack(nextPos);
 
-
+    this.carFriction = tileFriction(getTrackAtPixelCoord(this.position.x, this.position.y));
     
 
     
