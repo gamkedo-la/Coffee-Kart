@@ -502,7 +502,7 @@ function carClass() {
     var tractionToApply = Math.min(this.carFriction, 1.0);
     var tractionForce = Vec2Scale(this.carHeading, this.engineForce * tractionToApply);
     if (this.handBrake) {
-      tractionForce = Vec2Scale(Vec2Normalize(this.carVelocity), this.engineForce);
+      tractionForce = Vec2Scale(Vec2Normalize(this.carVelocity), this.engineForce * tractionToApply);
     }
     
     var rollingResistanceForce = Vec2Scale(this.carVelocity, -1.0*this.carFriction);
