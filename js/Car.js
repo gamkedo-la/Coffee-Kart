@@ -592,18 +592,26 @@ function carClass() {
   
   this.carDraw = function() {      
     
+    // waypoints
     if (DEBUG_DRAW) {      
       for (let i = 0; i < this.waypoints.length; i++) {
         waypoint = this.waypoints[i];
         colorCircle(waypoint.position.x - camera.drawPosition.x, waypoint.position.y - camera.drawPosition.y, waypoint.radius, "blue");
       }
     }
-    drawBitmapCenteredAtLocationWithRotation( this.myBitmap, this.position.x - camera.drawPosition.x, this.position.y - camera.drawPosition.y, degToRad(this.carAng + 90) );        
+    
+    // headlights and tail lights
+    drawBitmapCenteredAtLocationWithRotation(car_lights, this.position.x - camera.drawPosition.x, this.position.y - camera.drawPosition.y, degToRad(this.carAng + 90) );
+
+    // car sprite
+    drawBitmapCenteredAtLocationWithRotation(this.myBitmap, this.position.x - camera.drawPosition.x, this.position.y - camera.drawPosition.y, degToRad(this.carAng + 90) );        
+    
+    // collider debug
     if (DEBUG_DRAW) {
       this.carCollidesCar(0);
     }
 
-    // draw tire tracks
+    // tire tracks
     // todo: only when accel is max, when we are drifting, or brakes are on
     if (!this.drawTireTracks) return
     
@@ -613,8 +621,6 @@ function carClass() {
       this.lastTireTrackY = this.position.y;
     }
 
-    // debug drawing the corners of the car
-    
   }
 
 } // end of car class

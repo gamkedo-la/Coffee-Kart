@@ -3,6 +3,7 @@ var car2Pic = document.createElement("img");
 var car3Pic = document.createElement("img");
 var carSportPic = document.createElement("img");
 var trackSheet = document.createElement("img");
+var car_lights = document.createElement("img");
 
 // decals
 var tireTracksPic = document.createElement("img");
@@ -66,6 +67,7 @@ function loadImages() {
     { varName: decal_lights, theFile: "decal_lights.png" },
     { varName: background_flag, theFile: "background_flag.png" },
     { varName: cursor_flag, theFile: "cursor_flag.png" },
+    { varName: car_lights, theFile: "car_lights.png" },
   ];
 
   picsToLoad = imageList.length;
