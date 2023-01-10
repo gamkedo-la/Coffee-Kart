@@ -36,6 +36,8 @@ function carClass() {
   // add RPM to wheels
 
   // to be used later
+  this.engineSoundGear = 1; // only affects sound
+  this.engineSoundRPM = 1000; // sound loop playback rate * 1000
   this.gearRatios = [2.5, 1.8, 1.4, 1.0, 0.75];
   this.diffRatio = 3.4;
   this.wheelRadius = 0.3;
@@ -136,7 +138,18 @@ function carClass() {
 
     // change the pitch of the motor sound loop
     if (this.engineSound) {
-        this.engineSound.playbackRate = 0.25 + 4* (this.carSpeed/500);
+        
+        this.engineSoundRPM = 1000 * (0.25+6*(this.carSpeed/500)); // sound loop speed scale * 1000
+        this.engineSoundGear = 1;
+        if (this.carSpeed>200) this.engineSoundGear++;
+        if (this.carSpeed>300) this.engineSoundGear++;
+        // bump down RPM for each gear
+        this.engineSoundRPM -= (this.engineSoundGear-1) * 1000;
+
+        document.getElementById("debugText").innerHTML = "ENGINE SOUND DEBUG: speed: "+this.carSpeed.toFixed(0)+" gear:"+this.engineSoundGear+" rpm:"+this.engineSoundRPM.toFixed(0);
+        
+        this.engineSound.playbackRate = this.engineSoundRPM / 1000; // so that 1000 rpm is 100% playback speed when idling
+        
         if (this.carSpeed < 10) // almost stopped: fade sound out
             this.engineSound.volume = 0.25 * this.carSpeed/10; // silence as we slow
         else 
