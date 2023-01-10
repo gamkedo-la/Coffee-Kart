@@ -37,6 +37,12 @@ class Speedometer {
     setSpeed(newSpeed){
         this.speed = newSpeed;
     }
+    setGear(newGear){
+        this.gear = newGear;
+    }
+    setRPM(newRPM){
+        this.rpm = newRPM;
+    }
     draw(){
         //get a speed adjusted to real looking speed numbers
         var adjustedSpeed = this.speed/this.displaySpeedAdjustment;
@@ -44,6 +50,10 @@ class Speedometer {
         var rotationPercentage = adjustedSpeed/this.maxDisplaySpeed;
         //calculate the rotation in angles
         var rotation = ((this.maxAngle - this.minAngle)*rotationPercentage) + this.minAngle;
+
+        var rpmRotationPercentage = this.rpm / 3000;
+        //var rpm_rotation = ((this.maxAngle-this.minAngle)*rpmRotationPercentage)+this.minAngle;
+        var rpm_rotation = rpmRotationPercentage * 360 - 180; // the entire circle
 
         canvasContext.save(); // allows us to undo translate movement and rotate spin
         canvasContext.translate(this.xLocation,this.yLocation); // sets the point where our graphic will go
@@ -65,10 +75,29 @@ class Speedometer {
         this.drawSpeedTicks(this.numberSmallTicks,this.smallTickLength,rotationAmount);
         this.drawSpeedTicks(this.numberBigTicks,this.bigTickLength,rotationAmount*5);
 
+        // rpm dial
+        canvasContext.beginPath();
+        canvasContext.arc(20, 20, 20, 0, 2 * Math.PI);
+        canvasContext.fillStyle = "rgba(220,220,220,1)";
+        canvasContext.fill();
+        // rpm mini needle
+        canvasContext.save();
+        canvasContext.translate(20,20);
+        canvasContext.rotate(rpm_rotation*Math.PI/180 - Math.PI); // sets the rotation (converting to radians)
+        canvasContext.fillStyle = "grey";
+        canvasContext.fillRect(0,0,this.needleWidth/4,this.needleLength/4);
+        canvasContext.restore();
+        // numeric gear display
+        canvasContext.fillStyle = "grey";
+        canvasContext.font = "11px Courier Bold";
+        canvasContext.fillText(this.gear,18,32);
+
         //start draw needle
+        canvasContext.save();
         canvasContext.rotate(rotation*Math.PI/180 - Math.PI); // sets the rotation (converting to radians)
         canvasContext.fillStyle = this.needleColor;
         canvasContext.fillRect(0,0,this.needleWidth,this.needleLength);
+        canvasContext.restore();
 
         //restore canvas
         canvasContext.restore();

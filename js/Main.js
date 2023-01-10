@@ -55,6 +55,8 @@ function updateEverything() {
   updateWaypointEditor();
   timer.update();
   speedometer.setSpeed(p1.carSpeed);
+  speedometer.setGear(p1.engineSoundGear);
+  speedometer.setRPM(p1.engineSoundRPM);
 }
 function moveEverything() {
   if (paused) return;
