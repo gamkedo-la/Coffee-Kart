@@ -189,7 +189,7 @@ function spawn_decals(img,xy) {
     if (!xy) return;
     if (xy.length<2) return;
 
-    console.log("spawning "+(xy.length/2)+" decals of "+img.src);
+    //console.log("spawning "+(xy.length/2)+" decals of "+img.src);
     
     for (let n=0; n<xy.length; n+=2) {
         decals.add(xy[n],xy[n+1],0,1,img);

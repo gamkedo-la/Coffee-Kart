@@ -139,12 +139,19 @@ function carClass() {
     // change the pitch of the motor sound loop
     if (this.engineSound) {
         
+        // gear shifting simulation based on speed
         this.engineSoundRPM = 1000 * (0.25+6*(this.carSpeed/500)); // sound loop speed scale * 1000
+        let prevGear = this.engineSoundGear;
         this.engineSoundGear = 1;
         if (this.carSpeed>200) this.engineSoundGear++;
         if (this.carSpeed>300) this.engineSoundGear++;
         // bump down RPM for each gear
         this.engineSoundRPM -= (this.engineSoundGear-1) * 1000;
+        // play a sound the 1st time we shift up
+        if (prevGear < this.engineSoundGear) {
+            console.log("gear shift up!");
+            if (this.gearShiftUpSFX) this.gearShiftUpSFX.play();
+        }
 
         document.getElementById("debugText").innerHTML = "ENGINE SOUND DEBUG: speed: "+this.carSpeed.toFixed(0)+" gear:"+this.engineSoundGear+" rpm:"+this.engineSoundRPM.toFixed(0);
         
@@ -396,6 +403,10 @@ function carClass() {
     this.engineSound.playbackRate = 2;
     this.engineSound.preservesPitch = false;
     this.engineSound.play();
+
+    this.gearShiftUpSFX = new Audio('sounds/gear_shift_up.wav');
+    this.gearShiftUpSFX.loop = false;
+    this.gearShiftUpSFX.volume = 1;
 
     // a sound for when we are skidding / drifting / handbrake
     this.driftSound = new Audio('sounds/drifting_loop.ogg');
