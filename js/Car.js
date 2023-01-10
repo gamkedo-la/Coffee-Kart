@@ -149,7 +149,7 @@ function carClass() {
         this.engineSoundRPM -= (this.engineSoundGear-1) * 1000;
         // play a sound the 1st time we shift up
         if (prevGear < this.engineSoundGear) {
-            console.log("gear shift up!");
+            //console.log("gear shift up!");
             if (this.gearShiftUpSFX) this.gearShiftUpSFX.play();
         }
 
