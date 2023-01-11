@@ -68,12 +68,7 @@ function editorClick(e) {
   const trackRow = Math.floor(yOnTrack / TRACK_H);
   const trackPos = trackCol + TRACK_COLS * trackRow;
 
-  // TODO: enable user to select tile type
   TRACKS[courseIndex].grid[trackPos] = trackTileCounter;
-  trackTileCounter++;
-  if (trackTileCounter >= TRACK_TILE_MAX) {
-    trackTileCounter = 0;
-  }
 }
 
 document.addEventListener('click', editorClick);
@@ -101,6 +96,27 @@ function editorHover(e) {
 }
 
 document.addEventListener('mousemove', editorHover, false);
+
+function selectTrackTile(e) {
+  if (!trackEditorOn) {
+    return;
+  }
+
+  if (e.deltaY > 0) {
+    trackTileCounter++;
+    if (trackTileCounter >= TRACK_TILE_MAX) {
+      trackTileCounter = 0;
+    }
+  } else {
+    trackTileCounter--;
+    if (trackTileCounter < 0) {
+      trackTileCounter = TRACK_TILE_MAX - 1;
+    }
+  }
+  console.log("Next track number:" + trackTileCounter);
+}
+
+document.addEventListener("wheel", selectTrackTile);
 
 function drawEditor() {
   if (hoverTrackCol != undefined && hoverTrackRow != undefined) {
