@@ -27,6 +27,8 @@ let trackTileCounter = 0;
 
 let exportButtonRect = new Rect(1100, 650, 100, 50);
 
+let selectedTileRect = new Rect(1150, 20, 120, 130);
+
 function updateEditor() {
   if (keyHeld_Editor && canToggleEditor && !trackEditorOn) {
     console.log('Switching to track editor');
@@ -133,6 +135,20 @@ function drawEditor() {
   canvasContext.fillColor = 'black';
   canvasContext.fillText('Export', exportButtonRect.x + 10, exportButtonRect.y + 30);
   canvasContext.restore();
+
+  colorRect(selectedTileRect.x, selectedTileRect.y, selectedTileRect.width, selectedTileRect.height, 'gray');
+
+  canvasContext.save();
+  canvasContext.font = '20px serif';
+  canvasContext.fillColor = 'black';
+  canvasContext.fillText('Selected Tile', selectedTileRect.x + 10, selectedTileRect.y + 20);
+  canvasContext.restore();
+
+  canvasContext.drawImage(trackSheet,
+    trackTileCounter * TILE_SIZE, 0,
+    TILE_SIZE, TILE_SIZE,
+    selectedTileRect.x + 20, selectedTileRect.y + 30,
+    TRACK_W, TRACK_H);
 }
 
 function exportTrack() {
