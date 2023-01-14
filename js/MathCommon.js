@@ -131,3 +131,10 @@ function Vec2Normalize(v) {
     return result;
 }
 
+function Vec2InRect(v, topLeft, topRight, bottomLeft, bottomRight) {
+    if (v.x >= topLeft.x && v.x <= topRight.x && v.y <= bottomLeft.y && v.y >= topLeft.y) {
+        return true;
+    }
+    return false;
+}
+

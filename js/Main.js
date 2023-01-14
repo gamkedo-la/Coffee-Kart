@@ -15,6 +15,7 @@ var pauseUI = new PauseUI();
 var paused = false;
 var canChangePauseState = true;
 gCars = [];
+carCount = 0;
 
 window.onload = function () {
   canvas = document.getElementById("gameCanvas");
@@ -85,7 +86,7 @@ function drawEverything() {
   decals.draw(-camera.drawPosition.x, -camera.drawPosition.y); // tire tracks etc
 
   for (var i = 0; i < gCars.length; i++) {
-    gCars[i].carDraw();
+    gCars[i].carDraw();    
   }      
   
   speedometer.draw();

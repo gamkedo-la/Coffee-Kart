@@ -96,6 +96,8 @@ function carClass() {
   }
   
   this.carReset = function() {
+    this.carId = carCount;
+    carCount++;
     this.carSpeed = 0;
     this.wheelSpeed = 0; // rpm of wheels, inherently 1-dimensional
     this.carAng = -90; // currently in radians. why -ve? because 'up' is negative
@@ -372,26 +374,7 @@ function carClass() {
 
       
     }
-  }
-
-  this.carCollidesCar = function(otherCar) {
-    // WIP
-    topLeftInitial = Vec2Add(this.position, Vec2Init(-this.carWidth/4, -this.carHeight/2));
-    topRightInitial = Vec2Add(this.position, Vec2Init(this.carWidth/4, -this.carHeight/2));
-    bottomLeftInitial = Vec2Add(this.position, Vec2Init(-this.carWidth/4, this.carHeight/2));
-    bottomRightInitial = Vec2Add(this.position, Vec2Init(this.carWidth/4, this.carHeight/2));
-
-    topLeftRotated = Vec2Add(Vec2Rotate(Vec2Sub(topLeftInitial, this.position), this.carAng + 90), this.position);
-    topRightRotated = Vec2Add(Vec2Rotate(Vec2Sub(topRightInitial, this.position), this.carAng + 90), this.position);
-    bottomLeftRotated = Vec2Add(Vec2Rotate(Vec2Sub(bottomLeftInitial, this.position), this.carAng + 90), this.position);
-    bottomRightRotated = Vec2Add(Vec2Rotate(Vec2Sub(bottomRightInitial, this.position), this.carAng + 90), this.position);
-
-    // debug draw this to check that locations are correct
-    colorCircle(topLeftRotated.x - camera.drawPosition.x, topLeftRotated.y - camera.drawPosition.y, 5, "blue");
-    colorCircle(topRightRotated.x - camera.drawPosition.x, topRightRotated.y - camera.drawPosition.y, 5, "red");
-    colorCircle(bottomLeftRotated.x - camera.drawPosition.x, bottomLeftRotated.y - camera.drawPosition.y, 5, "green");
-    colorCircle(bottomRightRotated.x - camera.drawPosition.x, bottomRightRotated.y - camera.drawPosition.y, 5, "yellow");
-  }
+  }  
   
   this.startEngineSound = function() {
     
@@ -584,12 +567,62 @@ function carClass() {
     // todo
     // wrap below into a collision function
     // check for car collision too
+    var lastPos = this.position;
     this.carCollidesTrack(nextPos);
+    this.carCollidesCar(lastPos);
 
     this.carFriction = tileFriction(getTrackAtPixelCoord(this.position.x, this.position.y));
     
 
     
+  }
+
+  this.carCollidesCar = function(lastPos) {
+    topLeftInitial = Vec2Add(this.position, Vec2Init(-this.carWidth/4, -this.carHeight/2));
+    topRightInitial = Vec2Add(this.position, Vec2Init(this.carWidth/4, -this.carHeight/2));
+    bottomLeftInitial = Vec2Add(this.position, Vec2Init(-this.carWidth/4, this.carHeight/2));
+    bottomRightInitial = Vec2Add(this.position, Vec2Init(this.carWidth/4, this.carHeight/2));
+
+    topLeftRotated = Vec2Add(Vec2Rotate(Vec2Sub(topLeftInitial, this.position), this.carAng + 90), this.position);
+    topRightRotated = Vec2Add(Vec2Rotate(Vec2Sub(topRightInitial, this.position), this.carAng + 90), this.position);
+    bottomLeftRotated = Vec2Add(Vec2Rotate(Vec2Sub(bottomLeftInitial, this.position), this.carAng + 90), this.position);
+    bottomRightRotated = Vec2Add(Vec2Rotate(Vec2Sub(bottomRightInitial, this.position), this.carAng + 90), this.position);
+
+    // debug draw this to check that locations are correct
+    //colorCircle(topLeftRotated.x - camera.drawPosition.x, topLeftRotated.y - camera.drawPosition.y, 5, "blue");
+    //colorCircle(topRightRotated.x - camera.drawPosition.x, topRightRotated.y - camera.drawPosition.y, 5, "red");
+    //colorCircle(bottomLeftRotated.x - camera.drawPosition.x, bottomLeftRotated.y - camera.drawPosition.y, 5, "green");
+    //colorCircle(bottomRightRotated.x - camera.drawPosition.x, bottomRightRotated.y - camera.drawPosition.y, 5, "yellow");
+
+    for (var i = 0; i < gCars.length; i++) {
+      // don't collide with ourself
+      if (gCars[i].carId != this.carId) {        
+        // what we want to do is to 
+        // first get our axis aligned candidate positions
+        // and the rotation of the candidate car
+        // and then rotate BACK by the candidate car rotation
+        // so now we are axis aligned w.r.t the candidate car
+        var candidateCar = gCars[i];
+        // these are all axis aligned
+        var candidateTopLeft = Vec2Add(candidateCar.position, Vec2Init(-candidateCar.carWidth/4, -candidateCar.carHeight/2));
+        var candidateTopRight = Vec2Add(candidateCar.position, Vec2Init(candidateCar.carWidth/4, -candidateCar.carHeight/2));
+        var candidateBottomLeft = Vec2Add(candidateCar.position, Vec2Init(-candidateCar.carWidth/4, candidateCar.carHeight/2));
+        var candidateBottomRight = Vec2Add(candidateCar.position, Vec2Init(candidateCar.carWidth/4, candidateCar.carHeight/2));
+
+        var usTopLeftRotated = Vec2Add(Vec2Rotate(Vec2Sub(topLeftInitial, this.position), this.carAng - candidateCar.carAng + 90), this.position);
+        var usTopRightRotated = Vec2Add(Vec2Rotate(Vec2Sub(topRightInitial, this.position), this.carAng - candidateCar.carAng + 90), this.position);
+        var usBottomLeftRotated = Vec2Add(Vec2Rotate(Vec2Sub(bottomLeftInitial, this.position), this.carAng - candidateCar.carAng + 90), this.position);
+        var usBottomRightRotated = Vec2Add(Vec2Rotate(Vec2Sub(bottomRightInitial, this.position), this.carAng - candidateCar.carAng + 90), this.position);
+        var ourCorners = [usTopLeftRotated, usTopRightRotated, usBottomLeftRotated, usBottomRightRotated];
+        for (var i = 0; i < ourCorners.length; i++) {
+          if (Vec2InRect(ourCorners[i], candidateTopLeft, candidateTopRight, candidateBottomLeft, candidateBottomRight)) {
+            this.position = lastPos;
+            return; // I guess return here? although we limit to colliding with just one car in this way for now
+          }
+        }
+
+      }
+    }
   }
   
   this.carDraw = function() {      
@@ -610,7 +643,7 @@ function carClass() {
     
     // collider debug
     if (DEBUG_DRAW) {
-      this.carCollidesCar(0);
+      //this.carCollidesCar(0);
     }
 
     // tire tracks
