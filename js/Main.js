@@ -14,6 +14,7 @@ var speedometer = new Speedometer();
 var pauseUI = new PauseUI();
 var paused = false;
 var canChangePauseState = true;
+gCars = [];
 
 window.onload = function () {
   canvas = document.getElementById("gameCanvas");
@@ -32,6 +33,7 @@ function loadingDoneSoStartGame() {
   timer.resume();
   p2.carInit(car2Pic);
   p1.carInit(carSportPic, true);
+  gCars = [p1, p2];
   camera.InitCamera(
     SCREEN_WIDTH / 2,
     SCREEN_HEIGHT / 2,
@@ -66,8 +68,9 @@ function moveEverything() {
     editorCamera.moveEditorCamera();
     camera.UpdateEditorCamera(editorCamera.position);
   } else {
-    p1.carMove();
-    p2.carMove();
+    for (var i = 0; i < gCars.length; i++) {
+      gCars[i].carMove();
+    }    
     camera.UpdateCamera(p1.position);
   }
 }
@@ -81,8 +84,10 @@ function drawEverything() {
 
   decals.draw(-camera.drawPosition.x, -camera.drawPosition.y); // tire tracks etc
 
-  p1.carDraw();
-  p2.carDraw();
+  for (var i = 0; i < gCars.length; i++) {
+    gCars[i].carDraw();
+  }      
+  
   speedometer.draw();
   timer.draw();
 

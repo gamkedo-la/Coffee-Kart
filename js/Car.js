@@ -19,6 +19,7 @@ const collisionDecay = 0.97;
 
 const waypointEps = 20.0;
 
+
 function carClass() {
     
     // waypoints for ai.
@@ -582,6 +583,7 @@ function carClass() {
     
     // todo
     // wrap below into a collision function
+    // check for car collision too
     this.carCollidesTrack(nextPos);
 
     this.carFriction = tileFriction(getTrackAtPixelCoord(this.position.x, this.position.y));
