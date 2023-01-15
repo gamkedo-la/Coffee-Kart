@@ -1,4 +1,4 @@
-const DEBUG_DRAW = true;
+const DEBUG_DRAW = false;
 const AI_DEBUG_MODE = false; // console.log spam
 const AI_WAYPOINT_TRIGGER_DISTANCE = 350; // how close we need to get to each waypoint
 
@@ -127,6 +127,7 @@ function carClass() {
     this.reversing = false;
     this.handBrake = false;
     this.drawTireTracks = false;
+    this.resetWaypoints();
 
 
   } // end of carReset
@@ -323,8 +324,9 @@ function carClass() {
     
     // todo
     // wrap below into a collision function
+    var lastPos = this.position;
     this.carCollidesTrack(nextPos);
-
+    this.carCollidesCar(lastPos);
     // now that we've updated, check the friction of the tile to use next update
     this.carFriction = tileFriction(getTrackAtPixelCoord(this.position.x, this.position.y));
 

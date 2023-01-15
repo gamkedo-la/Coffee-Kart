@@ -94,7 +94,7 @@ const TRACKS = [
       {xPos: 1100, yPos: 150, angleVal: 20, widthVal: 20, radiusVal: 10}
     ]
   },// next track
-  {decals:{},  
+  {decals:{"decal_lights":[382,634,124,637,350,130,776,126,1008,132,1290,130,1582,520,1398,455,682,464,602,775,1486,1266,1236,1244,687,1263,940,1578,853,1836,1570,1910,1245,2050,58,1790],},  
   grid:
   [6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,
    6,6,4,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,
@@ -121,13 +121,11 @@ const TRACKS = [
    5,5,4,5,5,5,5,5,5,5,5,5,6,6,5,4,5,5,5,5,5,5,4,5,5,5,5,5,5,5,5,
    4,6,6,5,5,5,5,5,5,5,5,4,5,4,5,5,5,5,5,5,6,6,6,6,6,6,6,6,6,6,6,
    6,6,6,6,6,6,6,6,6,6,6],
-  waypoints:[
-    {xPos:175,yPos:300,angleVal:0,widthVal:20,radiusVal:20},
-    {xPos:500,yPos:150,angleVal:20,widthVal:20,radiusVal:20},
-    {xPos:700,yPos:150,angleVal:20,widthVal:20,radiusVal:20},
-    {xPos:900,yPos:150,angleVal:20,widthVal:20,radiusVal:20},
-    {xPos:1100,yPos:150,angleVal:20,widthVal:20,radiusVal:10}
-]}
+  waypoints:
+    
+    // 
+    [{"xPos":175,"yPos":300,"angleVal":0,"widthVal":20,"radiusVal":20},{"xPos":578,"yPos":254,"angleVal":0,"widthVal":30,"radiusVal":30},{"xPos":1233,"yPos":206,"angleVal":0,"widthVal":30,"radiusVal":30},{"xPos":1492,"yPos":297,"angleVal":0,"widthVal":30,"radiusVal":30},{"xPos":1480,"yPos":664,"angleVal":0,"widthVal":30,"radiusVal":30},{"xPos":905,"yPos":577,"angleVal":0,"widthVal":30,"radiusVal":30},{"xPos":524,"yPos":507,"angleVal":0,"widthVal":30,"radiusVal":30},{"xPos":534,"yPos":841,"angleVal":0,"widthVal":30,"radiusVal":30},{"xPos":1176,"yPos":929,"angleVal":0,"widthVal":30,"radiusVal":30},{"xPos":1427,"yPos":939,"angleVal":0,"widthVal":30,"radiusVal":30},{"xPos":1366,"yPos":1362,"angleVal":0,"widthVal":30,"radiusVal":30},{"xPos":1039,"yPos":1302,"angleVal":0,"widthVal":30,"radiusVal":30},{"xPos":817,"yPos":1245,"angleVal":0,"widthVal":30,"radiusVal":30},{"xPos":776,"yPos":1527,"angleVal":0,"widthVal":30,"radiusVal":30},{"xPos":1139,"yPos":1781,"angleVal":0,"widthVal":30,"radiusVal":30},{"xPos":1445,"yPos":1812,"angleVal":0,"widthVal":30,"radiusVal":30},{"xPos":1374,"yPos":2223,"angleVal":0,"widthVal":30,"radiusVal":30},{"xPos":682,"yPos":2050,"angleVal":0,"widthVal":30,"radiusVal":30},{"xPos":1050,"yPos":2210,"angleVal":0,"widthVal":30,"radiusVal":30},{"xPos":371,"yPos":1673,"angleVal":0,"widthVal":30,"radiusVal":30},{"xPos":284,"yPos":923,"angleVal":0,"widthVal":30,"radiusVal":30}]
+}
 
 ];
 // var trackGrid =
