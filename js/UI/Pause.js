@@ -12,7 +12,7 @@ class PauseUI {
     // option text
     this.option_font_size = 48;
     this.menu_start_y = 400;
-    this.margin_y = 80;
+    this.margin_y = 120;
     this.options = [
       { text: "Resume", onSelect: () => {} },
       { text: "Restart", onSelect: () => {} },
@@ -21,7 +21,10 @@ class PauseUI {
 
     // cursor flag
     this.cursor = 0;
+    this.max_cursor_float_height = 2;
+    this.cursor_y = 0;
     this.time = 0; // will used for animations
+    this.current_option = this.options[this.cursor];
 
     // background flag
     this.background_flag_y = 64;
@@ -46,15 +49,61 @@ class PauseUI {
     if (thisKey === this.upKey) {
       this.keyHeld_Up = setTo;
     }
+
+    // not moving the cursor when the button is lifted
+    if ((thisKey === this.downKey || thisKey === this.upKey) && !setTo) {
+      this.cursor_moving = false;
+    }
+  }
+
+  createTextGradient(x, y, width, height) {
+    var gradient = canvasContext.createLinearGradient(x, y, width, height);
+    gradient.addColorStop(0, this.text_color_1);
+    gradient.addColorStop(1, this.text_color_2);
+    gradient.textBaseline = "top";
+    return gradient;
+  }
+
+  highlightMenuOption(option, gradient) {
+    canvasContext.fillStyle = gradient;
+    canvasContext.lineWidth = 8;
+    canvasContext.strokeText(option.text, option.x, option.y);
   }
 
   update() {
-    if (this.keyHeld_Down) {
+    // move the cursor up or down
+    if (this.keyHeld_Down && !this.cursor_moving) {
       this.cursor++;
+      this.cursor_moving = true;
     }
-    if (this.keyHeld_Up) {
+
+    if (this.keyHeld_Up && !this.cursor_moving) {
       this.cursor--;
+      this.cursor_moving = true;
     }
+
+    // loop the menu cursor
+    if (this.cursor > this.options.length - 1) {
+      this.cursor = 0;
+    }
+
+    if (this.cursor < 0) {
+      this.cursor = this.options.length - 1;
+    }
+
+    // get the current menu item where the cursor is pointed
+    this.current_option = this.options[this.cursor];
+
+    // animate cursor floating
+    let cursor_float = Math.sin(this.time / 4) * this.max_cursor_float_height;
+    this.cursor_y =
+      this.menu_start_y +
+      this.margin_y * this.cursor -
+      this.option_font_size +
+      cursor_float;
+
+    // progress time value for animations
+    this.time++;
   }
 
   draw() {
@@ -80,22 +129,15 @@ class PauseUI {
       this.pause_text_size / 2;
 
     // cursor flag -- render test
-    canvasContext.drawImage(
-      cursor_flag,
-      canvas.width / 2 - 300,
-      this.menu_start_y
-    );
+    canvasContext.drawImage(cursor_flag, canvas.width / 2 - 300, this.cursor_y);
 
     // pause text color
-    var gradient = canvasContext.createLinearGradient(
+    var gradient = this.createTextGradient(
       pause_text_x,
       pause_text_y,
       pause_text_x + text_width,
       pause_text_y + 48
     );
-    gradient.addColorStop(0, this.text_color_1);
-    gradient.addColorStop(1, this.text_color_2);
-    gradient.textBaseline = "top";
 
     // pause text shadow
     canvasContext.fillStyle = "#00000088";
@@ -112,13 +154,28 @@ class PauseUI {
     // pause menu options
     canvasContext.font = this.font;
     this.options.forEach((option, i) => {
+      // dimensions
+      let option_width = canvasContext.measureText(option.text).width;
+      let option_x = canvas.width / 2 - option_width / 2;
+      let option_y = this.menu_start_y + this.margin_y * i;
+      let option_height = this.option_font_size;
+      const option_object = {
+        x: option_x,
+        y: option_y,
+        width: option_width,
+        height: option_height,
+        text: option.text,
+      };
+
+      // default fill style for menu items
       canvasContext.fillStyle = this.text_color_1;
-      let width = canvasContext.measureText(option.text).width;
-      canvasContext.fillText(
-        option.text,
-        canvas.width / 2 - width / 2,
-        this.menu_start_y + this.margin_y * i
-      );
+
+      // highlight the currently selected menu item
+      if (i === this.cursor) {
+        this.highlightMenuOption(option_object, gradient);
+      }
+
+      canvasContext.fillText(option.text, option_x, option_y);
     });
   }
 }
