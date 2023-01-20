@@ -153,17 +153,34 @@ function drawEditor() {
 }
 
 function exportTrack() {
-  // TODO: find some way to print the spawn point as well, otherwise we're going to have to remember where it is and re-insert it every time we do an export
-  // TODO: find a better way to print this too
   console.log('Exporting track', courseIndex, 'see console output below');
-  console.log("Ideally the grid would be properly indented (and we'd also print out the rest of the data), but here's the grid with TRACK_PLAYER locations kept in:");
   let printLines = [];
   printLines.push('  {');
-  printLines.push('    grid: ' + JSON.stringify(copiedGrids[courseIndex]) + ',');
+  // TODO: include new decals
+  let decalsString = '    decals: ' + JSON.stringify(TRACKS[courseIndex].decals) + ',';
+  printLines.push(decalsString);
+  let gridString = '    grid: [';
+  for (let i = 0; i < copiedGrids[courseIndex].length; i++) {
+    if (i % TRACK_COLS === 0) {
+      gridString += '\n      ';
+    }
+    gridString += copiedGrids[courseIndex][i].toString();
+    if (i < copiedGrids[courseIndex].length - 1) {
+      gridString += ',';
+      if (i % TRACK_COLS < TRACK_COLS - 1) {
+        gridString += ' ';
+      }
+    }
+  }
+  gridString += '\n    ],';
+  printLines.push(gridString);
+  printLines.push('    waypoints: [');
+  for (let i = 0; i < TRACKS[courseIndex].waypoints.length; i++) {
+    const waypoint = TRACKS[courseIndex].waypoints[i];
+    printLines.push('      { xPos: ' + waypoint.xPos + ', yPos: ' + waypoint.yPos + ', angleVal: ' + waypoint.angleVal + ', widthVal: ' + waypoint.widthVal + ', radiusVal: ' + waypoint.radiusVal + '},');
+  }
+  printLines.push('    ]');
   printLines.push('  }');
   console.log(printLines.join('\n'));
-  console.log("Here's the rest of the track object:");
-  const exportString = JSON.stringify(TRACKS[courseIndex]);
-  console.log(exportString);
-  console.log('copy and paste the above into the track class');
+  console.log('copy and paste the above into the TRACKS array');
 }
