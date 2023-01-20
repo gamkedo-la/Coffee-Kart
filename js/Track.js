@@ -128,6 +128,9 @@ const TRACKS = [
 }
 
 ];
+
+var copiedGrids = TRACKS.map((track) => track.grid.slice());
+
 // var trackGrid =
 //     [ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
 //       1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1,

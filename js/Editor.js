@@ -71,6 +71,7 @@ function editorClick(e) {
   const trackPos = trackCol + TRACK_COLS * trackRow;
 
   TRACKS[courseIndex].grid[trackPos] = trackTileCounter;
+  copiedGrids[courseIndex][trackPos] = trackTileCounter;
 }
 
 document.addEventListener('click', editorClick);
@@ -155,6 +156,13 @@ function exportTrack() {
   // TODO: find some way to print the spawn point as well, otherwise we're going to have to remember where it is and re-insert it every time we do an export
   // TODO: find a better way to print this too
   console.log('Exporting track', courseIndex, 'see console output below');
+  console.log("Ideally the grid would be properly indented (and we'd also print out the rest of the data), but here's the grid with TRACK_PLAYER locations kept in:");
+  let printLines = [];
+  printLines.push('  {');
+  printLines.push('    grid: ' + JSON.stringify(copiedGrids[courseIndex]) + ',');
+  printLines.push('  }');
+  console.log(printLines.join('\n'));
+  console.log("Here's the rest of the track object:");
   const exportString = JSON.stringify(TRACKS[courseIndex]);
   console.log(exportString);
   console.log('copy and paste the above into the track class');
