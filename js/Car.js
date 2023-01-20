@@ -650,12 +650,12 @@ function carClass() {
 
     // tire tracks
     // todo: only when accel is max, when we are drifting, or brakes are on
-    if (!this.drawTireTracks) return
-    
-    if (this.lastTireTrackX != this.position.x || this.lastTireTrackY != this.position.y) {
-      decals.add(this.position.x,this.position.y,degToRad(this.carAng + 90),this.tireTrackAlpha,tireTracksPic);
-      this.lastTireTrackX = this.position.x;
-      this.lastTireTrackY = this.position.y;
+    if (this.drawTireTracks) {
+        if (this.lastTireTrackX != this.position.x || this.lastTireTrackY != this.position.y) {
+        decals.add(this.position.x,this.position.y,degToRad(this.carAng + 90),this.tireTrackAlpha,tireTracksPic);
+        this.lastTireTrackX = this.position.x;
+        this.lastTireTrackY = this.position.y;
+        }
     }
 
   }
