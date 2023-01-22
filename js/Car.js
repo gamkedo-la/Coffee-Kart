@@ -98,6 +98,8 @@ function carClass() {
   this.carReset = function() {
     this.carId = carCount;
     carCount++;
+    this.powerupType = POWERUP_NONE;
+    this.powerupTimer = 0;
     this.carSpeed = 0;
     this.wheelSpeed = 0; // rpm of wheels, inherently 1-dimensional
     this.carAng = -90; // currently in radians. why -ve? because 'up' is negative
@@ -415,6 +417,18 @@ function carClass() {
 
   this.carMovePlayer = function() {
     
+    var currentDrivePower = drivePower;
+    var currentDrivePowerMax = drivePowerMax;
+
+    if (this.powerupType != POWERUP_NONE) {
+      this.powerupTimer -= fixedDt;
+      currentDrivePower = PowerupPower(this.powerupType);
+      currentDrivePowerMax = PowerupPowerMax(this.powerupType);
+
+      if (this.powerupTimer <= 0) {
+        this.powerupType = POWERUP_NONE;
+      }
+    }
 
     this.drawTireTracks = false;
 
@@ -467,7 +481,7 @@ function carClass() {
         this.reversing = false;
       }
       if (!this.handBrake) {
-        this.engineForce += (drivePower * fixedDt);
+        this.engineForce += (currentDrivePower * fixedDt);
       }
     
     } else if(this.keyHeld_Reverse) {
@@ -512,8 +526,8 @@ function carClass() {
       }
     }
 
-    if (this.engineForce > drivePowerMax) {
-      this.engineForce = drivePowerMax;
+    if (this.engineForce > currentDrivePowerMax) {
+      this.engineForce = currentDrivePowerMax;
       this.drawTireTracks = true;
     }
     if (this.engineForce < (drivePowerMaxReverse)) {

@@ -46,6 +46,9 @@ const TRACKS = [
       {xPos: 700, yPos: 150, angleVal: 20, widthVal: 20, radiusVal: 20},
       {xPos: 900, yPos: 150, angleVal: 20, widthVal: 20, radiusVal: 20},
       {xPos: 1100, yPos: 150, angleVal: 20, widthVal: 20, radiusVal: 10}
+    ],
+    powerups: [
+      
     ]
   }, //next track
   {
@@ -92,6 +95,9 @@ const TRACKS = [
       {xPos: 700, yPos: 150, angleVal: 20, widthVal: 20, radiusVal: 20},
       {xPos: 900, yPos: 150, angleVal: 20, widthVal: 20, radiusVal: 20},
       {xPos: 1100, yPos: 150, angleVal: 20, widthVal: 20, radiusVal: 10}
+    ],
+    powerups: [
+      
     ]
   },// next track
   {
@@ -150,6 +156,10 @@ const TRACKS = [
       { xPos: 1050, yPos: 2210, angleVal: 0, widthVal: 30, radiusVal: 30},
       { xPos: 371, yPos: 1673, angleVal: 0, widthVal: 30, radiusVal: 30},
       { xPos: 284, yPos: 923, angleVal: 0, widthVal: 30, radiusVal: 30},
+    ],
+    powerups: [
+      {type: POWERUP_ESPRESSO, xPos: 175, yPos: 300, radiusVal : 20, active : true},
+      {type: POWERUP_ESPRESSO, xPos: 275, yPos: 300, radiusVal : 20, active : true}
     ]
   }
 

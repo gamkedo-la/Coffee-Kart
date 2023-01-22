@@ -56,6 +56,7 @@ function updateEverything() {
   }
   updateEditor();
   updateWaypointEditor();
+  updatePowerups();
   timer.update();
   speedometer.setSpeed(p1.carSpeed);
   speedometer.setGear(p1.engineSoundGear);
@@ -82,7 +83,7 @@ function drawEverything() {
   }
 
   drawTracks();
-
+  drawPowerups();
   decals.draw(-camera.drawPosition.x, -camera.drawPosition.y); // tire tracks etc
 
   for (var i = 0; i < gCars.length; i++) {
