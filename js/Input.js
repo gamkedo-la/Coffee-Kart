@@ -1,4 +1,5 @@
 // keyboard keycode constants, determined by printing out evt.keyCode from a key handler
+const KEY_ENTER = 13;
 const KEY_LEFT_ARROW = 37;
 const KEY_UP_ARROW = 38;
 const KEY_RIGHT_ARROW = 39;
@@ -25,8 +26,16 @@ function initInput() {
   );
   //p2.setupControls(KEY_LETTER_W,KEY_LETTER_S,KEY_LETTER_A,KEY_LETTER_D);
 
-  pauseUI.setMenuControls({ downKey: KEY_DOWN_ARROW, upKey: KEY_UP_ARROW });
-  titleUI.setMenuControls({ downKey: KEY_DOWN_ARROW, upKey: KEY_UP_ARROW });
+  pauseUI.setMenuControls({
+    downKey: KEY_DOWN_ARROW,
+    upKey: KEY_UP_ARROW,
+    selectKey: KEY_ENTER,
+  });
+  titleUI.setMenuControls({
+    downKey: KEY_DOWN_ARROW,
+    upKey: KEY_UP_ARROW,
+    selectKey: KEY_ENTER,
+  });
 
   editorCamera.setupControls(
     KEY_LEFT_ARROW,
