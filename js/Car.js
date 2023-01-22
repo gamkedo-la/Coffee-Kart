@@ -128,6 +128,7 @@ function carClass() {
     this.handBrake = false;
     this.drawTireTracks = false;
     this.resetWaypoints();
+    this.collisionForce = Vec2Init(0,0);
 
 
   } // end of carReset
@@ -235,6 +236,13 @@ function carClass() {
     const brakingConst = -30000.0;
     var brakingForce = Vec2Init(0, 0);
 
+    const collisionThreshold = 20;
+    if (Vec2Mag(this.collisionForce) <= collisionThreshold) {
+      this.collisionForce = Vec2Init(0,0);
+    } else {
+      this.collisionForce = Vec2Scale(this.collisionForce, 0.5);
+    }
+
     this.handBrake = false;
     var hitTheGas = false;
     if (distanceToWaypoint > AI_WAYPOINT_TRIGGER_DISTANCE) {
@@ -281,7 +289,7 @@ function carClass() {
     
     var dragForce = Vec2Scale(this.carVelocity, -1.0 * Vec2Mag(this.carVelocity) * dragCoefficient);
     
-    var longForce = Vec2Add(Vec2Add(Vec2Add(tractionForce, rollingResistanceForce), dragForce), brakingForce);
+    var longForce = Vec2Add(Vec2Add(Vec2Add(Vec2Add(tractionForce, rollingResistanceForce), dragForce), brakingForce), this.collisionForce);
 
 
     var accel = Vec2Scale(longForce , 1.0 / this.carMass);
@@ -430,7 +438,13 @@ function carClass() {
     
     // engine stuff
 
-    
+    const collisionThreshold = 20;
+    if (Vec2Mag(this.collisionForce) <= collisionThreshold) {
+      this.collisionForce = Vec2Init(0,0);
+    } else {
+      this.collisionForce = Vec2Scale(this.collisionForce, 0.5);
+    }
+    console.log("collision force is " + Vec2Mag(this.collisionForce));
     const brakingConst = -30000.0;
     var brakingForce = Vec2Init(0, 0);
 
@@ -519,7 +533,7 @@ function carClass() {
     
     var dragForce = Vec2Scale(this.carVelocity, -1.0 * Vec2Mag(this.carVelocity) * dragCoefficient);
     
-    var longForce = Vec2Add(Vec2Add(Vec2Add(tractionForce, rollingResistanceForce), dragForce), brakingForce);
+    var longForce = Vec2Add(Vec2Add(Vec2Add(Vec2Add(tractionForce, rollingResistanceForce), dragForce), brakingForce), this.collisionForce);
 
 
     var accel = Vec2Scale(longForce , 1.0 / this.carMass);
@@ -596,15 +610,17 @@ function carClass() {
     //colorCircle(bottomLeftRotated.x - camera.drawPosition.x, bottomLeftRotated.y - camera.drawPosition.y, 5, "green");
     //colorCircle(bottomRightRotated.x - camera.drawPosition.x, bottomRightRotated.y - camera.drawPosition.y, 5, "yellow");
 
-    for (var i = 0; i < gCars.length; i++) {
+    for (var id = 0; id < gCars.length; id++) {
       // don't collide with ourself
-      if (gCars[i].carId != this.carId) {        
+      if (gCars[id].carId != this.carId) {        
         // what we want to do is to 
         // first get our axis aligned candidate positions
         // and the rotation of the candidate car
         // and then rotate BACK by the candidate car rotation
         // so now we are axis aligned w.r.t the candidate car
-        var candidateCar = gCars[i];
+        var candidateCar = gCars[id];
+        var directionToCar = Vec2Sub(candidateCar.position, this.position);
+        directionToCar = Vec2Normalize(directionToCar);
         // these are all axis aligned
         var candidateTopLeft = Vec2Add(candidateCar.position, Vec2Init(-candidateCar.carWidth/4, -candidateCar.carHeight/2));
         var candidateTopRight = Vec2Add(candidateCar.position, Vec2Init(candidateCar.carWidth/4, -candidateCar.carHeight/2));
@@ -618,7 +634,14 @@ function carClass() {
         var ourCorners = [usTopLeftRotated, usTopRightRotated, usBottomLeftRotated, usBottomRightRotated];
         for (var i = 0; i < ourCorners.length; i++) {
           if (Vec2InRect(ourCorners[i], candidateTopLeft, candidateTopRight, candidateBottomLeft, candidateBottomRight)) {
-            this.position = lastPos;
+            //this.position = lastPos;
+            // start with applying a force instead
+            // a basic idea would be to 
+            // take the vector from candidate to car
+            // apply negative directions
+            // todo: use a value based on the strength of the collision?
+            this.collisionForce = Vec2Scale(directionToCar, -10000);
+            gCars[id].collisionForce = Vec2Scale(directionToCar, 10000);
             return; // I guess return here? although we limit to colliding with just one car in this way for now
           }
         }
