@@ -12,7 +12,9 @@ let editorCamera = new EditorCamera();
 var timer = new CountdownTimer();
 var speedometer = new Speedometer();
 var pauseUI = new PauseUI();
+var titleUI = new TitleScreenUI();
 var paused = false;
+var onTitleScreen = true;
 var canChangePauseState = true;
 gCars = [];
 carCount = 0;
@@ -53,7 +55,11 @@ function updateEverything() {
   if (paused) {
     pauseUI.update();
     return;
+  } else if (onTitleScreen) {
+    titleUI.update();
+    return;
   }
+
   updateEditor();
   updateWaypointEditor();
   updatePowerups();
@@ -63,8 +69,7 @@ function updateEverything() {
   speedometer.setRPM(p1.engineSoundRPM);
 }
 function moveEverything() {
-  if (paused) return;
-  
+  if (paused || onTitleScreen) return;
 
   if (trackEditorOn) {
     editorCamera.moveEditorCamera();
@@ -72,14 +77,14 @@ function moveEverything() {
   } else {
     for (var i = 0; i < gCars.length; i++) {
       gCars[i].carMove();
-    }    
+    }
     camera.UpdateCamera(p1.position);
   }
 }
 
 function drawEverything() {
   if (trackEditorOn) {
-    colorRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, 'black');
+    colorRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, "black");
   }
 
   drawTracks();
@@ -87,14 +92,16 @@ function drawEverything() {
   decals.draw(-camera.drawPosition.x, -camera.drawPosition.y); // tire tracks etc
 
   for (var i = 0; i < gCars.length; i++) {
-    gCars[i].carDraw();    
-  }      
-  
+    gCars[i].carDraw();
+  }
+
   speedometer.draw();
   timer.draw();
 
   if (paused) {
     pauseUI.draw();
+  } else if (onTitleScreen) {
+    titleUI.draw();
   }
 
   if (trackEditorOn) {
