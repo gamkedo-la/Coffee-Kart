@@ -444,7 +444,7 @@ function carClass() {
     } else {
       this.collisionForce = Vec2Scale(this.collisionForce, 0.5);
     }
-    console.log("collision force is " + Vec2Mag(this.collisionForce));
+    //console.log("collision force is " + Vec2Mag(this.collisionForce));
     const brakingConst = -30000.0;
     var brakingForce = Vec2Init(0, 0);
 
