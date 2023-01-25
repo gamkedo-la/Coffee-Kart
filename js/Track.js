@@ -158,8 +158,8 @@ const TRACKS = [
       { xPos: 284, yPos: 923, angleVal: 0, widthVal: 30, radiusVal: 30},
     ],
     powerups: [
-      {type: POWERUP_ESPRESSO, xPos: 175, yPos: 300, radiusVal : 20, active : true},
-      {type: POWERUP_ESPRESSO, xPos: 275, yPos: 300, radiusVal : 20, active : true}
+      { type: POWERUP_ESPRESSO, xPos: 175, yPos: 300, radiusVal: 20, active: false },
+      { type: POWERUP_ESPRESSO, xPos: 275, yPos: 300, radiusVal: 20, active: true },
     ]
   }
 

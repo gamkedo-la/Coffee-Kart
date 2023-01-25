@@ -11,6 +11,16 @@ const POWERUP_MUFFIN = 2;
 const POWERUP_FRENCH_PRESS = 3;
 const POWERUP_ESPRESSO = 4;
 
+function powerupConstString(type) {
+  switch (type) {
+    case POWERUP_COFFEE_BEAN: return 'POWERUP_COFFEE_BEAN';
+    case POWERUP_MUFFIN: return 'POWERUP_MUFFIN';
+    case POWERUP_FRENCH_PRESS: return 'POWERUP_FRENCH_PRESS';
+    case POWERUP_ESPRESSO: return 'POWERUP_ESPRESSO';
+    default: return 'POWERUP_NONE';
+  }
+}
+
 function PowerupInit(typeVal, xPosVal, yPosVal, radiusVal, activeVal) {
     var result = {type: typeVal, xPos: xPosVal, yPos : yPosVal, radiusVal : radiusVal, active : activeVal};
     return result;

@@ -179,6 +179,12 @@ function exportTrack() {
     const waypoint = TRACKS[courseIndex].waypoints[i];
     printLines.push('      { xPos: ' + waypoint.xPos + ', yPos: ' + waypoint.yPos + ', angleVal: ' + waypoint.angleVal + ', widthVal: ' + waypoint.widthVal + ', radiusVal: ' + waypoint.radiusVal + '},');
   }
+  printLines.push('    ],');
+  printLines.push('    powerups: [');
+  for (let i = 0; i < TRACKS[courseIndex].powerups.length; i++) {
+    const item = TRACKS[courseIndex].powerups[i];
+    printLines.push('      { type: ' + powerupConstString(item.type) + ', xPos: ' + item.xPos + ', yPos: ' + item.yPos + ', radiusVal: ' + item.radiusVal + ', active: ' + item.active.toString() + ' },');
+  }
   printLines.push('    ]');
   printLines.push('  }');
   console.log(printLines.join('\n'));
