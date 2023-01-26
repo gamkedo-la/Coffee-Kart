@@ -696,8 +696,8 @@ function carClass() {
     }
 
     // occasionally emit some smoke particles
-    let exhaustX = 0; //Math.cos(this.carAng) * 20;
-    let exhaustY = 0; //Math.sin(this.carAng) * 20;
+    let exhaustX = Math.cos(degToRad(this.carAng)) * -25;
+    let exhaustY = Math.sin(degToRad(this.carAng)) * -25;
     carExhaustFX(this.position.x+exhaustX,this.position.y+exhaustY,this.carSpeed/500); // alpha of smoke particle based on speed
 
   }
