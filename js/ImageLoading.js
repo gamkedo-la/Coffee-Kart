@@ -26,6 +26,9 @@ var decal_lights = document.createElement("img");
 var background_flag = document.createElement("img");
 var cursor_flag = document.createElement("img");
 
+// particles
+var smokePic = document.createElement("img");
+
 var picsToLoad = 0;
 
 function countLoadedImageAndLaunchIfReady() {
@@ -68,6 +71,7 @@ function loadImages() {
     { varName: background_flag, theFile: "background_flag.png" },
     { varName: cursor_flag, theFile: "cursor_flag.png" },
     { varName: car_lights, theFile: "car_lights.png" },
+    { varName: smokePic, theFile: "smoke.png" },
   ];
 
   picsToLoad = imageList.length;

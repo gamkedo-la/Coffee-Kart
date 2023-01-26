@@ -70,6 +70,8 @@ function updateEverything() {
 }
 function moveEverything() {
   if (paused || onTitleScreen) return;
+  
+  particles.update();
 
   if (trackEditorOn) {
     editorCamera.moveEditorCamera();
@@ -88,14 +90,19 @@ function drawEverything() {
   }
 
   drawTracks();
+  
   drawPowerups();
+  
   decals.draw(-camera.drawPosition.x, -camera.drawPosition.y); // tire tracks etc
+  
+  particles.draw(-camera.drawPosition.x, -camera.drawPosition.y);
 
   for (var i = 0; i < gCars.length; i++) {
     gCars[i].carDraw();
   }
 
   speedometer.draw();
+
   timer.draw();
 
   if (paused) {
