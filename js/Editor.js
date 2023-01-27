@@ -156,7 +156,14 @@ function exportTrack() {
   console.log('Exporting track', courseIndex, 'see console output below');
   let printLines = [];
   printLines.push('  {');
-  let decalsString = '    decals: ' + JSON.stringify(TRACKS[courseIndex].decals) + ',';
+  let decalsString = '    decals: {';
+  for (let decalNumber = 0; decalNumber < decalpics.length; decalNumber++) {
+    let imagename = decalpics[decalNumber].src.split("/").pop().split(".")[0];
+    if (TRACKS[courseIndex].decals[imagename]) {
+      decalsString += '\n      "' + imagename + '": ' + JSON.stringify(TRACKS[courseIndex].decals[imagename]) + ',';
+    }
+  }
+  decalsString += '\n    },'
   printLines.push(decalsString);
   let gridString = '    grid: [';
   for (let i = 0; i < copiedGrids[courseIndex].length; i++) {

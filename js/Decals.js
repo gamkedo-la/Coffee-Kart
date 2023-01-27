@@ -112,30 +112,29 @@ var decals = new Decalmanager(); // initialized immediately
 
 
 
-
+const decalpics = [
+  decal_oilstain,
+  decal_crack,
+  decal_pebbles,
+  decal_grass,
+  decal_barrel,
+  decal_tire,
+  decal_cone,
+  decal_skidmarks,
+  decal_skidmarks_left,
+  decal_stripes,
+  decal_stripes_vertical,
+  decal_coffee_cup,
+  decal_coffee_takeaway,
+  decal_muffin,
+  decal_lights,
+  decal_french_press,
+];
 
 if (DECAL_EDITOR_MODE) {
     
     console.log("DECAL_EDITOR_MODE is on: recording clicks to console.log for you to copy n paste.");
 
-    let decalpics = [
-        decal_oilstain,
-        decal_crack,
-        decal_pebbles,
-        decal_grass,
-        decal_barrel,
-        decal_tire,
-        decal_cone,
-        decal_skidmarks,
-        decal_skidmarks_left,
-        decal_stripes,
-        decal_stripes_vertical,
-        decal_coffee_cup,
-        decal_coffee_takeaway,
-        decal_muffin,
-        decal_lights,
-        decal_french_press,
-    ];
     
     var decalClickBuffer = ""; //"var decals = [";
     var decalNumber = 0;
