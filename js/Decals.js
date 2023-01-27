@@ -168,6 +168,11 @@ if (DECAL_EDITOR_MODE) {
         let rot = 0;
         decals.add(x,y,rot,alpha,pic);
 
+        let decalsToSave = TRACKS[courseIndex].decals;
+        if (!decalsToSave[imagename]) {
+          decalsToSave[imagename] = [];
+        }
+        decalsToSave[imagename].push(x, y);
     }
  
     // mouse click places a decal

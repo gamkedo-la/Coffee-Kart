@@ -156,7 +156,6 @@ function exportTrack() {
   console.log('Exporting track', courseIndex, 'see console output below');
   let printLines = [];
   printLines.push('  {');
-  // TODO: include new decals
   let decalsString = '    decals: ' + JSON.stringify(TRACKS[courseIndex].decals) + ',';
   printLines.push(decalsString);
   let gridString = '    grid: [';
