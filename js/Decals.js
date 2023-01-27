@@ -149,6 +149,10 @@ if (DECAL_EDITOR_MODE) {
           return;
         }
 
+        if (!isXYinRect(e.clientX, e.clientY, canvas.getBoundingClientRect())) {
+          return;
+        }
+
         let x = Math.round(camera.drawPosition.x) + Math.round(e.clientX);
         let y = Math.round(camera.drawPosition.y) + Math.round(e.clientY);
         decalClickBuffer += x+","+y+","; 
