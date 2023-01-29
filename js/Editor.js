@@ -54,7 +54,7 @@ function getYOnScreen(e) {
 }
 
 function editorClick(e) {
-  if (!trackEditorOn) {
+  if (!trackEditorOn || waypointEditorOn) {
     return;
   }
 
