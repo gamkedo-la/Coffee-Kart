@@ -7,6 +7,28 @@ let canToggleWaypointEditor = true;
 var keyHeld_WaypointEditor = false;
 let waypointEditorOn = false;
 
+function rankCars() {
+  var carRankings = [];
+  for (var i = 0; i < gCars.length; i++) {
+    var currentCar = gCars[i];
+    var tDist = Vec2Distance(currentCar.position, currentCar.waypoints[currentCar.waypointCounter].position);
+    //console.log("tdist is " + tDist);
+    var distToAdd;
+    // todo: refine this to allow for multiple laps etc
+    distToAdd = currentCar.waypointCounter*10000 - tDist;    
+    var result = {id : i, dist : distToAdd};
+    carRankings.push(result);
+  }
+  // so now we have an unsorted array
+  carRankings.sort(function(x,y){return x.dist - y.dist});
+  // now it's sorted lowest to highest, so should be 4th, 3rd etc
+  for (var i = 0; i < carRankings.length; i++) {
+    var rank = carRankings[i];
+    //console.log("car " + rank.id + "has dist " + rank.dist);
+    gCars[rank.id].ranking = carRankings.length - i;
+  }
+}
+
 function waypointInit(xPosVal, yPosVal, angleVal, widthVal, radiusVal) {
     var result = {xPos: xPosVal, yPos : yPosVal, angleVal : angleVal, widthVal : widthVal, radiusVal : radiusVal};
     return result;

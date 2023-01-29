@@ -11,6 +11,8 @@ const POWERUP_MUFFIN = 2;
 const POWERUP_FRENCH_PRESS = 3;
 const POWERUP_ESPRESSO = 4;
 
+// TODO: map powerups to sprite names to draw
+
 function powerupConstString(type) {
   switch (type) {
     case POWERUP_COFFEE_BEAN: return 'POWERUP_COFFEE_BEAN';

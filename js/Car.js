@@ -1,4 +1,4 @@
-const DEBUG_DRAW = false;
+const DEBUG_DRAW = true;
 const AI_DEBUG_MODE = false; // console.log spam
 const AI_WAYPOINT_TRIGGER_DISTANCE = 350; // how close we need to get to each waypoint
 
@@ -96,6 +96,7 @@ function carClass() {
   }
   
   this.carReset = function() {
+    this.ranking = 0;
     this.carId = carCount;
     carCount++;
     this.powerupType = POWERUP_NONE;
@@ -139,6 +140,7 @@ function carClass() {
 
     if (this.isPlayer) {
       this.carMovePlayer();
+      console.log("player rank is " + this.ranking);
     } else {
       this.carMoveAi();
     }
@@ -417,6 +419,19 @@ function carClass() {
 
   this.carMovePlayer = function() {
     
+    var currentWaypoint = this.waypoints[this.waypointCounter];        
+    var distanceToWaypoint = Vec2Distance(this.position, currentWaypoint.position);
+    waypointEpsilon = currentWaypoint.radius;    
+    if (distanceToWaypoint < waypointEpsilon && this.waypointCounter < (this.waypoints.length - 1)) {
+      
+      if (AI_DEBUG_MODE) console.log("AI REACHED ("+Math.round(distanceToWaypoint)+" away) waypoint "+this.waypointCounter+" of " +this.waypoints.length);
+
+      // update our waypoint to the next
+      this.waypointCounter++;
+      currentWaypoint = this.waypoints[this.waypointCounter];    
+      
+    }    
+
     var currentDrivePower = drivePower;
     var currentDrivePowerMax = drivePowerMax;
 

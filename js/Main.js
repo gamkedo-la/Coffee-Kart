@@ -63,6 +63,9 @@ function updateEverything() {
   updateEditor();
   updateWaypointEditor();
   updatePowerups();
+  // at this level of the loop we can probably
+  // rank the cars based on their positions
+  rankCars();
   timer.update();
   speedometer.setSpeed(p1.carSpeed);
   speedometer.setGear(p1.engineSoundGear);
