@@ -23,8 +23,17 @@ class Menu {
     this.current_option = this.options[this.cursor];
 
     // background flag
-    this.background_flag_y = 64;
-    this.background_flag_height = 208;
+    this.background_flag = {
+      x: 0,
+      y: 64,
+      height: 208,
+      width: SCREEN_WIDTH,
+      speed: 8,
+    };
+    this.background_flags = [
+      { ...this.background_flag },
+      { ...this.background_flag, x: SCREEN_WIDTH },
+    ];
 
     // controls
     this.keyHeld_Down = false;
@@ -72,6 +81,12 @@ class Menu {
   }
 
   update() {
+    // move background flag
+    this.background_flags.forEach((flag) => {
+      flag.x -= flag.speed;
+      if (flag.x + flag.width <= 0) flag.x = SCREEN_WIDTH;
+    });
+
     // move the cursor up or down
     if (this.keyHeld_Down && !this.cursor_moving) {
       this.cursor++;
@@ -122,7 +137,9 @@ class Menu {
     canvasContext.globalAlpha = 1;
 
     // background flag image
-    canvasContext.drawImage(background_flag, 0, 64);
+    this.background_flags.forEach((flag) => {
+      canvasContext.drawImage(background_flag, flag.x, flag.y);
+    });
 
     // main text dimensions + position
     let text_width = canvasContext.measureText(this.text).width;
@@ -130,8 +147,8 @@ class Menu {
 
     // vertically center the main text within the background flag
     let main_text_y =
-      this.background_flag_y +
-      this.background_flag_height / 2 +
+      this.background_flag.y +
+      this.background_flag.height / 2 +
       this.main_text_size / 2;
 
     // cursor flag -- render test
