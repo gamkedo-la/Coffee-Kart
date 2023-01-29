@@ -10,7 +10,7 @@ class CountdownTimer{
         this.yLocation = 60;
     }
     update(){
-        if(!this.paused && this.remainingTime > 0) {
+        if(!this.paused && this.remainingTime && !trackEditorOn > 0) {
             this.remainingTime -= framesPerSecond/1000;
         }
     }
