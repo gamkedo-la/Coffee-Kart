@@ -13,6 +13,11 @@ const KEY_LETTER_P = 80;
 const KEY_LETTER_E = 69;
 const KEY_LETTER_R = 82;
 const controlKeyForWaypointEditor = KEY_LETTER_R;
+const KEY_DEL = 46;
+
+var keyPressedWaypointDelete = false;
+var canDelete = true;
+
 function initInput() {
   document.addEventListener("keydown", keyPressed);
   document.addEventListener("keyup", keyReleased);
@@ -67,6 +72,7 @@ function setKeyHoldState(thisKey, thisCar, setTo) {
   if (thisKey == controlKeyForWaypointEditor) {
     keyHeld_WaypointEditor = setTo;
   }
+  
 }
 
 function keyPressed(evt) {
@@ -82,6 +88,11 @@ function keyPressed(evt) {
     paused = !paused;
     canChangePauseState = false;
   }
+  if (evt.keyCode == KEY_DEL && canDelete) {
+    keyPressedWaypointDelete = true;;
+    canDelete = false;
+  }
+
 }
 
 function keyReleased(evt) {
@@ -95,5 +106,8 @@ function keyReleased(evt) {
   // we've released the pause key, so allow us to unpause on the next press
   if (evt.keyCode == KEY_LETTER_P) {
     canChangePauseState = true;
+  }
+  if (evt.keyCode == KEY_DEL) {
+    canDelete = true;
   }
 }

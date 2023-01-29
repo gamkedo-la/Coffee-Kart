@@ -7,6 +7,8 @@ let canToggleWaypointEditor = true;
 var keyHeld_WaypointEditor = false;
 let waypointEditorOn = false;
 
+let lastMatchedWaypoint = -1;
+
 function rankCars() {
   var carRankings = [];
   for (var i = 0; i < gCars.length; i++) {
@@ -46,15 +48,22 @@ function waypointInitWithConfig(config) {
 }
 
 function drawWaypoints() {
-  if (TRACKS[courseIndex].waypoints.length > 1) {
+  if (TRACKS[courseIndex].waypoints.length > 1) {    
     for (let i = 1; i < TRACKS[courseIndex].waypoints.length; i++) {
       // some overdraw here
       waypoint = TRACKS[courseIndex].waypoints[i];
-      colorCircle(waypoint.xPos - camera.drawPosition.x, waypoint.yPos - camera.drawPosition.y, waypoint.radiusVal, "blue");
+      if (i == lastMatchedWaypoint) {
+        colorCircle(waypoint.xPos - camera.drawPosition.x, waypoint.yPos - camera.drawPosition.y, waypoint.radiusVal, "red");
+      } else {
+        colorCircle(waypoint.xPos - camera.drawPosition.x, waypoint.yPos - camera.drawPosition.y, waypoint.radiusVal, "blue");
+      }
       waypointPrev = TRACKS[courseIndex].waypoints[i-1];
-      colorCircle(waypointPrev.xPos - camera.drawPosition.x, waypointPrev.yPos - camera.drawPosition.y, waypointPrev.radiusVal, "blue");
-      // draw line between the waypoints
-      colorLine(waypoint.xPos - camera.drawPosition.x, waypoint.yPos - camera.drawPosition.y, waypointPrev.xPos - camera.drawPosition.x, waypointPrev.yPos - camera.drawPosition.y, "red");
+      if (i - 1 == lastMatchedWaypoint) {
+        colorCircle(waypointPrev.xPos - camera.drawPosition.x, waypointPrev.yPos - camera.drawPosition.y, waypointPrev.radiusVal, "red");
+      } else {
+        colorCircle(waypointPrev.xPos - camera.drawPosition.x, waypointPrev.yPos - camera.drawPosition.y, waypointPrev.radiusVal, "blue");
+      }
+      colorLine(waypoint.xPos - camera.drawPosition.x, waypoint.yPos - camera.drawPosition.y, waypointPrev.xPos - camera.drawPosition.x, waypointPrev.yPos - camera.drawPosition.y, "blue");
     }
   } else if (TRACKS[courseIndex].waypoints.length == 1) {
       waypoint = TRACKS[courseIndex].waypoints[0];
@@ -78,6 +87,14 @@ function updateWaypointEditor() {
   else if (!keyHeld_WaypointEditor && !canToggleWaypointEditor) {
     canToggleWaypointEditor = true;
   }
+
+  if (keyPressedWaypointDelete) {
+    // handle deletion
+    keyPressedWaypointDelete = false;
+    if (lastMatchedWaypoint != -1) {
+      TRACKS[courseIndex].waypoints.splice(lastMatchedWaypoint, 1);
+    }
+  }
 }
 
 function WaypointEditorClick(e) {
@@ -86,17 +103,37 @@ function WaypointEditorClick(e) {
   }
   const x = Math.round(camera.drawPosition.x) + Math.round(e.clientX);
   const y = Math.round(camera.drawPosition.y) + Math.round(e.clientY);
+  // find a possible waypoint to select
+  var foundMatchingWaypoint = false;
+  for (var i = 0; i < TRACKS[courseIndex].waypoints.length; i++) {
+    var currentWaypoint = TRACKS[courseIndex].waypoints[i];
+    var currentWaypointPos = Vec2Init(currentWaypoint.xPos, currentWaypoint.yPos);
+    var mousePos = Vec2Init(x,y);
+    if (Vec2Distance(currentWaypointPos, mousePos) < currentWaypoint.radiusVal) {
+      foundMatchingWaypoint = true;
+      lastMatchedWaypoint = i;
+      break;
+    }
+  }
+
+  if (!foundMatchingWaypoint) {
+
   
-  angleToAdd = Number(prompt("enter angle"));
-  widthToAdd = Number(prompt("enter width"));
-  radiusToAdd = Number(prompt("enter radius"));
+  
+    angleToAdd = Number(prompt("enter angle"));
+    widthToAdd = Number(prompt("enter width"));
+    radiusToAdd = Number(prompt("enter radius"));
 
-  waypointToAdd = waypointInit(x, y, angleToAdd, widthToAdd, radiusToAdd);
+    waypointToAdd = waypointInit(x, y, angleToAdd, widthToAdd, radiusToAdd);
 
-  console.log("adding waypoint at " + x + " " + y + " " + angleToAdd + " " + widthToAdd + radiusToAdd);
-  // TODO: enable user to select tile type
-  TRACKS[courseIndex].waypoints.push(waypointToAdd);
-  p2.resetWaypoints();
-}
+    console.log("adding waypoint at " + x + " " + y + " " + angleToAdd + " " + widthToAdd + radiusToAdd);    
+    if (lastMatchedWaypoint == -1) {
+      TRACKS[courseIndex].waypoints.push(waypointToAdd);
+    } else {
+      TRACKS[courseIndex].waypoints.splice(lastMatchedWaypoint+1, 0, waypointToAdd);
+    }
+    p2.resetWaypoints();
+  }
+} 
 
 document.addEventListener('click', WaypointEditorClick);
