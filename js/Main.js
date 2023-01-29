@@ -116,5 +116,8 @@ function drawEverything() {
 
   if (trackEditorOn) {
     drawEditor();
+    if (waypointEditorOn) {
+      drawWaypoints();
+    }
   }
 }

@@ -45,8 +45,21 @@ function waypointInitWithConfig(config) {
     return result;
 }
 
-function drawWaypoint(waypoint) {
-
+function drawWaypoints() {
+  if (TRACKS[courseIndex].waypoints.length > 1) {
+    for (let i = 1; i < TRACKS[courseIndex].waypoints.length; i++) {
+      // some overdraw here
+      waypoint = TRACKS[courseIndex].waypoints[i];
+      colorCircle(waypoint.xPos - camera.drawPosition.x, waypoint.yPos - camera.drawPosition.y, waypoint.radiusVal, "blue");
+      waypointPrev = TRACKS[courseIndex].waypoints[i-1];
+      colorCircle(waypointPrev.xPos - camera.drawPosition.x, waypointPrev.yPos - camera.drawPosition.y, waypointPrev.radiusVal, "blue");
+      // draw line between the waypoints
+      colorLine(waypoint.xPos - camera.drawPosition.x, waypoint.yPos - camera.drawPosition.y, waypointPrev.xPos - camera.drawPosition.x, waypointPrev.yPos - camera.drawPosition.y, "red");
+    }
+  } else if (TRACKS[courseIndex].waypoints.length == 1) {
+      waypoint = TRACKS[courseIndex].waypoints[0];
+      colorCircle(waypoint.xPos - camera.drawPosition.x, waypoint.yPos - camera.drawPosition.y, waypoint.radiusVal, "blue");
+  }
 }
 
 
