@@ -3,15 +3,40 @@ console.log("Press 'P' to enter PowerupEditor mode");
 let canTogglePowerupEditor = true;
 
 var keyHeld_PowerupEditor = false;
-let PowerupEditorOn = false;
+let powerupEditorOn = false;
 
 const POWERUP_NONE = 0;
 const POWERUP_COFFEE_BEAN = 1;
 const POWERUP_MUFFIN = 2;
 const POWERUP_FRENCH_PRESS = 3;
 const POWERUP_ESPRESSO = 4;
+// inelegant but let's make the croissant the last
+// so we can get the number to modulo with off that?
+const POWERUP_TAKEAWAY = 5;
+const POWERUP_CROISSANT = 6;
+const POWERUP_NUM = POWERUP_CROISSANT + 1;
+
+var selectedPowerup = 1;
 
 // TODO: map powerups to sprite names to draw
+
+document.addEventListener("wheel", selectPowerup);
+
+function selectPowerup(e) {
+  if (!powerupEditorOn) {
+    return;
+  }
+
+  if (e.deltaY > 0) {
+    selectedPowerup = max(1, (selectedPowerup + 1) % POWERUP_NUM);
+    
+  } else {
+    selectedPowerup--;
+    if (selectedPowerup < 0) {
+      selectedPowerup = POWERUP_NUM - 1;
+    }
+  }
+}
 
 function powerupConstString(type) {
   switch (type) {
@@ -23,8 +48,20 @@ function powerupConstString(type) {
   }
 }
 
-function PowerupInit(typeVal, xPosVal, yPosVal, radiusVal, activeVal) {
-    var result = {type: typeVal, xPos: xPosVal, yPos : yPosVal, radiusVal : radiusVal, active : activeVal};
+function PowerupRadius(type) {
+  const testRadius = 20;
+  switch (type) {
+    case POWERUP_COFFEE_BEAN: return testRadius;
+    case POWERUP_MUFFIN: return testRadius;
+    case POWERUP_FRENCH_PRESS: return testRadius;
+    case POWERUP_ESPRESSO: return testRadius;
+    default: return testRadius;
+  }
+}
+
+function PowerupInit(xPosVal, yPosVal, typeVal) {
+    var radiusToAdd = PowerupRadius(typeVal);
+    var result = {type: typeVal, xPos: xPosVal, yPos : yPosVal, radiusVal : radiusToAdd, active : true};
     return result;
 }
 
@@ -44,8 +81,20 @@ function drawPowerups() {
     for (i = 0; i < TRACKS[courseIndex].powerups.length; i++) {
         var powerup = TRACKS[courseIndex].powerups[i];
         if (powerup.active) {
-          if (powerup.type == POWERUP_ESPRESSO) {
+          if (powerup.type == POWERUP_COFFEE_BEAN) {
+            drawBitmapCenteredAtLocationWithRotation(decal_coffee_cup, powerup.xPos - camera.drawPosition.x, powerup.yPos - camera.drawPosition.y, degToRad(0) );
+        }
+          if (powerup.type == POWERUP_COFFEE_BEAN) {
               drawBitmapCenteredAtLocationWithRotation(decal_coffee_cup, powerup.xPos - camera.drawPosition.x, powerup.yPos - camera.drawPosition.y, degToRad(0) );
+          }
+          if (powerup.type == POWERUP_MUFFIN) {
+              drawBitmapCenteredAtLocationWithRotation(decal_muffin, powerup.xPos - camera.drawPosition.x, powerup.yPos - camera.drawPosition.y, degToRad(0) );
+          }
+          if (powerup.type == POWERUP_FRENCH_PRESS) {
+            drawBitmapCenteredAtLocationWithRotation(decal_french_press, powerup.xPos - camera.drawPosition.x, powerup.yPos - camera.drawPosition.y, degToRad(0) );
+          }
+          if (powerup.type == POWERUP_ESPRESSO) {
+            drawBitmapCenteredAtLocationWithRotation(decal_coffee_cup, powerup.xPos - camera.drawPosition.x, powerup.yPos - camera.drawPosition.y, degToRad(0) );
           }
         }
     }
@@ -97,14 +146,14 @@ function updatePowerups()
 
 
 function updatePowerupEditor() {
-  if (keyHeld_PowerupEditor && canTogglePowerupEditor && !PowerupEditorOn) {
+  if (keyHeld_PowerupEditor && canTogglePowerupEditor && !powerupEditorOn) {
     console.log('Switching to Powerup PowerupEditor');
-    PowerupEditorOn = true;
+    powerupEditorOn = true;
     canTogglePowerupEditor = false;
   }
-  if (keyHeld_PowerupEditor && canTogglePowerupEditor && PowerupEditorOn) {
+  if (keyHeld_PowerupEditor && canTogglePowerupEditor && powerupEditorOn) {
     console.log('Exiting Powerup PowerupEditor');
-    PowerupEditorOn = false;
+    powerupEditorOn = false;
     canTogglePowerupEditor = false;
   }
   else if (!keyHeld_PowerupEditor && !canTogglePowerupEditor) {
@@ -112,21 +161,22 @@ function updatePowerupEditor() {
   }
 }
 
+
 function PowerupEditorClick(e) {
-  if (!PowerupEditorOn) {
+  if (!powerupEditorOn) {
     return;
   }
   const x = Math.round(camera.drawPosition.x) + Math.round(e.clientX);
   const y = Math.round(camera.drawPosition.y) + Math.round(e.clientY);
   
-  radiusToAdd = Number(prompt("enter radius"));
+  
 
-  PowerupToAdd = PowerupInit(x, y, radiusToAdd);
+  PowerupToAdd = PowerupInit(x, y, selectedPowerup);
 
-  console.log("adding Powerup at " + x + " " + y + " " + angleToAdd + " " + widthToAdd + radiusToAdd);
+  console.log("adding Powerup at " + PowerupToAdd.xPos + " " + PowerupToAdd.yPos );
   // TODO: enable user to select tile type
-  TRACKS[courseIndex].Powerups.push(PowerupToAdd);
-  p2.resetPowerups();
+  TRACKS[courseIndex].powerups.push(PowerupToAdd);
+  
 }
 
 document.addEventListener('click', PowerupEditorClick);

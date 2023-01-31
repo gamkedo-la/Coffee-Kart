@@ -54,7 +54,7 @@ function getYOnScreen(e) {
 }
 
 function editorClick(e) {
-  if (!trackEditorOn || waypointEditorOn) {
+  if (!trackEditorOn || waypointEditorOn || powerupEditorOn) {
     return;
   }
 
@@ -101,7 +101,7 @@ function editorHover(e) {
 document.addEventListener('mousemove', editorHover, false);
 
 function selectTrackTile(e) {
-  if (!trackEditorOn) {
+  if (!trackEditorOn || powerupEditorOn) {
     return;
   }
 

@@ -62,6 +62,7 @@ function updateEverything() {
 
   updateEditor();
   updateWaypointEditor();
+  updatePowerupEditor();
   updatePowerups();
   // at this level of the loop we can probably
   // rank the cars based on their positions

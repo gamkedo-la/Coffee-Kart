@@ -12,7 +12,9 @@ const KEY_LETTER_SPACE = 32;
 const KEY_LETTER_P = 80;
 const KEY_LETTER_E = 69;
 const KEY_LETTER_R = 82;
+const KEY_LETTER_U = 85;
 const controlKeyForWaypointEditor = KEY_LETTER_R;
+const controlKeyForPowerupEditor = KEY_LETTER_U; 
 const KEY_DEL = 46;
 
 var keyPressedWaypointDelete = false;
@@ -71,6 +73,9 @@ function setKeyHoldState(thisKey, thisCar, setTo) {
   }
   if (thisKey == controlKeyForWaypointEditor) {
     keyHeld_WaypointEditor = setTo;
+  }
+  if (thisKey == controlKeyForPowerupEditor) {
+    keyHeld_PowerupEditor = setTo;
   }
   
 }
