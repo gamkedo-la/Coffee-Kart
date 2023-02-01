@@ -4,6 +4,7 @@ var car3Pic = document.createElement("img");
 var carSportPic = document.createElement("img");
 var trackSheet = document.createElement("img");
 var car_lights = document.createElement("img");
+var timerBGPic = document.createElement("img");
 
 // decals
 var tireTracksPic = document.createElement("img");
@@ -72,6 +73,7 @@ function loadImages() {
     { varName: cursor_flag, theFile: "cursor_flag.png" },
     { varName: car_lights, theFile: "car_lights.png" },
     { varName: smokePic, theFile: "smoke.png" },
+    { varName: timerBGPic, theFile: "stopwatch_bg.png" },
   ];
 
   picsToLoad = imageList.length;
