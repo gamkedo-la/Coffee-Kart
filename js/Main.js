@@ -4,9 +4,12 @@ const SCREEN_WIDTH = 1280;
 const SCREEN_HEIGHT = 720;
 const framesPerSecond = 30;
 
-var courseIndex = 3;
-var p1 = new carClass();
+var courseIndex = 0;
+// limit ourselves to four cars
+var p1 = new carClass(); // player
 var p2 = new carClass();
+var p3 = new carClass();
+var p4 = new carClass();
 var camera = new CameraClass();
 let editorCamera = new EditorCamera();
 var timer = new CountdownTimer();
@@ -34,9 +37,13 @@ function loadingDoneSoStartGame() {
     drawEverything();
   }, 1000 / framesPerSecond);
   timer.resume();
+  
+  p1.carInit(carSportPic, true);  
   p2.carInit(car2Pic);
-  p1.carInit(carSportPic, true);
-  gCars = [p1, p2];
+  p3.carInit(carOpenTopPic);
+  p4.carInit(carPic);
+  gCars = [p1, p2, p3, p4];
+  //gCars = [p1, p2];
   camera.InitCamera(
     SCREEN_WIDTH / 2,
     SCREEN_HEIGHT / 2,

@@ -20,6 +20,12 @@ const collisionDecay = 0.97;
 const waypointEps = 20.0;
 
 
+function resetAllCars() {
+  for (i = 0; i < gCars.length; i++) {
+    gCars[i].carReset();
+  }
+}
+
 function carClass() {
     
     // waypoints for ai.
@@ -352,8 +358,12 @@ function carClass() {
       this.position = nextPos;
     } else if( drivingIntoTileType == TRACK_GOAL ) {
       document.getElementById("debugText").innerHTML = this.myName + " won the race";
-      p1.carReset();
-      p2.carReset();
+
+      // TODO: handle placings!
+      //courseIndex = (courseIndex + 1) % TRACKS.length;
+      resetAllCars();
+      
+      
       timer.setTime(TIME_DEFAULT);
     } else {
     
@@ -421,7 +431,7 @@ function carClass() {
     
     var currentWaypoint = this.waypoints[this.waypointCounter];        
     var distanceToWaypoint = Vec2Distance(this.position, currentWaypoint.position);
-    waypointEpsilon = currentWaypoint.radius;    
+    waypointEpsilon = currentWaypoint.radius + 80;    
     if (distanceToWaypoint < waypointEpsilon && this.waypointCounter < (this.waypoints.length - 1)) {
       
       if (AI_DEBUG_MODE) console.log("AI REACHED ("+Math.round(distanceToWaypoint)+" away) waypoint "+this.waypointCounter+" of " +this.waypoints.length);
@@ -603,8 +613,11 @@ function carClass() {
     if (timer.getTime() <= 0) {
       // out of time!
       document.getElementById("debugText").innerHTML = "out of time!";
-      p1.carReset();
-      p2.carReset();
+
+      //reset all
+      resetAllCars();
+      
+      
       timer.setTime(TIME_DEFAULT);
       return;
     }
