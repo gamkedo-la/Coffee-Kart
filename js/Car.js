@@ -715,6 +715,16 @@ function carClass() {
     let exhaustY = Math.sin(degToRad(this.carAng)) * -25;
     carExhaustFX(this.position.x+exhaustX,this.position.y+exhaustY,this.carSpeed/500); // alpha of smoke particle based on speed
 
+
+    // draw placing
+    if (this.isPlayer) {
+      // placingSheet
+      canvasContext.drawImage(placingSheet,
+        (this.ranking - 1) * 32, 0, // top-left corner of tile art, multiple of tile width
+        32, 32, // get full tile size from source
+        SCREEN_WIDTH - 128, 48, // x,y top-left corner for image destination
+        TRACK_W, TRACK_H); // draw full full tile size for destination
+    }
   }
 
 } // end of car class
