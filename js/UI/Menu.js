@@ -22,6 +22,10 @@ class Menu {
     this.time = 0; // will used for animations
     this.current_option = this.options[this.cursor];
 
+    // line width
+    this.currentOptionLineWidth = 0;
+    this.maxLineWidth = 8;
+
     // background flag
     this.background_flag = {
       x: 0,
@@ -76,7 +80,12 @@ class Menu {
 
   highlightMenuOption(option, gradient) {
     canvasContext.fillStyle = gradient;
-    canvasContext.lineWidth = 8;
+    this.currentOptionLineWidth = lerp(
+      this.currentOptionLineWidth,
+      this.maxLineWidth,
+      0.2
+    );
+    canvasContext.lineWidth = this.currentOptionLineWidth;
     canvasContext.strokeText(option.text, option.x, option.y);
   }
 
@@ -91,11 +100,13 @@ class Menu {
     if (this.keyHeld_Down && !this.cursor_moving) {
       this.cursor++;
       this.cursor_moving = true;
+      this.currentOptionLineWidth = 0;
     }
 
     if (this.keyHeld_Up && !this.cursor_moving) {
       this.cursor--;
       this.cursor_moving = true;
+      this.currentOptionLineWidth = 0;
     }
 
     // loop the menu cursor
