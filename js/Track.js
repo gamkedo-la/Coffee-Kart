@@ -163,6 +163,72 @@ const TRACKS = [
       { type: POWERUP_ESPRESSO, xPos: 175, yPos: 300, radiusVal: 20, active: false },
       { type: POWERUP_ESPRESSO, xPos: 275, yPos: 300, radiusVal: 20, active: true },
     ]
+  },
+  // CAFE track
+  {
+    decals: {
+      "decal_oilstain": [1368,1958],
+      "decal_lights": [382,634,124,637,350,130,776,126,1008,132,1290,130,1582,520,1398,455,682,464,602,775,1486,1266,1236,1244,687,1263,940,1578,853,1836,1570,1910,1245,2050,58,1790],
+    },
+    grid: [
+      8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8,
+      8, 8, 8, 8, 8, 8, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 8,
+      8, 7, 8, 8, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 8,
+      8, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 8, 8, 7, 7, 7, 7, 7, 7, 8,
+      8, 7, 7, 7, 7, 7, 7, 7, 7, 7, 8, 7, 7, 8, 7, 7, 7, 7, 7, 8,
+      8, 7, 7, 8, 8, 7, 7, 7, 8, 8, 8, 7, 7, 7, 8, 7, 7, 7, 7, 8,
+      8, 7, 7, 8, 8, 8, 8, 8, 7, 7, 7, 7, 7, 7, 7, 8, 7, 7, 7, 8,
+      8, 7, 7, 8, 8, 8, 7, 7, 7, 7, 7, 7, 7, 7, 7, 8, 7, 7, 7, 8,
+      8, 7, 7, 8, 8, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 8, 7, 7, 7, 8,
+      8, 7, 7, 7, 7, 7, 8, 8, 8, 8, 8, 7, 7, 7, 7, 7, 7, 7, 7, 8,
+      8, 7, 7, 7, 7, 8, 7, 7, 7, 7, 7, 8, 7, 7, 7, 7, 7, 7, 7, 8,
+      8, 7, 8, 7, 8, 7, 7, 7, 7, 7, 7, 7, 8, 7, 7, 7, 7, 7, 7, 8,
+      8, 7, 8, 7, 8, 7, 7, 7, 7, 7, 7, 7, 8, 7, 7, 7, 7, 7, 8, 8,
+      8, 7, 8, 7, 8, 7, 7, 7, 7, 8, 7, 7, 7, 7, 7, 7, 7, 8, 8, 8,
+      8, 7, 8, 7, 8, 7, 7, 7, 7, 8, 8, 7, 7, 7, 7, 7, 7, 8, 8, 8,
+      8, 7, 8, 7, 8, 7, 7, 7, 7, 8, 8, 7, 7, 7, 7, 7, 7, 8, 8, 8,
+      8, 7, 7, 7, 8, 8, 8, 7, 7, 8, 8, 8, 7, 7, 7, 7, 8, 7, 7, 8,
+      8, 7, 7, 7, 8, 8, 8, 7, 7, 8, 8, 8, 8, 8, 8, 8, 7, 7, 7, 8,
+      8, 7, 7, 7, 8, 8, 8, 7, 7, 8, 7, 7, 7, 7, 7, 7, 7, 7, 7, 8,
+      8, 7, 7, 8, 8, 8, 8, 7, 7, 8, 7, 7, 7, 7, 7, 7, 8, 8, 7, 8,
+      8, 7, 7, 8, 7, 7, 7, 7, 7, 8, 7, 7, 7, 7, 7, 8, 8, 7, 7, 8,
+      8, 7, 7, 8, 7, 7, 7, 7, 8, 7, 7, 7, 8, 8, 8, 8, 8, 7, 7, 8,
+      8, 7, 7, 8, 7, 7, 7, 8, 8, 7, 7, 7, 8, 8, 8, 8, 8, 7, 7, 8,
+      8, 7, 7, 8, 7, 7, 8, 8, 8, 8, 7, 7, 7, 7, 7, 8, 8, 7, 7, 8,
+      8, 7, 7, 8, 7, 7, 7, 8, 8, 8, 8, 8, 7, 7, 7, 7, 8, 7, 7, 8,
+      8, 7, 7, 8, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 8, 7, 7, 8,
+      8, 7, 7, 7, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 7, 7, 8,
+      8, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 8, 2, 2, 8,
+      8, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 3, 8, 7, 8,
+      8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8
+    ],
+    waypoints: [
+      { xPos: 175, yPos: 300, angleVal: 0, widthVal: 20, radiusVal: 20},
+      { xPos: 578, yPos: 254, angleVal: 0, widthVal: 30, radiusVal: 30},
+      { xPos: 1233, yPos: 206, angleVal: 0, widthVal: 30, radiusVal: 30},
+      { xPos: 1492, yPos: 297, angleVal: 0, widthVal: 30, radiusVal: 30},
+      { xPos: 1480, yPos: 664, angleVal: 0, widthVal: 30, radiusVal: 30},
+      { xPos: 905, yPos: 577, angleVal: 0, widthVal: 30, radiusVal: 30},
+      { xPos: 524, yPos: 507, angleVal: 0, widthVal: 30, radiusVal: 30},
+      { xPos: 534, yPos: 841, angleVal: 0, widthVal: 30, radiusVal: 30},
+      { xPos: 1176, yPos: 929, angleVal: 0, widthVal: 30, radiusVal: 30},
+      { xPos: 1427, yPos: 939, angleVal: 0, widthVal: 30, radiusVal: 30},
+      { xPos: 1366, yPos: 1362, angleVal: 0, widthVal: 30, radiusVal: 30},
+      { xPos: 1039, yPos: 1302, angleVal: 0, widthVal: 30, radiusVal: 30},
+      { xPos: 817, yPos: 1245, angleVal: 0, widthVal: 30, radiusVal: 30},
+      { xPos: 776, yPos: 1527, angleVal: 0, widthVal: 30, radiusVal: 30},
+      { xPos: 1139, yPos: 1781, angleVal: 0, widthVal: 30, radiusVal: 30},
+      { xPos: 1445, yPos: 1812, angleVal: 0, widthVal: 30, radiusVal: 30},
+      { xPos: 1374, yPos: 2223, angleVal: 0, widthVal: 30, radiusVal: 30},
+      { xPos: 682, yPos: 2050, angleVal: 0, widthVal: 30, radiusVal: 30},
+      { xPos: 1050, yPos: 2210, angleVal: 0, widthVal: 30, radiusVal: 30},
+      { xPos: 371, yPos: 1673, angleVal: 0, widthVal: 30, radiusVal: 30},
+      { xPos: 284, yPos: 923, angleVal: 0, widthVal: 30, radiusVal: 30},
+    ],
+    powerups: [
+      { type: POWERUP_ESPRESSO, xPos: 175, yPos: 300, radiusVal: 20, active: false },
+      { type: POWERUP_ESPRESSO, xPos: 275, yPos: 300, radiusVal: 20, active: true },
+    ]
   }
 
 ];
@@ -193,7 +259,9 @@ const TRACK_GOAL = 3;
 const TRACK_SNOW_ICE = 4;
 const TRACK_SNOW_ROAD = 5;
 const TRACK_SNOW_WALL = 6;
-const TRACK_TILE_MAX = 7; // will have to update this as extra tiles are added
+const TRACK_CAFE_FLOOR = 7;
+const TRACK_CAFE_COUNTER = 8;
+const TRACK_TILE_MAX = 9; // will have to update this as extra tiles are added, should match suffix of track file
 //const TRACK_FLAG = 8;
 
 function trackTileToIndex(tileCol, tileRow) {
@@ -208,6 +276,9 @@ function tileIsDriveable(tileType) {
     return true;
   }
   if (tileType == TRACK_SNOW_ICE) {
+    return true;
+  }
+  if (tileType == TRACK_CAFE_FLOOR) {
     return true;
   }
   return false;

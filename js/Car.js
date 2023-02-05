@@ -1,4 +1,4 @@
-const DEBUG_DRAW = false;
+const DEBUG_DRAW = true;
 const AI_DEBUG_MODE = false; // console.log spam
 const AI_WAYPOINT_TRIGGER_DISTANCE = 350; // how close we need to get to each waypoint
 
