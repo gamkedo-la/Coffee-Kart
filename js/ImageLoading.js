@@ -7,6 +7,7 @@ var trackSheet = document.createElement("img");
 var car_lights = document.createElement("img");
 var timerBGPic = document.createElement("img");
 var placingSheet = document.createElement("img");
+var rainEffectPic = document.createElement("img");
 
 // decals
 var tireTracksPic = document.createElement("img");
@@ -78,6 +79,7 @@ function loadImages() {
     { varName: smokePic, theFile: "smoke.png" },
     { varName: timerBGPic, theFile: "stopwatch_bg.png" },
     { varName : placingSheet, theFile: "placings.png"},
+    { varName : rainEffectPic, theFile: "rain_effect.png"},
   ];
 
   picsToLoad = imageList.length;

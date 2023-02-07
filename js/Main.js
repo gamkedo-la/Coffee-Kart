@@ -5,6 +5,8 @@ const SCREEN_HEIGHT = 720;
 const framesPerSecond = 30;
 
 var courseIndex = 0;
+var currentlyRaining = true; // FIXME: set to true on track 2(?) only
+
 // limit ourselves to four cars
 var p1 = new carClass(); // player
 var p2 = new carClass();
@@ -111,6 +113,8 @@ function drawEverything() {
   for (var i = 0; i < gCars.length; i++) {
     gCars[i].carDraw();
   }
+
+  if (currentlyRaining) drawRain(-camera.drawPosition.x, -camera.drawPosition.y);
 
   speedometer.draw();
 

@@ -27,7 +27,6 @@ class CountdownTimer{
         return mins + ":" + secs + ":" + ms; // +"."+microsecs;
     }
     draw(){
-        
         var timestr = this.formatTimeString(this.remainingTime);
         canvasContext.drawImage(timerBGPic,0,0);
         canvasContext.font = this.font;

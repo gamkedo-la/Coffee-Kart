@@ -1,4 +1,5 @@
 const DEBUG_DRAW = false;
+const DEBUG_RANK_LOG = false; // output car rank every frame in debug log 
 const AI_DEBUG_MODE = false; // console.log spam
 const AI_WAYPOINT_TRIGGER_DISTANCE = 350; // how close we need to get to each waypoint
 
@@ -146,7 +147,7 @@ function carClass() {
 
     if (this.isPlayer) {
       this.carMovePlayer();
-      console.log("player rank is " + this.ranking);
+      if (DEBUG_RANK_LOG) console.log("player rank is " + this.ranking);
     } else {
       this.carMoveAi();
     }
