@@ -4,7 +4,7 @@ const SCREEN_WIDTH = 1280;
 const SCREEN_HEIGHT = 720;
 const framesPerSecond = 30;
 
-var courseIndex = 0;
+var courseIndex = 1;
 var currentlyRaining = true; // FIXME: set to true on track 2(?) only
 
 // limit ourselves to four cars

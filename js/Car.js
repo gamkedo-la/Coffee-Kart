@@ -76,6 +76,12 @@ function carClass() {
     this.isPlayer = isPlayerVal;
     this.carWidth = this.myBitmap.width;
     this.carHeight = this.myBitmap.height;    
+    
+    this.spawnPoints = [];
+    
+    for (var i = 0; i < TRACKS.length; i++) {          
+      this.spawnPoints.push(null);
+    }
     this.carReset();
   }
 
@@ -112,20 +118,24 @@ function carClass() {
     this.wheelSpeed = 0; // rpm of wheels, inherently 1-dimensional
     this.carAng = -90; // currently in radians. why -ve? because 'up' is negative
     this.wheelAng = 0;
-    if(this.homeX == undefined) {
+    if (this.spawnPoints[courseIndex] == null) {
       for(var i=0; i<TRACKS[courseIndex].grid.length; i++) {
         if( TRACKS[courseIndex].grid[i] == TRACK_PLAYER) {
           var tileRow = Math.floor(i/TRACK_COLS);
           var tileCol = i%TRACK_COLS;
-          this.homeX = tileCol * TRACK_W + 0.5*TRACK_W;
-          this.homeY = tileRow * TRACK_H + 0.5*TRACK_H;
+          var homeX = tileCol * TRACK_W + 0.5*TRACK_W;
+          var homeY = tileRow * TRACK_H + 0.5*TRACK_H;
+          var spawnPoint = Vec2Init(homeX, homeY);
+          this.spawnPoints[courseIndex] = spawnPoint;
           TRACKS[courseIndex].grid[i] = TRACK_ROAD;
           break; // found it, so no need to keep searching 
         } // end of if
       } // end of for
-    } // end of if car position not saved yet
+     // end spawnPoint null condition
+    }
+    
 
-    this.position = Vec2Init(this.homeX, this.homeY);
+    this.position = Vec2Init(this.spawnPoints[courseIndex].x, this.spawnPoints[courseIndex].y);
     this.carHeading = Vec2Init(0,1);
     this.wheelHeading = Vec2Init(0,1);
     this.wheelBase = 1.2;
@@ -362,7 +372,9 @@ function carClass() {
 
       // TODO: handle placings!
       //courseIndex = (courseIndex + 1) % TRACKS.length;
+      courseIndex = (courseIndex + 1) % TRACKS.length;
       resetAllCars();
+      
       
       
       timer.setTime(TIME_DEFAULT);
