@@ -24,6 +24,7 @@ const waypointEps = 20.0;
 function resetAllCars() {
   for (i = 0; i < gCars.length; i++) {
     gCars[i].carReset();
+    gCars[i].resetWaypoints();
   }
 }
 
@@ -70,12 +71,13 @@ function carClass() {
     this.controlKeyForHandbrake = spaceKey;
   }
 
-  this.carInit = function(whichGraphic, isPlayerVal = false) {
+  this.carInit = function(whichGraphic, id, isPlayerVal = false) {
     this.myBitmap = whichGraphic;
     this.myName = this.nameFromGraphic();
     this.isPlayer = isPlayerVal;
     this.carWidth = this.myBitmap.width;
     this.carHeight = this.myBitmap.height;    
+    this.carId = id;
     
     this.spawnPoints = [];
     
@@ -109,8 +111,7 @@ function carClass() {
   }
   
   this.carReset = function() {
-    this.ranking = 0;
-    this.carId = carCount;
+    this.ranking = 0;    
     carCount++;
     this.powerupType = POWERUP_NONE;
     this.powerupTimer = 0;
