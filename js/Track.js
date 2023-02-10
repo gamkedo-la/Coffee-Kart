@@ -4,6 +4,7 @@ const TRACK_W = 80;
 const TRACK_H = 80;
 const TRACK_COLS = 20;
 const TRACK_ROWS = 30;//15
+
 const TRACKS = [
   // snow track
   {
@@ -169,6 +170,16 @@ const TRACK_CAFE_COUNTER = 8;
 const TRACK_CAFE_COUNTER_ROTATED = 9;
 const TRACK_TILE_MAX = 10; // will have to update this as extra tiles are added, should match suffix of track file
 //const TRACK_FLAG = 8;
+
+function courseReplacementTile()
+{
+  if (courseIndex == 0) {
+    return TRACK_SNOW_ROAD;
+  }
+  if (courseIndex == 1) {
+    return TRACK_CAFE_FLOOR;
+  }
+}
 
 function trackTileToIndex(tileCol, tileRow) {
   return (tileCol + TRACK_COLS*tileRow);

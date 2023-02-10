@@ -128,7 +128,7 @@ function carClass() {
           var homeY = tileRow * TRACK_H + 0.5*TRACK_H;
           var spawnPoint = Vec2Init(homeX, homeY);
           this.spawnPoints[courseIndex] = spawnPoint;
-          TRACKS[courseIndex].grid[i] = TRACK_ROAD;
+          TRACKS[courseIndex].grid[i] = courseReplacementTile();
           break; // found it, so no need to keep searching 
         } // end of if
       } // end of for
