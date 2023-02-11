@@ -1,5 +1,6 @@
-const DEBUG_DRAW = false;
+const DEBUG_DRAW = true;
 const DEBUG_RANK_LOG = false; // output car rank every frame in debug log 
+const DEBUG_LAP_LOG = true;
 const AI_DEBUG_MODE = false; // console.log spam
 const AI_WAYPOINT_TRIGGER_DISTANCE = 350; // how close we need to get to each waypoint
 
@@ -111,6 +112,8 @@ function carClass() {
   }
   
   this.carReset = function() {
+    this.lap = 0;
+    this.canIncLap = false;
     this.ranking = 0;    
     carCount++;
     this.powerupType = POWERUP_NONE;
@@ -214,19 +217,19 @@ function carClass() {
     // apply acceleration in that direction
     // when within a certain distance of the waypoint, update to a new waypoint
 
-    var currentWaypoint = this.waypoints[this.waypointCounter];    
+    var currentWaypoint = this.waypoints[this.waypointCounter % this.waypoints.length];    
     var headingToWaypoint = (Vec2Sub(currentWaypoint.position, this.position)); 
     var distanceToWaypoint = Vec2Distance(this.position, currentWaypoint.position);
     waypointEpsilon = currentWaypoint.radius;
     const headingEpsilon = 0.5;
 
-    if (distanceToWaypoint < waypointEpsilon && this.waypointCounter < (this.waypoints.length - 1)) {
+    if (distanceToWaypoint < waypointEpsilon) {
       
       if (AI_DEBUG_MODE) console.log("AI REACHED ("+Math.round(distanceToWaypoint)+" away) waypoint "+this.waypointCounter+" of " +this.waypoints.length);
 
       // update our waypoint to the next
       this.waypointCounter++;
-      currentWaypoint = this.waypoints[this.waypointCounter];    
+      currentWaypoint = this.waypoints[this.waypointCounter % this.waypoints.length];    
       headingToWaypoint = Vec2Normalize((Vec2Sub(currentWaypoint.position, this.position)));           
     }    
 
@@ -368,13 +371,28 @@ function carClass() {
     
     if( tileIsDriveable(drivingIntoTileType) ) {
       this.position = nextPos;
+      this.canIncLap = true;
     } else if( drivingIntoTileType == TRACK_GOAL ) {
       document.getElementById("debugText").innerHTML = this.myName + " won the race";
 
       // TODO: handle placings!
       //courseIndex = (courseIndex + 1) % TRACKS.length;
-      courseIndex = (courseIndex + 1) % TRACKS.length;
-      resetAllCars();
+      // from here we actually want to handle multiple laps
+
+      if (this.lap >= MAX_LAPS) {
+        courseIndex = (courseIndex + 1) % TRACKS.length;
+        resetAllCars();
+      } else {
+        // I *think* this is the calculation        
+        // was our last waypoint the last one on the track?
+
+        if (this.canIncLap && 
+          ((this.waypointCounter) % this.waypoints.length == (this.waypoints.length - 1))) {
+          this.lap++;
+          this.canIncLap = false;
+        }
+        this.position = nextPos;
+      }
       
       
       
@@ -443,7 +461,11 @@ function carClass() {
 
   this.carMovePlayer = function() {
     
-    var currentWaypoint = this.waypoints[this.waypointCounter];        
+    if (DEBUG_LAP_LOG) {
+      console.log("player lap is " + this.lap);
+    }
+
+    var currentWaypoint = this.waypoints[this.waypointCounter % this.waypoints.length];        
     var distanceToWaypoint = Vec2Distance(this.position, currentWaypoint.position);
     waypointEpsilon = currentWaypoint.radius + 80;    
     if (distanceToWaypoint < waypointEpsilon && this.waypointCounter < (this.waypoints.length - 1)) {
@@ -452,7 +474,7 @@ function carClass() {
 
       // update our waypoint to the next
       this.waypointCounter++;
-      currentWaypoint = this.waypoints[this.waypointCounter];    
+      currentWaypoint = this.waypoints[this.waypointCounter % this.waypoints.length];    
       
     }    
 

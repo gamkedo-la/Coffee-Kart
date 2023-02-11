@@ -11,13 +11,15 @@ let lastMatchedWaypoint = -1;
 
 function rankCars() {
   var carRankings = [];
+  
   for (var i = 0; i < gCars.length; i++) {
     var currentCar = gCars[i];
-    var tDist = Vec2Distance(currentCar.position, currentCar.waypoints[currentCar.waypointCounter].position);
+    var trackLength = currentCar.waypoints.length;
+    var tDist =  Vec2Distance(currentCar.position, currentCar.waypoints[currentCar.waypointCounter % currentCar.waypoints.length].position);
     //console.log("tdist is " + tDist);
     var distToAdd;
     // todo: refine this to allow for multiple laps etc
-    distToAdd = currentCar.waypointCounter*10000 - tDist;    
+    distToAdd = (trackLength * currentCar.lap * 20000) + currentCar.waypointCounter*10000 - tDist;    
     var result = {id : i, dist : distToAdd};
     carRankings.push(result);
   }
