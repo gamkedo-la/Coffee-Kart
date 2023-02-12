@@ -155,6 +155,79 @@ const TRACKS = [
       { type: POWERUP_ESPRESSO, xPos: 275, yPos: 300, radiusVal: 20, active: true },
     ]
   },
+  // new monsoon
+  {
+    decals: {
+    },
+    grid: [
+      10, 10, 10, 10, 10, 10, 10, 10, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+      10, 10, 10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1,
+      10, 10, 0, 11, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 11, 0, 1,
+      10, 10, 0, 11, 11, 0, 0, 0, 10, 10, 0, 0, 0, 0, 0, 0, 0, 11, 0, 1,
+      10, 10, 0, 11, 0, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 0, 11, 0, 1,
+      10, 10, 0, 11, 0, 10, 0, 0, 0, 10, 10, 0, 0, 0, 0, 0, 0, 11, 0, 1,
+      10, 10, 0, 11, 0, 10, 11, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 11, 0, 1,
+      10, 10, 0, 11, 0, 10, 11, 11, 0, 0, 10, 10, 1, 1, 1, 1, 1, 1, 1, 1,
+      10, 10, 0, 11, 0, 10, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 12, 0, 1,
+      10, 10, 0, 11, 0, 10, 0, 0, 0, 0, 10, 10, 10, 0, 0, 0, 0, 11, 0, 1,
+      10, 10, 0, 11, 0, 10, 0, 0, 0, 0, 10, 10, 10, 10, 0, 0, 0, 11, 0, 1,
+      10, 10, 0, 11, 0, 10, 0, 0, 1, 1, 1, 10, 10, 10, 0, 0, 0, 11, 0, 1,
+      10, 10, 0, 11, 0, 10, 0, 1, 1, 1, 1, 10, 10, 10, 10, 0, 0, 11, 0, 1,
+      10, 0, 11, 11, 0, 10, 10, 10, 1, 1, 1, 0, 10, 10, 10, 10, 0, 11, 0, 1,
+      10, 0, 11, 11, 0, 10, 10, 10, 0, 0, 0, 0, 0, 10, 10, 10, 0, 11, 0, 1,
+      10, 0, 11, 10, 0, 10, 10, 10, 0, 12, 12, 12, 12, 12, 12, 12, 12, 12, 0, 1,
+      10, 0, 11, 10, 0, 10, 10, 10, 0, 11, 0, 0, 0, 10, 10, 10, 10, 0, 0, 1,
+      10, 0, 11, 10, 0, 10, 10, 10, 0, 11, 0, 0, 0, 0, 10, 10, 10, 0, 0, 1,
+      10, 0, 11, 0, 0, 10, 10, 10, 0, 11, 0, 0, 0, 10, 10, 10, 10, 1, 1, 1,
+      10, 0, 11, 0, 0, 10, 10, 10, 0, 11, 0, 10, 10, 10, 10, 0, 1, 1, 1, 1,
+      10, 0, 11, 11, 0, 10, 10, 10, 0, 12, 12, 12, 12, 12, 12, 12, 12, 0, 0, 1,
+      10, 0, 11, 11, 0, 10, 10, 10, 0, 0, 0, 0, 0, 0, 0, 11, 11, 0, 0, 1,
+      10, 10, 10, 11, 0, 10, 10, 10, 0, 0, 0, 10, 10, 0, 0, 11, 11, 0, 0, 1,
+      10, 10, 10, 11, 0, 10, 10, 10, 1, 1, 1, 10, 10, 10, 0, 11, 11, 0, 0, 1,
+      10, 10, 10, 11, 0, 10, 10, 10, 0, 0, 1, 1, 10, 10, 0, 2, 2, 0, 0, 1,
+      10, 10, 10, 11, 0, 10, 10, 10, 0, 0, 0, 0, 10, 10, 0, 2, 2, 0, 0, 1,
+      10, 10, 10, 11, 0, 10, 10, 10, 0, 12, 12, 12, 12, 10, 10, 11, 11, 0, 0, 1,
+      10, 10, 0, 11, 12, 12, 12, 12, 11, 11, 1, 1, 11, 12, 3, 12, 11, 0, 0, 1,
+      10, 10, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 3, 0, 0, 0, 0, 1,
+      10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10
+    ],
+    waypoints: [
+      { xPos: 1269, yPos: 1674, angleVal: 0, widthVal: 50, radiusVal: 50},
+      { xPos: 877, yPos: 1651, angleVal: 0, widthVal: 50, radiusVal: 50},
+      { xPos: 772, yPos: 1622, angleVal: 0, widthVal: 30, radiusVal: 30},
+      { xPos: 779, yPos: 1264, angleVal: 0, widthVal: 60, radiusVal: 60},
+      { xPos: 935, yPos: 1251, angleVal: 0, widthVal: 30, radiusVal: 50},
+      { xPos: 1402, yPos: 1268, angleVal: 0, widthVal: 30, radiusVal: 50},
+      { xPos: 1404, yPos: 764, angleVal: 0, widthVal: 50, radiusVal: 50},
+      { xPos: 1386, yPos: 668, angleVal: 0, widthVal: 30, radiusVal: 30},
+      { xPos: 1026, yPos: 668, angleVal: 0, widthVal: 30, radiusVal: 40},
+      { xPos: 739, yPos: 688, angleVal: 0, widthVal: 40, radiusVal: 40},
+      { xPos: 550, yPos: 694, angleVal: 0, widthVal: 40, radiusVal: 40},
+      { xPos: 567, yPos: 559, angleVal: 0, widthVal: 40, radiusVal: 40},
+      { xPos: 712, yPos: 519, angleVal: 0, widthVal: 40, radiusVal: 40},
+      { xPos: 1400, yPos: 524, angleVal: 0, widthVal: 40, radiusVal: 40},
+      { xPos: 1401, yPos: 233, angleVal: 0, widthVal: 40, radiusVal: 40},
+      { xPos: 985, yPos: 202, angleVal: 0, widthVal: 40, radiusVal: 40},
+      { xPos: 579, yPos: 208, angleVal: 0, widthVal: 40, radiusVal: 40},
+      { xPos: 313, yPos: 300, angleVal: 0, widthVal: 40, radiusVal: 40},
+      { xPos: 280, yPos: 672, angleVal: 0, widthVal: 40, radiusVal: 40},
+      { xPos: 296, yPos: 1062, angleVal: 0, widthVal: 40, radiusVal: 40},
+      { xPos: 186, yPos: 1183, angleVal: 0, widthVal: 40, radiusVal: 40},
+      { xPos: 218, yPos: 1652, angleVal: 0, widthVal: 40, radiusVal: 40},
+      { xPos: 298, yPos: 1750, angleVal: 0, widthVal: 40, radiusVal: 40},
+      { xPos: 315, yPos: 2180, angleVal: 0, widthVal: 40, radiusVal: 40},
+      { xPos: 718, yPos: 2214, angleVal: 0, widthVal: 40, radiusVal: 40},
+      { xPos: 781, yPos: 2109, angleVal: 0, widthVal: 40, radiusVal: 40},
+      { xPos: 989, yPos: 2132, angleVal: 0, widthVal: 40, radiusVal: 40},
+      { xPos: 1018, yPos: 2224, angleVal: 0, widthVal: 40, radiusVal: 40},
+      { xPos: 1313, yPos: 2206, angleVal: 0, widthVal: 40, radiusVal: 40},
+    ],
+    powerups: [
+      { type: POWERUP_ESPRESSO, xPos: 175, yPos: 300, radiusVal: 20, active: false },
+      { type: POWERUP_ESPRESSO, xPos: 275, yPos: 300, radiusVal: 20, active: false },
+    ]
+  },
+  // old monsoon
   {
     decals: {
     },
@@ -192,31 +265,15 @@ const TRACKS = [
     ],
     waypoints: [
       { xPos: 265, yPos: 280, angleVal: 0, widthVal: 0, radiusVal: 70},
-      { xPos: 578, yPos: 254, angleVal: 0, widthVal: 30, radiusVal: 30},
-      { xPos: 1233, yPos: 206, angleVal: 0, widthVal: 30, radiusVal: 30},
-      { xPos: 1492, yPos: 297, angleVal: 0, widthVal: 30, radiusVal: 30},
-      { xPos: 1480, yPos: 664, angleVal: 0, widthVal: 30, radiusVal: 30},
-      { xPos: 905, yPos: 577, angleVal: 0, widthVal: 30, radiusVal: 30},
-      { xPos: 524, yPos: 507, angleVal: 0, widthVal: 30, radiusVal: 30},
-      { xPos: 534, yPos: 841, angleVal: 0, widthVal: 30, radiusVal: 30},
-      { xPos: 1176, yPos: 929, angleVal: 0, widthVal: 30, radiusVal: 30},
-      { xPos: 1427, yPos: 939, angleVal: 0, widthVal: 30, radiusVal: 30},
-      { xPos: 1366, yPos: 1362, angleVal: 0, widthVal: 30, radiusVal: 30},
-      { xPos: 1039, yPos: 1302, angleVal: 0, widthVal: 30, radiusVal: 30},
-      { xPos: 817, yPos: 1245, angleVal: 0, widthVal: 30, radiusVal: 30},
-      { xPos: 776, yPos: 1527, angleVal: 0, widthVal: 30, radiusVal: 30},
-      { xPos: 1139, yPos: 1781, angleVal: 0, widthVal: 30, radiusVal: 30},
-      { xPos: 1445, yPos: 1812, angleVal: 0, widthVal: 30, radiusVal: 30},
-      { xPos: 1374, yPos: 2223, angleVal: 0, widthVal: 30, radiusVal: 30},
-      { xPos: 1050, yPos: 2210, angleVal: 0, widthVal: 30, radiusVal: 30},
-      { xPos: 371, yPos: 1673, angleVal: 0, widthVal: 30, radiusVal: 30},
-      { xPos: 284, yPos: 923, angleVal: 0, widthVal: 30, radiusVal: 30},
+    
     ],
     powerups: [
       { type: POWERUP_ESPRESSO, xPos: 175, yPos: 300, radiusVal: 20, active: false },
       { type: POWERUP_ESPRESSO, xPos: 275, yPos: 300, radiusVal: 20, active: false },
     ]
   },
+
+  
   
   
 
