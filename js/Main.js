@@ -41,7 +41,7 @@ function loadingDoneSoStartGame() {
   timer.resume();
   
   p1.carInit(carSportPic, 1, true);  
-  p2.carInit(car2Pic, 2);
+  p2.carInit(motorcyclePic, 2);
   p3.carInit(carOpenTopPic, 3);
   p4.carInit(carPic, 4);
   gCars = [p1, p2, p3, p4];
