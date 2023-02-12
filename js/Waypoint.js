@@ -19,7 +19,7 @@ function rankCars() {
     //console.log("tdist is " + tDist);
     var distToAdd;
     // todo: refine this to allow for multiple laps etc
-    distToAdd = (trackLength * currentCar.lap * 20000) + currentCar.waypointCounter*10000 - tDist;    
+    distToAdd = (trackLength * currentCar.lap * 200000) + currentCar.waypointCounter*10000 - tDist;    
     var result = {id : i, dist : distToAdd};
     carRankings.push(result);
   }
