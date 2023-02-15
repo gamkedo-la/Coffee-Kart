@@ -381,6 +381,7 @@ function carClass() {
 
       if (this.lap >= MAX_LAPS) {
         courseIndex = (courseIndex + 1) % TRACKS.length;
+        decals.clear();
         resetAllCars();
       } else {
         // I *think* this is the calculation        
@@ -652,6 +653,7 @@ function carClass() {
 
       //reset all
       resetAllCars();
+      decals.clear();
       
       
       timer.setTime(TIME_DEFAULT);
