@@ -80,10 +80,7 @@ function PowerupInitWithConfig(config) {
 function drawPowerups() {
     for (i = 0; i < TRACKS[courseIndex].powerups.length; i++) {
         var powerup = TRACKS[courseIndex].powerups[i];
-        if (powerup.active) {
-          if (powerup.type == POWERUP_COFFEE_BEAN) {
-            drawBitmapCenteredAtLocationWithRotation(decal_coffee_cup, powerup.xPos - camera.drawPosition.x, powerup.yPos - camera.drawPosition.y, degToRad(0) );
-        }
+        if (powerup.active) {      
           if (powerup.type == POWERUP_COFFEE_BEAN) {
               drawBitmapCenteredAtLocationWithRotation(decal_coffee_cup, powerup.xPos - camera.drawPosition.x, powerup.yPos - camera.drawPosition.y, degToRad(0) );
           }
@@ -103,6 +100,15 @@ function drawPowerups() {
 function PowerupTimer(powerupType)
 {
   if (powerupType == POWERUP_ESPRESSO) {
+    return 3;
+  }
+  if (powerupType == POWERUP_COFFEE_BEAN) {
+    return 2;
+  }
+  if (powerupType == POWERUP_MUFFIN) {
+    return 4;
+  }
+  if (powerupType == POWERUP_FRENCH_PRESS) {
     return 5;
   }
   return 0;
@@ -111,17 +117,26 @@ function PowerupTimer(powerupType)
 function PowerupPower(powerupType)
 {
   if (powerupType == POWERUP_ESPRESSO) {
-    return drivePower * 2;
+    return drivePower * 3.25;
   }
+  if (powerupType == POWERUP_COFFEE_BEAN) {
+    return drivePower * 3.5;
+  }
+  if (powerupType == POWERUP_MUFFIN) {
+    return drivePower * 2.75;
+  }
+  if (powerupType == POWERUP_FRENCH_PRESS) {
+    return drivePower * 3;
+  }
+  
+
   return 0;
 }
 
 function PowerupPowerMax(powerupType)
 {
-  if (powerupType == POWERUP_ESPRESSO) {
-    return drivePowerMax * 2;
-  }
-  return 0;
+  // for now just use this
+  return PowerupPower(powerupType);  
 }
 
 function updatePowerups()
