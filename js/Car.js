@@ -21,6 +21,18 @@ const collisionDecay = 0.97;
 
 const waypointEps = 20.0;
 
+function goToTrack(trackIndex) {
+  courseIndex = trackIndex;
+  decals.clear();
+  resetAllCars();
+  timer.setTime(TIME_DEFAULT);
+}
+
+function resetCurrentTrack() {
+  decals.clear();
+  resetAllCars();
+  timer.setTime(TIME_DEFAULT);
+}
 
 function resetAllCars() {
   for (i = 0; i < gCars.length; i++) {

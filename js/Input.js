@@ -4,6 +4,10 @@ const KEY_LEFT_ARROW = 37;
 const KEY_UP_ARROW = 38;
 const KEY_RIGHT_ARROW = 39;
 const KEY_DOWN_ARROW = 40;
+const KEY_DIGIT_0 = 48;
+const KEY_DIGIT_1 = 49;
+const KEY_DIGIT_2 = 50;
+const KEY_DIGIT_3 = 51;
 const KEY_LETTER_W = 87;
 const KEY_LETTER_A = 65;
 const KEY_LETTER_S = 83;
@@ -98,6 +102,18 @@ function keyPressed(evt) {
     canDelete = false;
   }
 
+  if (evt.keyCode == KEY_DIGIT_0) {
+    resetCurrentTrack();
+  }
+  if (evt.keyCode == KEY_DIGIT_1) {
+    goToTrack(0);
+  }
+  if (evt.keyCode == KEY_DIGIT_2) {
+    goToTrack(1);
+  }
+  if (evt.keyCode == KEY_DIGIT_3) {
+    goToTrack(2);
+  }
 }
 
 function keyReleased(evt) {
