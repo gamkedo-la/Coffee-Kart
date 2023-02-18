@@ -130,6 +130,9 @@ function carClass() {
     carCount++;
     this.powerupType = POWERUP_NONE;
     this.powerupTimer = 0;
+    this.drawArrow = true;
+    this.drawArrowTimer = 5;
+
     this.carSpeed = 0;
     this.wheelSpeed = 0; // rpm of wheels, inherently 1-dimensional
     this.carAng = -90; // currently in radians. why -ve? because 'up' is negative
@@ -478,6 +481,14 @@ function carClass() {
       console.log("player lap is " + this.lap);
     }
 
+    // check if we need to draw a helpful arrow
+    if (this.drawArrowTimer > 0) {
+      this.drawArrowTimer -= fixedDt;
+    } else {
+      this.drawArrowTimer = 0;
+      this.drawArrow = false;
+    }
+
     var currentWaypoint = this.waypoints[this.waypointCounter % this.waypoints.length];        
     var distanceToWaypoint = Vec2Distance(this.position, currentWaypoint.position);
     waypointEpsilon = currentWaypoint.radius + 80;    
@@ -741,6 +752,12 @@ function carClass() {
       }
     }
   }
+
+  this.drawStartArrow = function() {
+    if (this.drawArrow) {
+      drawBitmapCenteredAtLocationWithRotation(player_arrow, this.position.x - camera.drawPosition.x + 40 + 40*Math.sin(2 * Math.PI * this.drawArrowTimer / 0.5), this.position.y - camera.drawPosition.y, degToRad(0) );
+    }
+  }
   
   this.carDraw = function() {      
     
@@ -787,6 +804,7 @@ function carClass() {
         32, 32, // get full tile size from source
         SCREEN_WIDTH - 128, 48, // x,y top-left corner for image destination
         TRACK_W, TRACK_H); // draw full full tile size for destination
+      
     }
   }
 

@@ -113,6 +113,12 @@ function drawEverything() {
   for (var i = 0; i < gCars.length; i++) {
     gCars[i].carDraw();
   }
+  // draw arrow just on player (and don't get drawn over)
+  for (var i = 0; i < gCars.length; i++) {
+    if (gCars[i].isPlayer) {
+      gCars[i].drawStartArrow();
+    }
+  }
 
   if (currentlyRaining) drawRain(-camera.drawPosition.x, -camera.drawPosition.y);
 

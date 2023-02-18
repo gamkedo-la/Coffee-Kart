@@ -3,6 +3,7 @@ const TIME_DEFAULT = 60;
 class CountdownTimer{
     constructor(){
         this.remainingTime = TIME_DEFAULT;
+        this.timeElapsed = 0;
         this.paused = true;
         this.timerColor = 'white';
         this.shadowColor = 'black';
@@ -10,9 +11,15 @@ class CountdownTimer{
         this.xLocation = 60;
         this.yLocation = 45;
     }
+    reset() {
+        this.elapsedTime = 0;
+        this.remainingTime = TIME_DEFAULT;
+    }
+
     update(){
         if(!this.paused && this.remainingTime && !trackEditorOn > 0) {
             this.remainingTime -= framesPerSecond/1000;
+            this.timeElapsed += framesPerSecond/1000;
         }
     }
     formatTimeString(secs){

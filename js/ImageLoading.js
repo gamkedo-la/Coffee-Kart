@@ -9,6 +9,7 @@ var car_lights = document.createElement("img");
 var timerBGPic = document.createElement("img");
 var placingSheet = document.createElement("img");
 var rainEffectPic = document.createElement("img");
+var player_arrow = document.createElement("img");
 
 // decals
 var tireTracksPic = document.createElement("img");
@@ -30,6 +31,7 @@ var decal_stripes_vertical = document.createElement("img");
 var decal_lights = document.createElement("img");
 var background_flag = document.createElement("img");
 var cursor_flag = document.createElement("img");
+
 
 // particles
 var smokePic = document.createElement("img");
@@ -59,6 +61,7 @@ function loadImages() {
     { varName: carOpenTopPic, theFile: "opentopCarv2.png" },
     { varName: trackSheet, theFile: "tiles_thirteen.png" },
     { varName: tireTracksPic, theFile: "tire_tracks.png" },
+    { varName: player_arrow, theFile: "arrow.png" },
     { varName: decal_oilstain, theFile: "decal_oilstain.png" },
     { varName: decal_crack, theFile: "decal_crack.png" },
     { varName: decal_pebbles, theFile: "decal_pebbles.png" },
