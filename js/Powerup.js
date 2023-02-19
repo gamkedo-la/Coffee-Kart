@@ -28,7 +28,7 @@ function selectPowerup(e) {
   }
 
   if (e.deltaY > 0) {
-    selectedPowerup = max(1, (selectedPowerup + 1) % POWERUP_NUM);
+    selectedPowerup = Math.max(1, (selectedPowerup + 1) % POWERUP_NUM);
     
   } else {
     selectedPowerup--;
@@ -36,6 +36,7 @@ function selectPowerup(e) {
       selectedPowerup = POWERUP_NUM - 1;
     }
   }
+  console.log("changed to " + powerupConstString(selectedPowerup) + " powerup");
 }
 
 function powerupConstString(type) {
@@ -44,6 +45,8 @@ function powerupConstString(type) {
     case POWERUP_MUFFIN: return 'POWERUP_MUFFIN';
     case POWERUP_FRENCH_PRESS: return 'POWERUP_FRENCH_PRESS';
     case POWERUP_ESPRESSO: return 'POWERUP_ESPRESSO';
+    case POWERUP_TAKEAWAY: return 'POWERUP_TAKEAWAY';
+    case POWERUP_CROISSANT: return 'POWERUP_CROISSANT';
     default: return 'POWERUP_NONE';
   }
 }
@@ -55,6 +58,9 @@ function PowerupRadius(type) {
     case POWERUP_MUFFIN: return testRadius;
     case POWERUP_FRENCH_PRESS: return testRadius;
     case POWERUP_ESPRESSO: return testRadius;
+    case POWERUP_TAKEAWAY: return testRadius;
+    case POWERUP_CROISSANT: return testRadius;
+
     default: return testRadius;
   }
 }
@@ -82,7 +88,7 @@ function drawPowerups() {
         var powerup = TRACKS[courseIndex].powerups[i];
         if (powerup.active) {      
           if (powerup.type == POWERUP_COFFEE_BEAN) {
-              drawBitmapCenteredAtLocationWithRotation(decal_coffee_cup, powerup.xPos - camera.drawPosition.x, powerup.yPos - camera.drawPosition.y, degToRad(0) );
+              drawBitmapCenteredAtLocationWithRotation(decal_coffee_bean, powerup.xPos - camera.drawPosition.x, powerup.yPos - camera.drawPosition.y, degToRad(0) );
           }
           if (powerup.type == POWERUP_MUFFIN) {
               drawBitmapCenteredAtLocationWithRotation(decal_muffin, powerup.xPos - camera.drawPosition.x, powerup.yPos - camera.drawPosition.y, degToRad(0) );
@@ -92,6 +98,12 @@ function drawPowerups() {
           }
           if (powerup.type == POWERUP_ESPRESSO) {
             drawBitmapCenteredAtLocationWithRotation(decal_coffee_cup, powerup.xPos - camera.drawPosition.x, powerup.yPos - camera.drawPosition.y, degToRad(0) );
+          }
+          if (powerup.type == POWERUP_TAKEAWAY) {
+            drawBitmapCenteredAtLocationWithRotation(decal_coffee_takeaway, powerup.xPos - camera.drawPosition.x, powerup.yPos - camera.drawPosition.y, degToRad(0) );
+          }
+          if (powerup.type == POWERUP_CROISSANT) {
+            drawBitmapCenteredAtLocationWithRotation(decal_croissant, powerup.xPos - camera.drawPosition.x, powerup.yPos - camera.drawPosition.y, degToRad(0) );
           }
         }
     }
@@ -188,7 +200,7 @@ function PowerupEditorClick(e) {
 
   PowerupToAdd = PowerupInit(x, y, selectedPowerup);
 
-  console.log("adding Powerup at " + PowerupToAdd.xPos + " " + PowerupToAdd.yPos );
+  console.log("adding Powerup" + powerupConstString(selectedPowerup) + " at " + PowerupToAdd.xPos + " " + PowerupToAdd.yPos );
   // TODO: enable user to select tile type
   TRACKS[courseIndex].powerups.push(PowerupToAdd);
   

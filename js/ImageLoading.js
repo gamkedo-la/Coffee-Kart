@@ -23,7 +23,9 @@ var decal_tire = document.createElement("img");
 var decal_cone = document.createElement("img");
 var decal_skidmarks = document.createElement("img");
 var decal_stripes = document.createElement("img");
+var decal_coffee_bean = document.createElement("img");
 var decal_coffee_cup = document.createElement("img");
+var decal_croissant = document.createElement("img");
 var decal_coffee_takeaway = document.createElement("img");
 var decal_muffin = document.createElement("img");
 var decal_french_press = document.createElement("img");
@@ -64,6 +66,8 @@ function beginLoadingImage(imgVar, fileName) {
 
 function loadImages() {
   var imageList = [
+    { varName: decal_coffee_bean, theFile: "CoffeeBean.png" },
+    { varName: decal_croissant, theFile: "croissantv2.png" },
     { varName: carPic, theFile: "car_top.png" },
     { varName: instructions_pic, theFile: "instructions.png"},
     { varName: car2Pic, theFile: "car_green_top.png" },
