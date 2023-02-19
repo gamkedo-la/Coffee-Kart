@@ -91,8 +91,13 @@ function moveEverything() {
     editorCamera.moveEditorCamera();
     camera.UpdateEditorCamera(editorCamera.position);
   } else {
-    for (var i = 0; i < gCars.length; i++) {
-      gCars[i].carMove();
+    if (timer.timeElapsed < 3) {
+      //console.log("counting down");
+      //;
+    } else {
+      for (var i = 0; i < gCars.length; i++) {
+        gCars[i].carMove();
+      }
     }
     camera.UpdateCamera(p1.position);
   }
@@ -111,9 +116,13 @@ function drawEverything() {
   
   particles.draw(-camera.drawPosition.x, -camera.drawPosition.y);
 
+  
   for (var i = 0; i < gCars.length; i++) {
     gCars[i].carDraw();
   }
+
+  
+
   // draw arrow just on player (and don't get drawn over)
   for (var i = 0; i < gCars.length; i++) {
     if (gCars[i].isPlayer) {
@@ -124,8 +133,11 @@ function drawEverything() {
   if (currentlyRaining) drawRain(-camera.drawPosition.x, -camera.drawPosition.y);
 
   speedometer.draw();
-
-  timer.draw();
+  if (timer.timeElapsed < 3) {
+    timer.drawCountdown();
+  } else {
+    timer.draw();
+  }
 
   if (paused) {
     pauseUI.draw();

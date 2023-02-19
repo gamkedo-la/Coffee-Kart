@@ -25,13 +25,15 @@ function goToTrack(trackIndex) {
   courseIndex = trackIndex;
   decals.clear();
   resetAllCars();
-  timer.setTime(TIME_DEFAULT);
+  timer.reset();
+  //timer.setTime(TIME_DEFAULT);
 }
 
 function resetCurrentTrack() {
   decals.clear();
   resetAllCars();
-  timer.setTime(TIME_DEFAULT);
+  //timer.setTime(TIME_DEFAULT);
+  timer.reset();
 }
 
 function resetAllCars() {
@@ -391,13 +393,14 @@ function carClass() {
       document.getElementById("debugText").innerHTML = this.myName + " won the race";
 
       // TODO: handle placings!
-      //courseIndex = (courseIndex + 1) % TRACKS.length;
-      // from here we actually want to handle multiple laps
+      
+      
  
       if (this.lap >= MAX_LAPS) {
         courseIndex = (courseIndex + 1) % TRACKS.length;
         decals.clear();
         resetAllCars();
+        timer.reset();
       } else {
         // I *think* this is the calculation        
         // was our last waypoint the last one on the track?
@@ -415,7 +418,7 @@ function carClass() {
       
       
       
-      timer.setTime(TIME_DEFAULT);
+      
     } else {
     
       var actualHeading = Vec2Init(0, 0);
@@ -683,7 +686,7 @@ function carClass() {
       decals.clear();
       
       
-      timer.setTime(TIME_DEFAULT);
+      timer.reset();
       return;
     }
     

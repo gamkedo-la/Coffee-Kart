@@ -6,13 +6,14 @@ class CountdownTimer{
         this.timeElapsed = 0;
         this.paused = true;
         this.timerColor = 'white';
+        this.countdownColor = 'red';
         this.shadowColor = 'black';
         this.font = 'bold 32px arial';
         this.xLocation = 60;
         this.yLocation = 45;
     }
     reset() {
-        this.elapsedTime = 0;
+        this.timeElapsed = 0;
         this.remainingTime = TIME_DEFAULT;
     }
 
@@ -41,6 +42,18 @@ class CountdownTimer{
         canvasContext.fillText(timestr,this.xLocation+1,this.yLocation+1);
         canvasContext.fillStyle = this.timerColor;
         canvasContext.fillText(timestr,this.xLocation,this.yLocation);
+        canvasContext.fillStyle = 'white'; // reset just in case
+    }
+
+    drawCountdown(){
+        //var timestr = this.formatTimeString(3 - this.timeElapsed);
+        var timestr = (3 - this.timeElapsed).toFixed(0);
+        canvasContext.drawImage(timerBGPic,0,0);
+        canvasContext.font = this.font;
+        canvasContext.fillStyle = this.shadowColor
+        canvasContext.fillText(timestr,(SCREEN_WIDTH / 2)+1,(SCREEN_HEIGHT / 2)+1);
+        canvasContext.fillStyle = this.countdownColor;
+        canvasContext.fillText(timestr,(SCREEN_WIDTH / 2),(SCREEN_HEIGHT / 2));
         canvasContext.fillStyle = 'white'; // reset just in case
     }
     addTime(timeToAdd){
