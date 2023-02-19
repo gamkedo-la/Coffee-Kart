@@ -10,6 +10,7 @@ var timerBGPic = document.createElement("img");
 var placingSheet = document.createElement("img");
 var rainEffectPic = document.createElement("img");
 var player_arrow = document.createElement("img");
+var instructions_pic = document.createElement("img");
 
 // decals
 var tireTracksPic = document.createElement("img");
@@ -45,8 +46,10 @@ function countLoadedImageAndLaunchIfReady() {
     // last image loaded?
     allImagesLoaded = true;
     //loadingDoneSoStartGame();
+    
     var message = "Click to start the game!";
     var messageWidth = canvasContext.measureText(message).width;
+    canvasContext.drawImage(instructions_pic, 0, 0, 256, 256, SCREEN_WIDTH / 2 - messageWidth / 2, 48, 256, 256);
     canvasContext.fillStyle = "black";
     canvasContext.fillText(message, SCREEN_WIDTH / 2 - messageWidth /2,
     SCREEN_HEIGHT / 2 + 30);
@@ -61,6 +64,7 @@ function beginLoadingImage(imgVar, fileName) {
 function loadImages() {
   var imageList = [
     { varName: carPic, theFile: "car_top.png" },
+    { varName: instructions_pic, theFile: "instructions.png"},
     { varName: car2Pic, theFile: "car_green_top.png" },
     { varName: car3Pic, theFile: "car_red_top.png" },
     { varName: motorcyclePic, theFile : "motorcycle.png"},
