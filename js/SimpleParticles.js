@@ -19,6 +19,19 @@ function carExhaustFX(x,y,alpha=0.5) {
     }
 }
 
+function mudSplatterFX(x,y,alpha=0.75) {
+    var num = 1;
+    for (var i = 0; i < num; i++) {
+        let life = randomInt(200, 400);
+        let size = randomInt(1,2);
+        let rotspd = Math.random()*0.5 - 0.25;
+        let ang = 0;
+        let velx = Math.random()*3- 2.5;
+        let vely = Math.random()*- 2.5;
+        particles.add(x,y,mudPic,life,size,rotspd,ang,velx,vely,alpha);
+    }
+}
+
 function SimpleParticles() { // class constructor
     var particle = [];
     this.add = function (x, y, sprite, life, size, rotationSpeed, forcedAngle, velX, velY, myAlpha) {

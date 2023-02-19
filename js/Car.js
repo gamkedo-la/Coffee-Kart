@@ -785,9 +785,9 @@ function carClass() {
     // todo: only when accel is max, when we are drifting, or brakes are on
     if (this.drawTireTracks) {
         if (this.lastTireTrackX != this.position.x || this.lastTireTrackY != this.position.y) {
-        decals.add(this.position.x,this.position.y,degToRad(this.carAng + 90),this.tireTrackAlpha,tireTracksPic);
-        this.lastTireTrackX = this.position.x;
-        this.lastTireTrackY = this.position.y;
+          decals.add(this.position.x,this.position.y,degToRad(this.carAng + 90),this.tireTrackAlpha,tireTracksPic);
+          this.lastTireTrackX = this.position.x;
+          this.lastTireTrackY = this.position.y;
         }
     }
 
@@ -796,6 +796,10 @@ function carClass() {
     let exhaustY = Math.sin(degToRad(this.carAng)) * -25;
     carExhaustFX(this.position.x+exhaustX,this.position.y+exhaustY,this.carSpeed/500); // alpha of smoke particle based on speed
 
+    // todo: only emit mud splatters if the car is off the track
+    let mudX = Math.cos(degToRad(this.carAng)) * -25;
+    let mudY = Math.sin(degToRad(this.carAng)) * -25;
+    mudSplatterFX(this.position.x+mudX, this.position.y+mudY,this.carSpeed/500);
 
     // draw placing
     if (this.isPlayer) {

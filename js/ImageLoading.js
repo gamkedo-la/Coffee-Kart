@@ -36,6 +36,7 @@ var cursor_flag = document.createElement("img");
 
 // particles
 var smokePic = document.createElement("img");
+var mudPic = document.createElement("img");
 
 var picsToLoad = 0;
 var allImagesLoaded = false;
@@ -93,6 +94,7 @@ function loadImages() {
     { varName: cursor_flag, theFile: "cursor_flag.png" },
     { varName: car_lights, theFile: "car_lights.png" },
     { varName: smokePic, theFile: "smoke.png" },
+    { varName: mudPic, theFile: "mud.png" },
     { varName: timerBGPic, theFile: "stopwatch_bg.png" },
     { varName : placingSheet, theFile: "placings.png"},
     { varName : rainEffectPic, theFile: "rain_effect.png"},
