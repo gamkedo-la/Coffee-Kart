@@ -32,6 +32,11 @@ window.onload = function () {
   initInput();
 };
 
+function reset() {
+  resetAllCars();
+  resetCurrentTrack();
+}
+
 function loadingDoneSoStartGame() {
   // these next few lines set up our game logic and render to happen 30 times per second
   setInterval(function () {
@@ -40,8 +45,8 @@ function loadingDoneSoStartGame() {
     drawEverything();
   }, 1000 / framesPerSecond);
   timer.resume();
-  
-  p1.carInit(carSportPic, 1, true);  
+
+  p1.carInit(carSportPic, 1, true);
   p2.carInit(motorcyclePic, 2);
   p3.carInit(carOpenTopPic, 3);
   p4.carInit(carPic, 4);
@@ -84,7 +89,7 @@ function updateEverything() {
 }
 function moveEverything() {
   if (paused || onTitleScreen) return;
-  
+
   particles.update();
 
   if (trackEditorOn) {
@@ -109,19 +114,16 @@ function drawEverything() {
   }
 
   drawTracks();
-  
+
   drawPowerups();
-  
+
   decals.draw(-camera.drawPosition.x, -camera.drawPosition.y); // tire tracks etc
-  
+
   particles.draw(-camera.drawPosition.x, -camera.drawPosition.y);
 
-  
   for (var i = 0; i < gCars.length; i++) {
     gCars[i].carDraw();
   }
-
-  
 
   // draw arrow just on player (and don't get drawn over)
   for (var i = 0; i < gCars.length; i++) {
@@ -130,7 +132,8 @@ function drawEverything() {
     }
   }
 
-  if (currentlyRaining) drawRain(-camera.drawPosition.x, -camera.drawPosition.y);
+  if (currentlyRaining)
+    drawRain(-camera.drawPosition.x, -camera.drawPosition.y);
 
   speedometer.draw();
   if (timer.timeElapsed < 3) {

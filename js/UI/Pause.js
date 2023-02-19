@@ -39,7 +39,10 @@ class PauseUI extends Menu {
   resumeGame() {
     paused = false;
   }
-  restartGame() {}
+  restartGame() {
+    reset();
+    paused = false;
+  }
   quitGame() {
     paused = false;
     onTitleScreen = true;
