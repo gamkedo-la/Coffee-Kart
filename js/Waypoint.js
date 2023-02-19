@@ -1,5 +1,5 @@
 // todo: probably need extra info like "target velocity"
-const DEBUG_RANK = true;
+const DEBUG_RANK = false;
 console.log("Press 'R' to enter WaypointEditor mode");
 
 let canToggleWaypointEditor = true;

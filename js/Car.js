@@ -1,6 +1,6 @@
-const DEBUG_DRAW = true;
+const DEBUG_DRAW = false;
 const DEBUG_RANK_LOG = false; // output car rank every frame in debug log 
-const DEBUG_LAP_LOG = true;
+const DEBUG_LAP_LOG = false;
 const AI_DEBUG_MODE = false; // console.log spam
 const AI_WAYPOINT_TRIGGER_DISTANCE = 350; // how close we need to get to each waypoint
 
@@ -393,7 +393,7 @@ function carClass() {
       // TODO: handle placings!
       //courseIndex = (courseIndex + 1) % TRACKS.length;
       // from here we actually want to handle multiple laps
-
+ 
       if (this.lap >= MAX_LAPS) {
         courseIndex = (courseIndex + 1) % TRACKS.length;
         decals.clear();
@@ -403,8 +403,10 @@ function carClass() {
         // was our last waypoint the last one on the track?
 
         if (this.canIncLap && 
-          ((this.waypointCounter) % this.waypoints.length == (this.waypoints.length - 1))) {
-            
+          ( ((this.waypointCounter % this.waypoints.length) == (this.waypoints.length - 1)) ||
+          ( ((this.waypointCounter % this.waypoints.length) == 0 && this.waypointCounter > 0))
+        )) {
+          
           this.lap++;
           this.canIncLap = false;
         }
@@ -499,6 +501,7 @@ function carClass() {
 
       // update our waypoint to the next
       this.waypointCounter++;
+      
       currentWaypoint = this.waypoints[this.waypointCounter % this.waypoints.length];    
       
     }    
