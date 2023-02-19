@@ -29,6 +29,7 @@ window.onload = function () {
   canvasContext = canvas.getContext("2d");
 
   loadImages();
+  initInput();
 };
 
 function loadingDoneSoStartGame() {
@@ -58,7 +59,7 @@ function loadingDoneSoStartGame() {
     Vec2Init(SCREEN_WIDTH / 2.0, SCREEN_HEIGHT / 2.0),
     1.0
   ); // end InitCamera
-  initInput();
+  //initInput();
 }
 function updateEverything() {
   if (paused) {

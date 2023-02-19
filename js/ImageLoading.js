@@ -37,12 +37,19 @@ var cursor_flag = document.createElement("img");
 var smokePic = document.createElement("img");
 
 var picsToLoad = 0;
+var allImagesLoaded = false;
 
 function countLoadedImageAndLaunchIfReady() {
   picsToLoad--;
   if (picsToLoad == 0) {
     // last image loaded?
-    loadingDoneSoStartGame();
+    allImagesLoaded = true;
+    //loadingDoneSoStartGame();
+    var message = "Click to start the game!";
+    var messageWidth = canvasContext.measureText(message).width;
+    canvasContext.fillStyle = "black";
+    canvasContext.fillText(message, SCREEN_WIDTH / 2 - messageWidth /2,
+    SCREEN_HEIGHT / 2 + 30);
   }
 }
 

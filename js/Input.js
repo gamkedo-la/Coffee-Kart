@@ -23,11 +23,12 @@ const KEY_DEL = 46;
 
 var keyPressedWaypointDelete = false;
 var canDelete = true;
+var clickedYet = false;
 
 function initInput() {
   document.addEventListener("keydown", keyPressed);
   document.addEventListener("keyup", keyReleased);
-
+  document.addEventListener("mousedown", mousePressed)
   p1.setupControls(
     KEY_UP_ARROW,
     KEY_DOWN_ARROW,
@@ -54,6 +55,15 @@ function initInput() {
     KEY_UP_ARROW,
     KEY_DOWN_ARROW
   );
+}
+
+function mousePressed() {
+  if (!clickedYet) {
+    if (allImagesLoaded) {
+      clickedYet = true;
+      loadingDoneSoStartGame();      
+    }
+  }
 }
 
 function setKeyHoldState(thisKey, thisCar, setTo) {
