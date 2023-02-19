@@ -1,5 +1,5 @@
 // todo: probably need extra info like "target velocity"
-
+const DEBUG_RANK = true;
 console.log("Press 'R' to enter WaypointEditor mode");
 
 let canToggleWaypointEditor = true;
@@ -14,12 +14,17 @@ function rankCars() {
   
   for (var i = 0; i < gCars.length; i++) {
     var currentCar = gCars[i];
+    
     var trackLength = currentCar.waypoints.length;
     var tDist =  Vec2Distance(currentCar.position, currentCar.waypoints[currentCar.waypointCounter % currentCar.waypoints.length].position);
     //console.log("tdist is " + tDist);
     var distToAdd;
     // todo: refine this to allow for multiple laps etc
-    distToAdd = (trackLength * currentCar.lap * 200000) + currentCar.waypointCounter*10000 - tDist;    
+    distToAdd = (trackLength * currentCar.lap * 10000) + currentCar.waypointCounter*500 - tDist;    
+    if (DEBUG_RANK) {
+      console.log("car " + i + " has distance " + distToAdd);
+      console.log("and has lap " + currentCar.lap);
+    }
     var result = {id : i, dist : distToAdd};
     carRankings.push(result);
   }

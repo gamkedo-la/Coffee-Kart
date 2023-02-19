@@ -404,6 +404,7 @@ function carClass() {
 
         if (this.canIncLap && 
           ((this.waypointCounter) % this.waypoints.length == (this.waypoints.length - 1))) {
+            
           this.lap++;
           this.canIncLap = false;
         }
@@ -492,7 +493,7 @@ function carClass() {
     var currentWaypoint = this.waypoints[this.waypointCounter % this.waypoints.length];        
     var distanceToWaypoint = Vec2Distance(this.position, currentWaypoint.position);
     waypointEpsilon = currentWaypoint.radius + 80;    
-    if (distanceToWaypoint < waypointEpsilon && this.waypointCounter < (this.waypoints.length - 1)) {
+    if (distanceToWaypoint < waypointEpsilon) {
       
       if (AI_DEBUG_MODE) console.log("AI REACHED ("+Math.round(distanceToWaypoint)+" away) waypoint "+this.waypointCounter+" of " +this.waypoints.length);
 
