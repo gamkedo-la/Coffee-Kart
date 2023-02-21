@@ -19,6 +19,10 @@ var speedometer = new Speedometer();
 var pauseUI = new PauseUI();
 var titleUI = new TitleScreenUI();
 var paused = false;
+
+var onLevelSelectScreen = false;
+var onRaceResultsScreen = false;
+
 var onTitleScreen = false;
 var canChangePauseState = true;
 gCars = [];
@@ -73,6 +77,12 @@ function updateEverything() {
   } else if (onTitleScreen) {
     titleUI.update();
     return;
+  } else if (onLevelSelectScreen) {
+    // update level select
+    return;
+  } else if (onRaceResultsScreen) {
+    // update race results
+    return;
   }
 
   updateEditor();
@@ -88,7 +98,8 @@ function updateEverything() {
   speedometer.setRPM(p1.engineSoundRPM);
 }
 function moveEverything() {
-  if (paused || onTitleScreen) return;
+  if (paused || onTitleScreen || 
+    onLevelSelectScreen || onRaceResultsScreen) return;
 
   particles.update();
 
@@ -153,5 +164,13 @@ function drawEverything() {
     if (waypointEditorOn) {
       drawWaypoints();
     }
+  }
+
+  if (onLevelSelectScreen) {
+    // draw level select screen
+  }
+
+  if (onRaceResultsScreen) {
+    // draw race results
   }
 }
