@@ -12,6 +12,10 @@ var rainEffectPic = document.createElement("img");
 var player_arrow = document.createElement("img");
 var instructions_pic = document.createElement("img");
 
+var snow_level_pic = document.createElement("img");
+var cafe_level_pic = document.createElement("img");
+var jungle_level_pic = document.createElement("img");
+
 // decals
 var tireTracksPic = document.createElement("img");
 var decal_oilstain = document.createElement("img");
@@ -66,6 +70,9 @@ function beginLoadingImage(imgVar, fileName) {
 
 function loadImages() {
   var imageList = [
+    { varName: snow_level_pic, theFile: "snowLevel.png" },
+    { varName: cafe_level_pic, theFile: "cafeLevel.png" },
+    { varName: jungle_level_pic, theFile: "jungleLevel.png" },
     { varName: decal_coffee_bean, theFile: "CoffeeBean.png" },
     { varName: decal_croissant, theFile: "croissantv2.png" },
     { varName: carPic, theFile: "car_top.png" },

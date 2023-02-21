@@ -18,9 +18,12 @@ var timer = new CountdownTimer();
 var speedometer = new Speedometer();
 var pauseUI = new PauseUI();
 var titleUI = new TitleScreenUI();
+
+var levelSelect = new LevelSelect();
+
 var paused = false;
 
-var onLevelSelectScreen = false;
+var onLevelSelectScreen = true;
 var onRaceResultsScreen = false;
 
 var onTitleScreen = false;
@@ -79,6 +82,7 @@ function updateEverything() {
     return;
   } else if (onLevelSelectScreen) {
     // update level select
+    levelSelect.updateLevelSelect();
     return;
   } else if (onRaceResultsScreen) {
     // update race results
@@ -167,6 +171,7 @@ function drawEverything() {
   }
 
   if (onLevelSelectScreen) {
+    levelSelect.drawLevelSelect();
     // draw level select screen
   }
 

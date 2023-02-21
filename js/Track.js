@@ -7,6 +7,10 @@ const TRACK_ROWS = 30;//15
 
 const MAX_LAPS = 3;
 
+const SNOW_LEVEL = 0;
+const CAFE_LEVEL = 1;
+const JUNGLE_LEVEL = 2;
+
 const TRACK_ROAD = 0;
 const TRACK_WALL = 1;
 const TRACK_PLAYER = 2;
