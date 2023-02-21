@@ -124,6 +124,13 @@ function moveEverything() {
 }
 
 function drawEverything() {
+
+  if (onLevelSelectScreen) {
+    levelSelect.drawLevelSelect();
+    return; // exit and do not draw anything else
+    // draw level select screen
+  }
+    
   if (trackEditorOn) {
     colorRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, "black");
   }
@@ -151,7 +158,8 @@ function drawEverything() {
     drawRain(-camera.drawPosition.x, -camera.drawPosition.y);
 
   speedometer.draw();
-  if (timer.timeElapsed < 3) {
+  
+  if (!paused && timer.timeElapsed < 3) {
     timer.drawCountdown();
   } else {
     timer.draw();
@@ -168,11 +176,6 @@ function drawEverything() {
     if (waypointEditorOn) {
       drawWaypoints();
     }
-  }
-
-  if (onLevelSelectScreen) {
-    levelSelect.drawLevelSelect();
-    // draw level select screen
   }
 
   if (onRaceResultsScreen) {

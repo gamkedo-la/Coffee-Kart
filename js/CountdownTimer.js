@@ -11,6 +11,7 @@ class CountdownTimer{
         this.font = 'bold 32px arial';
         this.xLocation = 60;
         this.yLocation = 45;
+        this.lastCountDown = ""; // used to avoid playing sounds every frme
     }
     reset() {
         this.timeElapsed = 0;
@@ -46,8 +47,24 @@ class CountdownTimer{
     }
 
     drawCountdown(){
-        //var timestr = this.formatTimeString(3 - this.timeElapsed);
+        if (paused) return;
+        if (this.paused) return; // FIXME: this function is called during track selection screen
+        
         var timestr = (3 - this.timeElapsed).toFixed(0);
+        
+        // play a sound only when the number changes
+        if (timestr != this.lastCountDown) { 
+            console.log("Countdown: "+timestr);
+            this.lastCountDown = timestr;
+            if (timestr == "0") {
+                countdown_start.currentTime = 0;    
+                countdown_start.play();
+            } else {
+                countdown_beep.currentTime = 0;    
+                countdown_beep.play();
+            }
+        }
+        
         canvasContext.drawImage(timerBGPic,0,0);
         canvasContext.font = this.font;
         canvasContext.fillStyle = this.shadowColor
