@@ -1,3 +1,6 @@
+// Shared state between all of the menus
+let isSelecting = false;
+
 class Menu {
   constructor() {
     // general text properties
@@ -68,6 +71,9 @@ class Menu {
     if ((thisKey === this.downKey || thisKey === this.upKey) && !setTo) {
       this.cursor_moving = false;
     }
+    if ((thisKey === this.selectKey) && !setTo) {
+      isSelecting = false;
+    }
   }
 
   createTextGradient(x, y, width, height) {
@@ -133,7 +139,8 @@ class Menu {
     this.time++;
 
     //   select the current menu item if the selecy key was pressed
-    if (this.keyHeld_Select) {
+    if (this.keyHeld_Select && !isSelecting) {
+      isSelecting = true;
       this.current_option.onSelect();
     }
   }
