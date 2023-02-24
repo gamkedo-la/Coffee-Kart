@@ -396,11 +396,12 @@ function carClass() {
       
       
  
-      if (this.lap >= MAX_LAPS) {
+      if (this.lap >= 1) {
         courseIndex = (courseIndex + 1) % TRACKS.length;
         decals.clear();
         resetAllCars();
         timer.reset();
+        gGameState = GS_SHOW_SCORES;
       } else {
         // I *think* this is the calculation        
         // was our last waypoint the last one on the track?

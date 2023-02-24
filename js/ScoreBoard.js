@@ -7,7 +7,7 @@ class ScoreBoard {
         
     }
 
-    setLevelSelectControls(controls) {        
+    setScoreboardControls(controls) {        
         
         this.selectKey = controls.selectKey;
     }
@@ -21,13 +21,17 @@ class ScoreBoard {
         
     }
 
-    updateLevelSelect() {     
+    updateScores(idToSet, rankingToSet) {
+        this.scores[rankingToSet] = idToSet;
+    }
+
+    updateScoreboard() {     
         
         if (this.keyHeld_Select && this.canSelect) {
             // start the race
             resetAllCars();
             timer.reset();
-            onLevelSelectScreen = false;
+            onScoreBoardScreen = false;
         }
         if (!this.keyHeld_Select && 
             !this.keyHeld_Left &&
@@ -40,14 +44,13 @@ class ScoreBoard {
     }
 
     
-    drawLevelSelect() {
+    drawScoreboard() {
         colorRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, "#6f4e37");
-        if (courseIndex == SNOW_LEVEL) {
-            drawBitmapCenteredAtLocationWithRotation(snow_level_pic, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, 0);
-        } else if (courseIndex == CAFE_LEVEL) {
-            drawBitmapCenteredAtLocationWithRotation(cafe_level_pic, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, 0);
-        } else if (courseIndex ==  JUNGLE_LEVEL) {
-            drawBitmapCenteredAtLocationWithRotation(jungle_level_pic, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, 0);
+        for (var i = 1; i <= 4; i++) {
+            var carId = this.scores[i];
+            console.log("attempting to draw " + carId);
+            drawBitmapCenteredAtLocationWithRotation(gCars[carId-1].myBitmap, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 4 + i*200);
         }
+
     }
 }

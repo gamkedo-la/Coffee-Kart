@@ -35,6 +35,7 @@ function rankCars() {
     var rank = carRankings[i];
     //console.log("car " + rank.id + "has dist " + rank.dist);
     gCars[rank.id].ranking = carRankings.length - i;
+    scoreBoard.updateScores(rank.id, gCars[rank.id].ranking);
   }
 }
 

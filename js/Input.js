@@ -55,6 +55,10 @@ function initInput() {
     selectKey: KEY_ENTER,
   });
 
+  scoreBoard.setScoreboardControls({    
+    selectKey: KEY_ENTER,
+  });
+
   editorCamera.setupControls(
     KEY_LEFT_ARROW,
     KEY_RIGHT_ARROW,
@@ -107,6 +111,7 @@ function keyPressed(evt) {
   pauseUI.setKeyHoldState(evt.keyCode, true);
   titleUI.setKeyHoldState(evt.keyCode, true);
   levelSelect.setKeyHoldState(evt.keyCode, true);
+  scoreBoard.setKeyHoldState(evt.keyCode, true);
   evt.preventDefault(); // without this, arrow keys scroll the browser!
 
   // we've pressed the pause key, so pause the game and only listen to this first press
@@ -140,6 +145,7 @@ function keyReleased(evt) {
   pauseUI.setKeyHoldState(evt.keyCode, false);
   titleUI.setKeyHoldState(evt.keyCode, false);
   levelSelect.setKeyHoldState(evt.keyCode, false);
+  scoreBoard.setKeyHoldState(evt.keyCode, false);
   // prevents player from toggling pause on and off while holding pause key
 
   // we've released the pause key, so allow us to unpause on the next press

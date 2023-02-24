@@ -101,10 +101,12 @@ function updateEverything() {
     return;
   } else if (gGameState == GS_SELECT_LEVEL) {
     // update level select
+    console.log("hit level select");
     levelSelect.updateLevelSelect();
     return;
   } else if (gGameState == GS_SHOW_SCORES) {
     // update race results
+    scoreBoard.updateScoreboard();
     return;
   }
 
@@ -147,6 +149,11 @@ function drawEverything() {
     levelSelect.drawLevelSelect();
     return; // exit and do not draw anything else
     // draw level select screen
+  }
+
+  if (gGameState == GS_SHOW_SCORES) {
+    // draw race results
+    scoreBoard.drawScoreboard();
   }
     
   if (trackEditorOn) {
@@ -196,7 +203,5 @@ function drawEverything() {
     }
   }
 
-  if (gGameState == GS_SHOW_SCORES) {
-    // draw race results
-  }
+  
 }

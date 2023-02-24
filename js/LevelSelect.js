@@ -5,10 +5,11 @@ class LevelSelect {
         this.keyHeld_Left = false;
         this.keyHeld_Right = false;
         this.keyHeld_Select = false;
-        this.canSelect = true;
+        this.canSelect = false;
         this.leftKey = 0;
         this.rightKey = 0;
         this.selectKey = 0;
+        
     }
 
     setLevelSelectControls(controls) {        
