@@ -3,6 +3,7 @@ const DEBUG_RANK_LOG = false; // output car rank every frame in debug log
 const DEBUG_LAP_LOG = false;
 const AI_DEBUG_MODE = false; // console.log spam
 const AI_WAYPOINT_TRIGGER_DISTANCE = 350; // how close we need to get to each waypoint
+const FAST_FINISH_DEBUG = false;
 
 const turnSpeed = 360.0;
 const wheelDeadSpot = 15;
@@ -238,7 +239,7 @@ function carClass() {
     var headingToWaypoint = (Vec2Sub(currentWaypoint.position, this.position)); 
     var distanceToWaypoint = Vec2Distance(this.position, currentWaypoint.position);
     waypointEpsilon = currentWaypoint.radius;
-    const headingEpsilon = 0.5;
+    const headingEpsilon = 0.5; 
 
     if (distanceToWaypoint < waypointEpsilon) {
       
@@ -394,14 +395,19 @@ function carClass() {
 
       // TODO: handle placings!
       
+      var maxLaps = 3;
+      if (FAST_FINISH_DEBUG) {
+        maxLaps = 1;
+      }
       
- 
-      if (this.lap >= 1) {
+      if (this.lap >= maxLaps) {
         courseIndex = (courseIndex + 1) % TRACKS.length;
         decals.clear();
         resetAllCars();
         timer.reset();
-        gGameState = GS_SHOW_SCORES;
+        // show scores currently bugged
+        //gGameState = GS_SHOW_SCORES;
+        gGameState = GS_SELECT_LEVEL;
       } else {
         // I *think* this is the calculation        
         // was our last waypoint the last one on the track?
