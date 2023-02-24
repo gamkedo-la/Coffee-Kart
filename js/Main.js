@@ -6,6 +6,16 @@ const framesPerSecond = 30;
 
 const countdownToUse = 4;
 
+
+const GS_TITLE_SCREEN = 0;
+const GS_SELECT_LEVEL = 1;
+const GS_RACING = 2;
+const GS_SHOW_SCORES = 3;
+const GS_SHOW_INSTRUCTIONS = 4;
+const GS_EDITING = 5;
+
+var gGameState = GS_TITLE_SCREEN;
+
 var courseIndex = 0;
 var currentlyRaining = true; // FIXME: set to true on track 2(?) only
 
@@ -23,6 +33,8 @@ var titleUI = new TitleScreenUI();
 
 var levelSelect = new LevelSelect();
 
+var scoreBoard = new ScoreBoard();
+
 var paused = false;
 
 var onLevelSelectScreen = true;
@@ -32,6 +44,8 @@ var onTitleScreen = false;
 var canChangePauseState = true;
 gCars = [];
 carCount = 0;
+
+
 
 window.onload = function () {
   canvas = document.getElementById("gameCanvas");
@@ -59,8 +73,11 @@ function loadingDoneSoStartGame() {
   p2.carInit(motorcyclePic, 2);
   p3.carInit(carOpenTopPic, 3);
   p4.carInit(carPic, 4);
+
   gCars = [p1, p2, p3, p4];
-  //gCars = [p1, p2];
+  
+
+  
   camera.InitCamera(
     SCREEN_WIDTH / 2,
     SCREEN_HEIGHT / 2,
@@ -79,14 +96,14 @@ function updateEverything() {
   if (paused) {
     pauseUI.update();
     return;
-  } else if (onTitleScreen) {
+  } else if (gGameState == GS_TITLE_SCREEN) {
     titleUI.update();
     return;
-  } else if (onLevelSelectScreen) {
+  } else if (gGameState == GS_SELECT_LEVEL) {
     // update level select
     levelSelect.updateLevelSelect();
     return;
-  } else if (onRaceResultsScreen) {
+  } else if (gGameState == GS_SHOW_SCORES) {
     // update race results
     return;
   }
@@ -104,8 +121,7 @@ function updateEverything() {
   speedometer.setRPM(p1.engineSoundRPM);
 }
 function moveEverything() {
-  if (paused || onTitleScreen || 
-    onLevelSelectScreen || onRaceResultsScreen) return;
+  if (paused || gGameState != GS_RACING) return;
 
   particles.update();
 
@@ -127,7 +143,7 @@ function moveEverything() {
 
 function drawEverything() {
 
-  if (onLevelSelectScreen) {
+  if (gGameState == GS_SELECT_LEVEL) {
     levelSelect.drawLevelSelect();
     return; // exit and do not draw anything else
     // draw level select screen
@@ -169,7 +185,7 @@ function drawEverything() {
 
   if (paused) {
     pauseUI.draw();
-  } else if (onTitleScreen) {
+  } else if (gGameState == GS_TITLE_SCREEN) {
     titleUI.draw();
   }
 
@@ -180,7 +196,7 @@ function drawEverything() {
     }
   }
 
-  if (onRaceResultsScreen) {
+  if (gGameState == GS_SHOW_SCORES) {
     // draw race results
   }
 }

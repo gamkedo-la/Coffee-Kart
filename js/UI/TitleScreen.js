@@ -26,6 +26,6 @@ class TitleScreenUI extends Menu {
   }
 
   startGame() {
-    onTitleScreen = false;
+    gGameState = GS_SELECT_LEVEL    
   }
 }

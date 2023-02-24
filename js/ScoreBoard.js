@@ -1,31 +1,19 @@
-
-
-class LevelSelect {
+class ScoreBoard {
     constructor() {
-        this.keyHeld_Left = false;
-        this.keyHeld_Right = false;
-        this.keyHeld_Select = false;
-        this.canSelect = true;
-        this.leftKey = 0;
-        this.rightKey = 0;
-        this.selectKey = 0;
+        this.scores = {};
+        for (var i = 1; i <= 4; i++) {
+            this.scores[i] = 0;
+        }
+        
     }
 
     setLevelSelectControls(controls) {        
-        this.leftKey = controls.leftKey;
-        this.rightKey = controls.rightKey;
+        
         this.selectKey = controls.selectKey;
     }
 
     setKeyHoldState(thisKey, setTo) {
-        //console.log("hit setkeyhold");
-        if (thisKey === this.leftKey) {
-          this.keyHeld_Left = setTo;
-        }
-        if (thisKey === this.rightKey) {
-            console.log("setting right key");
-          this.keyHeld_Right = setTo;
-        }
+        
         if (thisKey === this.selectKey) {
           this.keyHeld_Select = setTo;
         }
@@ -34,25 +22,12 @@ class LevelSelect {
     }
 
     updateLevelSelect() {     
-        if (this.keyHeld_Left && this.canSelect) {
-            this.canSelect = false;
-            if (courseIndex > 0) {
-                courseIndex--;
-            } else {
-                courseIndex = TRACKS.length-1;
-            }
-            
-        }
-        if (this.keyHeld_Right && this.canSelect) {
-            console.log("pressed right");
-            courseIndex = (courseIndex + 1) % TRACKS.length;
-            this.canSelect = false;
-        }
+        
         if (this.keyHeld_Select && this.canSelect) {
             // start the race
             resetAllCars();
             timer.reset();
-            gGameState = GS_RACING;
+            onLevelSelectScreen = false;
         }
         if (!this.keyHeld_Select && 
             !this.keyHeld_Left &&
