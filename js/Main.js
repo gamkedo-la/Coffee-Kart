@@ -4,6 +4,8 @@ const SCREEN_WIDTH = 1280;
 const SCREEN_HEIGHT = 720;
 const framesPerSecond = 30;
 
+const countdownToUse = 4;
+
 var courseIndex = 0;
 var currentlyRaining = true; // FIXME: set to true on track 2(?) only
 
@@ -111,7 +113,7 @@ function moveEverything() {
     editorCamera.moveEditorCamera();
     camera.UpdateEditorCamera(editorCamera.position);
   } else {
-    if (timer.timeElapsed < 3) {
+    if (timer.timeElapsed <= countdownToUse) {
       //console.log("counting down");
       //;
     } else {
@@ -159,7 +161,7 @@ function drawEverything() {
 
   speedometer.draw();
   
-  if (!paused && timer.timeElapsed < 3) {
+  if (!paused && timer.timeElapsed <= countdownToUse) {
     timer.drawCountdown();
   } else {
     timer.draw();

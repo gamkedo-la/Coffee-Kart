@@ -50,6 +50,7 @@ class CountdownTimer{
         if (paused) return;
         if (this.paused) return; // FIXME: this function is called during track selection screen
         var timeToDisplay = Math.round(3.5 - this.timeElapsed);
+        var actualTime = 3 - this.timeElapsed;
         
         var timestr = (timeToDisplay).toFixed(0);
         
@@ -57,7 +58,7 @@ class CountdownTimer{
         if (timestr != this.lastCountDown) { 
             console.log("Countdown: "+timestr);
             this.lastCountDown = timestr;
-            if (timestr == "0") {
+            if (actualTime <= 0.3) {
                 countdown_start.currentTime = 0;    
                 countdown_start.play();
             } else {
