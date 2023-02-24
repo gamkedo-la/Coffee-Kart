@@ -1,9 +1,12 @@
+const carsToUpdate = 4;
+
 class ScoreBoard {
     constructor() {
-        this.scores = {};
-        for (var i = 1; i <= 4; i++) {
-            this.scores[i] = 0;
+        this.scores = [];
+        for (var i = 0; i < carsToUpdate; i++) {
+            this.scores.push(0);
         }
+        this.canSelect = false;
         
     }
 
@@ -22,7 +25,7 @@ class ScoreBoard {
     }
 
     updateScores(idToSet, rankingToSet) {
-        this.scores[rankingToSet] = idToSet;
+        this.scores[rankingToSet-1] = idToSet;
     }
 
     updateScoreboard() {     
@@ -31,12 +34,10 @@ class ScoreBoard {
             // start the race
             resetAllCars();
             timer.reset();
-            onScoreBoardScreen = false;
+            
         }
-        if (!this.keyHeld_Select && 
-            !this.keyHeld_Left &&
-            !this.keyHeld_Right) {
-                this.canSelect = true;
+        if (!this.keyHeld_Select) {
+            this.canSelect = true;
         }
         
 
@@ -46,10 +47,10 @@ class ScoreBoard {
     
     drawScoreboard() {
         colorRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, "#6f4e37");
-        for (var i = 1; i <= 4; i++) {
+        for (var i = 0; i < carsToUpdate; i++) {
             var carId = this.scores[i];
             console.log("attempting to draw " + carId);
-            drawBitmapCenteredAtLocationWithRotation(gCars[carId-1].myBitmap, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 4 + i*200);
+            drawBitmapCenteredAtLocationWithRotation(gCars[carId].myBitmap, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 4 + i*100);
         }
 
     }

@@ -100,8 +100,7 @@ function updateEverything() {
     titleUI.update();
     return;
   } else if (gGameState == GS_SELECT_LEVEL) {
-    // update level select
-    console.log("hit level select");
+    // update level select    
     levelSelect.updateLevelSelect();
     return;
   } else if (gGameState == GS_SHOW_SCORES) {

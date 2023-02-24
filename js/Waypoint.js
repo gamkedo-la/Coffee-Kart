@@ -33,8 +33,9 @@ function rankCars() {
   // now it's sorted lowest to highest, so should be 4th, 3rd etc
   for (var i = 0; i < carRankings.length; i++) {
     var rank = carRankings[i];
-    //console.log("car " + rank.id + "has dist " + rank.dist);
+    
     gCars[rank.id].ranking = carRankings.length - i;
+    
     scoreBoard.updateScores(rank.id, gCars[rank.id].ranking);
   }
 }
