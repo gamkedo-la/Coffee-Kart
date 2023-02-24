@@ -49,8 +49,9 @@ class CountdownTimer{
     drawCountdown(){
         if (paused) return;
         if (this.paused) return; // FIXME: this function is called during track selection screen
+        var timeToDisplay = Math.round(3.5 - this.timeElapsed);
         
-        var timestr = (3 - this.timeElapsed).toFixed(0);
+        var timestr = (timeToDisplay).toFixed(0);
         
         // play a sound only when the number changes
         if (timestr != this.lastCountDown) { 
