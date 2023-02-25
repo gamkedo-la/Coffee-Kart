@@ -11,6 +11,11 @@ var placingSheet = document.createElement("img");
 var rainEffectPic = document.createElement("img");
 var player_arrow = document.createElement("img");
 var instructions_pic = document.createElement("img");
+var press_enter_pic = document.createElement("img");
+var press_enter_continue_pic = document.createElement("img");
+var select_level_pic = document.createElement("img");
+var you_won_pic = document.createElement("img");
+var better_luck_pic = document.createElement("img");
 
 var snow_level_pic = document.createElement("img");
 var cafe_level_pic = document.createElement("img");
@@ -70,6 +75,11 @@ function beginLoadingImage(imgVar, fileName) {
 
 function loadImages() {
   var imageList = [
+    { varName: you_won_pic, theFile: "you_won.png" },
+    { varName: better_luck_pic, theFile: "better_luck.png" },
+    { varName: press_enter_continue_pic, theFile: "press_enter_continue.png" },
+    { varName: press_enter_pic, theFile: "press_enter.png" },
+    { varName: select_level_pic, theFile: "select_track.png" },
     { varName: snow_level_pic, theFile: "snowLevel.png" },
     { varName: cafe_level_pic, theFile: "cafeLevel.png" },
     { varName: jungle_level_pic, theFile: "jungleLevel.png" },

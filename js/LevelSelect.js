@@ -23,8 +23,7 @@ class LevelSelect {
         if (thisKey === this.leftKey) {
           this.keyHeld_Left = setTo;
         }
-        if (thisKey === this.rightKey) {
-            console.log("setting right key");
+        if (thisKey === this.rightKey) {            
           this.keyHeld_Right = setTo;
         }
         if (thisKey === this.selectKey) {
@@ -69,6 +68,7 @@ class LevelSelect {
     
     drawLevelSelect() {
         colorRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, "#6f4e37");
+        drawBitmapCenteredAtLocationWithRotation(select_level_pic, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 8, degToRad(0));
         if (courseIndex == SNOW_LEVEL) {
             drawBitmapCenteredAtLocationWithRotation(snow_level_pic, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, 0);
         } else if (courseIndex == CAFE_LEVEL) {
@@ -76,5 +76,8 @@ class LevelSelect {
         } else if (courseIndex ==  JUNGLE_LEVEL) {
             drawBitmapCenteredAtLocationWithRotation(jungle_level_pic, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, 0);
         }
+        drawBitmapCenteredAtLocationWithRotation(player_arrow, SCREEN_WIDTH / 4, SCREEN_HEIGHT / 2, degToRad(0));
+        drawBitmapCenteredAtLocationWithRotation(player_arrow, 3 * SCREEN_WIDTH / 4, SCREEN_HEIGHT / 2, degToRad(180));
+        drawBitmapCenteredAtLocationWithRotation(press_enter_pic, SCREEN_WIDTH / 2, 3 * SCREEN_HEIGHT / 4, degToRad(0));
     }
 }

@@ -9,6 +9,8 @@ let waypointEditorOn = false;
 
 let lastMatchedWaypoint = -1;
 
+var foundMatchingWaypoint = false;
+
 function rankCars() {
   var carRankings = [];
   
@@ -113,14 +115,21 @@ function WaypointEditorClick(e) {
   const x = Math.round(camera.drawPosition.x) + Math.round(e.clientX);
   const y = Math.round(camera.drawPosition.y) + Math.round(e.clientY);
   // find a possible waypoint to select
-  var foundMatchingWaypoint = false;
+  
   for (var i = 0; i < TRACKS[courseIndex].waypoints.length; i++) {
     var currentWaypoint = TRACKS[courseIndex].waypoints[i];
     var currentWaypointPos = Vec2Init(currentWaypoint.xPos, currentWaypoint.yPos);
     var mousePos = Vec2Init(x,y);
     if (Vec2Distance(currentWaypointPos, mousePos) < currentWaypoint.radiusVal) {
-      foundMatchingWaypoint = true;
-      lastMatchedWaypoint = i;
+      if (foundMatchingWaypoint) {
+        foundMatchingWaypoint = false;
+        lastMatchedWaypoint = -1;
+        return;
+      } else {
+        foundMatchingWaypoint = true;
+        lastMatchedWaypoint = i;
+      }
+      
       break;
     }
   }
@@ -129,9 +138,13 @@ function WaypointEditorClick(e) {
 
   
   
-    angleToAdd = Number(prompt("enter angle"));
-    widthToAdd = Number(prompt("enter width"));
+    angleToAdd = 0;
+    widthToAdd = 0;
     radiusToAdd = Number(prompt("enter radius"));
+
+    if(radiusToAdd < 50) {
+      radiusToAdd = 50;
+    }
 
     waypointToAdd = waypointInit(x, y, angleToAdd, widthToAdd, radiusToAdd);
 
@@ -142,7 +155,11 @@ function WaypointEditorClick(e) {
       TRACKS[courseIndex].waypoints.splice(lastMatchedWaypoint+1, 0, waypointToAdd);
     }
     p2.resetWaypoints();
+  } else {
+    // modify the radius
+    radiusToAdd = Number(prompt("enter radius"));
+    TRACKS[courseIndex].waypoints[lastMatchedWaypoint].radiusVal = radiusToAdd;
   }
-} 
+}
 
 document.addEventListener('click', WaypointEditorClick);
