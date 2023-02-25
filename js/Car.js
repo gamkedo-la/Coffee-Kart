@@ -401,13 +401,14 @@ function carClass() {
       }
       
       if (this.lap >= maxLaps) {
-        courseIndex = (courseIndex + 1) % TRACKS.length;
+        //courseIndex = (courseIndex + 1) % TRACKS.length;
         decals.clear();
         resetAllCars();
         timer.reset();
         // show scores currently bugged
-        //gGameState = GS_SHOW_SCORES;
-        gGameState = GS_SELECT_LEVEL;
+        gGameState = GS_SHOW_SCORES;
+        //gGameState = GS_SELECT_LEVEL;
+        return;
       } else {
         // I *think* this is the calculation        
         // was our last waypoint the last one on the track?

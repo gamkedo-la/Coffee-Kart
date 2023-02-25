@@ -50,6 +50,7 @@ class LevelSelect {
             this.canSelect = false;
         }
         if (this.keyHeld_Select && this.canSelect) {
+            this.canSelect = false;
             // start the race
             resetAllCars();
             timer.reset();

@@ -31,9 +31,11 @@ class ScoreBoard {
     updateScoreboard() {     
         
         if (this.keyHeld_Select && this.canSelect) {
-            // start the race
+            // start the next race
             resetAllCars();
             timer.reset();
+            gGameState = GS_SELECT_LEVEL;
+            this.canSelect = false;
             
         }
         if (!this.keyHeld_Select) {
@@ -48,8 +50,7 @@ class ScoreBoard {
     drawScoreboard() {
         colorRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, "#6f4e37");
         for (var i = 0; i < carsToUpdate; i++) {
-            var carId = this.scores[i];
-            console.log("attempting to draw " + carId);
+            var carId = this.scores[i];        
             drawBitmapCenteredAtLocationWithRotation(gCars[carId].myBitmap, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 4 + i*100);
         }
 

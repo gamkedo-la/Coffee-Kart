@@ -150,9 +150,10 @@ function drawEverything() {
     // draw level select screen
   }
 
-  if (gGameState == GS_SHOW_SCORES) {
+  if (gGameState == GS_SHOW_SCORES) {    
     // draw race results
     scoreBoard.drawScoreboard();
+    return;
   }
     
   if (trackEditorOn) {
