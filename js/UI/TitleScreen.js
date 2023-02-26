@@ -21,11 +21,20 @@ class TitleScreenUI extends Menu {
           this.startGame();
         },
       },
-      { text: "Options", onSelect: () => {} },
+      {
+        text: "Controls",
+        onSelect: () => {
+          this.showControls();
+        },
+      },
     ];
   }
 
   startGame() {
     gGameState = GS_SELECT_LEVEL;
+  }
+
+  showControls() {
+    gGameState = GS_SHOW_INSTRUCTIONS;
   }
 }
