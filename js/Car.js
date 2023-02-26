@@ -3,7 +3,7 @@ const DEBUG_RANK_LOG = false; // output car rank every frame in debug log
 const DEBUG_LAP_LOG = false;
 const AI_DEBUG_MODE = false; // console.log spam
 const AI_WAYPOINT_TRIGGER_DISTANCE = 350; // how close we need to get to each waypoint
-const FAST_FINISH_DEBUG = true;
+const FAST_FINISH_DEBUG = false;
 
 const turnSpeed = 360.0;
 const wheelDeadSpot = 15;

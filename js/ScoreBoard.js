@@ -33,6 +33,7 @@ class ScoreBoard {
         if (this.keyHeld_Select && this.canSelect) {
             // start the next race
             resetAllCars();
+            decals.clear();
             timer.reset();
             gGameState = GS_SELECT_LEVEL;
             this.canSelect = false;

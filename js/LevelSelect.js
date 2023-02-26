@@ -53,6 +53,7 @@ class LevelSelect {
             // start the race
             resetAllCars();
             timer.reset();
+            decals.clear();
             gGameState = GS_RACING;
         }
         if (!this.keyHeld_Select && 
