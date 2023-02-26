@@ -48,6 +48,11 @@ function initInput() {
     upKey: KEY_UP_ARROW,
     selectKey: KEY_ENTER,
   });
+  controlsUI.setMenuControls({
+    downKey: KEY_DOWN_ARROW,
+    upKey: KEY_UP_ARROW,
+    selectKey: KEY_ENTER,
+  });
 
   levelSelect.setLevelSelectControls({
     leftKey: KEY_LEFT_ARROW,
@@ -110,6 +115,7 @@ function keyPressed(evt) {
   editorCamera.setKeyHoldState(evt.keyCode, true);
   pauseUI.setKeyHoldState(evt.keyCode, true);
   titleUI.setKeyHoldState(evt.keyCode, true);
+  controlsUI.setKeyHoldState(evt.keyCode, true);
   levelSelect.setKeyHoldState(evt.keyCode, true);
   scoreBoard.setKeyHoldState(evt.keyCode, true);
   evt.preventDefault(); // without this, arrow keys scroll the browser!
@@ -144,6 +150,7 @@ function keyReleased(evt) {
   editorCamera.setKeyHoldState(evt.keyCode, false);
   pauseUI.setKeyHoldState(evt.keyCode, false);
   titleUI.setKeyHoldState(evt.keyCode, false);
+  controlsUI.setKeyHoldState(evt.keyCode, false);
   levelSelect.setKeyHoldState(evt.keyCode, false);
   scoreBoard.setKeyHoldState(evt.keyCode, false);
   // prevents player from toggling pause on and off while holding pause key

@@ -6,7 +6,6 @@ const framesPerSecond = 30;
 
 const countdownToUse = 4;
 
-
 const GS_TITLE_SCREEN = 0;
 const GS_SELECT_LEVEL = 1;
 const GS_RACING = 2;
@@ -30,6 +29,7 @@ var timer = new CountdownTimer();
 var speedometer = new Speedometer();
 var pauseUI = new PauseUI();
 var titleUI = new TitleScreenUI();
+var controlsUI = new ControlsScreenUI();
 
 var levelSelect = new LevelSelect();
 
@@ -44,8 +44,6 @@ var onTitleScreen = false;
 var canChangePauseState = true;
 gCars = [];
 carCount = 0;
-
-
 
 window.onload = function () {
   canvas = document.getElementById("gameCanvas");
@@ -75,9 +73,7 @@ function loadingDoneSoStartGame() {
   p4.carInit(carPic, 4);
 
   gCars = [p1, p2, p3, p4];
-  
 
-  
   camera.InitCamera(
     SCREEN_WIDTH / 2,
     SCREEN_HEIGHT / 2,
@@ -99,8 +95,11 @@ function updateEverything() {
   } else if (gGameState == GS_TITLE_SCREEN) {
     titleUI.update();
     return;
+  } else if (gGameState == GS_SHOW_INSTRUCTIONS) {
+    controlsUI.update();
+    return;
   } else if (gGameState == GS_SELECT_LEVEL) {
-    // update level select    
+    // update level select
     levelSelect.updateLevelSelect();
     return;
   } else if (gGameState == GS_SHOW_SCORES) {
@@ -143,19 +142,18 @@ function moveEverything() {
 }
 
 function drawEverything() {
-
   if (gGameState == GS_SELECT_LEVEL) {
     levelSelect.drawLevelSelect();
     return; // exit and do not draw anything else
     // draw level select screen
   }
 
-  if (gGameState == GS_SHOW_SCORES) {    
+  if (gGameState == GS_SHOW_SCORES) {
     // draw race results
     scoreBoard.drawScoreboard();
     return;
   }
-    
+
   if (trackEditorOn) {
     colorRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, "black");
   }
@@ -183,7 +181,7 @@ function drawEverything() {
     drawRain(-camera.drawPosition.x, -camera.drawPosition.y);
 
   speedometer.draw();
-  
+
   if (!paused && timer.timeElapsed <= countdownToUse) {
     timer.drawCountdown();
   } else {
@@ -194,6 +192,8 @@ function drawEverything() {
     pauseUI.draw();
   } else if (gGameState == GS_TITLE_SCREEN) {
     titleUI.draw();
+  } else if (gGameState == GS_SHOW_INSTRUCTIONS) {
+    controlsUI.draw();
   }
 
   if (trackEditorOn) {
@@ -202,6 +202,4 @@ function drawEverything() {
       drawWaypoints();
     }
   }
-
-  
 }
