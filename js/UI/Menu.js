@@ -22,6 +22,7 @@ class Menu {
     this.cursor = 0;
     this.max_cursor_float_height = 2;
     this.cursor_y = 0;
+    this.cursor_x = -300;
     this.time = 0; // will used for animations
     this.current_option = this.options[this.cursor];
 
@@ -71,7 +72,7 @@ class Menu {
     if ((thisKey === this.downKey || thisKey === this.upKey) && !setTo) {
       this.cursor_moving = false;
     }
-    if ((thisKey === this.selectKey) && !setTo) {
+    if (thisKey === this.selectKey && !setTo) {
       isSelecting = false;
     }
   }
@@ -170,7 +171,11 @@ class Menu {
       this.main_text_size / 2;
 
     // cursor flag -- render test
-    canvasContext.drawImage(cursor_flag, canvas.width / 2 - 300, this.cursor_y);
+    canvasContext.drawImage(
+      cursor_flag,
+      canvas.width / 2 + this.cursor_x,
+      this.cursor_y
+    );
 
     // main text color
     var gradient = this.createTextGradient(
