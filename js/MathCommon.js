@@ -85,10 +85,19 @@ function Vec2Mag(v) {
 }
 
 function Vec2PointPastLine(lineStart, lineEnd, pointToTest) {
-  if (((lineEnd.x - lineStart.x) * (pointToTest.y - lineStart.y) - (lineEnd.y - lineStart.y) * (pointToTest.x - lineStart.x)) > 0) {
+  //console.log("given start " + lineStart.x + "," + lineStart.y);
+  //console.log("given end " + lineEnd.x + "," + lineEnd.y);
+  //console.log("given point " + pointToTest.x + "," + pointToTest.y);
+  var determinant = ((lineEnd.x - lineStart.x) * (pointToTest.y - lineStart.y) - (lineEnd.y - lineStart.y) * (pointToTest.x - lineStart.x));
+  //console.log("determinant is " + determinant);
+  if (determinant > 0) {
     return true;
   }
   return false;
+}
+
+function Vec2Log(vName, v) {
+  console.log(vName + " has value " + v.x + "," + v.y);
 }
 
 function Vec2AngleBetween(v1, v2) {

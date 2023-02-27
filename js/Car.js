@@ -4,7 +4,7 @@ const DEBUG_LAP_LOG = false;
 const AI_DEBUG_MODE = false; // console.log spam
 const AI_WAYPOINT_TRIGGER_DISTANCE = 350; // how close we need to get to each waypoint
 const FAST_FINISH_DEBUG = false;
-const DEBUG_LINE_WAYPOINT = false;
+const DEBUG_LINE_WAYPOINT = true;
 
 const turnSpeed = 360.0;
 const wheelDeadSpot = 15;
@@ -177,11 +177,18 @@ function carClass() {
   } // end of carReset
 
   this.carPassedWaypoint = function() {
-    var currentWaypoint = this.waypoints[this.waypointCounter % this.waypoints.length];    
-    var upperWidthVec = Vec2PolarInit(currentWaypoint.angleVal, currentWaypoint.widthVal);
-    var lowerWidthVec = Vec2PolarInit(currentWaypoint.angleVal + 180, currentWaypoint.widthVal);
-    var waypointStartVec = Vec2Add(currentWaypoint.position, upperWidthVec);
-    var waypointEndVec = Vec2Add(currentWaypoint.position, lowerWidthVec);
+    var currentWaypoint = this.waypoints[this.waypointCounter % this.waypoints.length];   
+    
+    var currentWaypointPos = currentWaypoint.position;
+    
+    var upperWidthVec = Vec2PolarInit(currentWaypoint.angle, currentWaypoint.width);
+    
+    var lowerWidthVec = Vec2PolarInit(currentWaypoint.angle + 180, currentWaypoint.width);
+    
+    var waypointStartVec = Vec2Add(currentWaypointPos, upperWidthVec);
+    
+    var waypointEndVec = Vec2Add(currentWaypointPos, lowerWidthVec);
+    
     return Vec2PointPastLine(waypointStartVec, waypointEndVec, this.position);
   }
 
@@ -522,7 +529,7 @@ function carClass() {
         this.waypointCounter++;
         currentWaypoint = this.waypoints[this.waypointCounter % this.waypoints.length];    
       } else {
-        console.log("not passed current waypoint");
+        //console.log("not passed current waypoint");
       }
     } else {
       if (distanceToWaypoint < waypointEpsilon) {
