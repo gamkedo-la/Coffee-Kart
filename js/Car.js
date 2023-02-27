@@ -4,6 +4,7 @@ const DEBUG_LAP_LOG = false;
 const AI_DEBUG_MODE = false; // console.log spam
 const AI_WAYPOINT_TRIGGER_DISTANCE = 350; // how close we need to get to each waypoint
 const FAST_FINISH_DEBUG = false;
+const DEBUG_LINE_WAYPOINT = false;
 
 const turnSpeed = 360.0;
 const wheelDeadSpot = 15;
@@ -174,6 +175,15 @@ function carClass() {
 
 
   } // end of carReset
+
+  this.carPassedWaypoint = function() {
+    var currentWaypoint = this.waypoints[this.waypointCounter % this.waypoints.length];    
+    var upperWidthVec = Vec2PolarInit(currentWaypoint.angleVal, currentWaypoint.widthVal);
+    var lowerWidthVec = Vec2PolarInit(currentWaypoint.angleVal + 180, currentWaypoint.widthVal);
+    var waypointStartVec = Vec2Add(currentWaypoint.position, upperWidthVec);
+    var waypointEndVec = Vec2Add(currentWaypoint.position, lowerWidthVec);
+    return Vec2PointPastLine(waypointStartVec, waypointEndVec, this.position);
+  }
 
   this.carMove = function() {
 
@@ -506,16 +516,26 @@ function carClass() {
     var currentWaypoint = this.waypoints[this.waypointCounter % this.waypoints.length];        
     var distanceToWaypoint = Vec2Distance(this.position, currentWaypoint.position);
     waypointEpsilon = currentWaypoint.radius + 80;    
-    if (distanceToWaypoint < waypointEpsilon) {
-      
-      if (AI_DEBUG_MODE) console.log("AI REACHED ("+Math.round(distanceToWaypoint)+" away) waypoint "+this.waypointCounter+" of " +this.waypoints.length);
+    if (DEBUG_LINE_WAYPOINT) {
+      if (this.carPassedWaypoint()) {
+        console.log("passed waypoint");
+        this.waypointCounter++;
+        currentWaypoint = this.waypoints[this.waypointCounter % this.waypoints.length];    
+      } else {
+        console.log("not passed current waypoint");
+      }
+    } else {
+      if (distanceToWaypoint < waypointEpsilon) {
+        
+        if (AI_DEBUG_MODE) console.log("AI REACHED ("+Math.round(distanceToWaypoint)+" away) waypoint "+this.waypointCounter+" of " +this.waypoints.length);
 
-      // update our waypoint to the next
-      this.waypointCounter++;
-      
-      currentWaypoint = this.waypoints[this.waypointCounter % this.waypoints.length];    
-      
-    }    
+        // update our waypoint to the next
+        this.waypointCounter++;
+        
+        currentWaypoint = this.waypoints[this.waypointCounter % this.waypoints.length];    
+        
+      }    
+    }
 
     var currentDrivePower = drivePower;
     var currentDrivePowerMax = drivePowerMax;

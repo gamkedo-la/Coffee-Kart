@@ -84,6 +84,13 @@ function Vec2Mag(v) {
   return Math.sqrt(v.x * v.x + v.y * v.y);
 }
 
+function Vec2PointPastLine(lineStart, lineEnd, pointToTest) {
+  if (((lineEnd.x - lineStart.x) * (pointToTest.y - lineStart.y) - (lineEnd.y - lineStart.y) * (pointToTest.x - lineStart.x)) > 0) {
+    return true;
+  }
+  return false;
+}
+
 function Vec2AngleBetween(v1, v2) {
   // check for
   // potential div-zero
