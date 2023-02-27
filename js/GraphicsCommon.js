@@ -19,7 +19,7 @@ function colorCircle(centerX, centerY, radius, fillColor) {
 
 function colorLine(startX, startY, endX, endY, fillColor) {
   canvasContext.save();
-  canvasContext.fillStyle = fillColor;
+  canvasContext.strokeStyle = fillColor;
   canvasContext.beginPath();
   canvasContext.moveTo(startX, startY);
   canvasContext.lineTo(endX, endY);

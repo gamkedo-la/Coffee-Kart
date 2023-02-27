@@ -63,6 +63,12 @@ function drawWaypoints() {
     for (let i = 1; i < TRACKS[courseIndex].waypoints.length; i++) {
       // some overdraw here
       waypoint = TRACKS[courseIndex].waypoints[i];
+      // check for angle adjustment?
+      var waypointPosVector = Vec2Init(waypoint.xPos, waypoint.yPos);
+      console.log("waypoint pos vector is " + waypointPosVector.x + "," + waypointPosVector.y);
+      var widthVectorUpper = Vec2Add(waypointPosVector, Vec2PolarInit(waypoint.angleVal, waypoint.widthVal));
+      console.log("width vector upper is " + widthVectorUpper.x + "," + widthVectorUpper.y);
+      var widthVectorLower = Vec2Add(waypointPosVector, Vec2PolarInit(waypoint.angleVal + 180, waypoint.widthVal));
       if (i == lastMatchedWaypoint) {
         colorCircle(waypoint.xPos - camera.drawPosition.x, waypoint.yPos - camera.drawPosition.y, waypoint.radiusVal, "red");
       } else {
@@ -74,7 +80,10 @@ function drawWaypoints() {
       } else {
         colorCircle(waypointPrev.xPos - camera.drawPosition.x, waypointPrev.yPos - camera.drawPosition.y, waypointPrev.radiusVal, "blue");
       }
-      colorLine(waypoint.xPos - camera.drawPosition.x, waypoint.yPos - camera.drawPosition.y, waypointPrev.xPos - camera.drawPosition.x, waypointPrev.yPos - camera.drawPosition.y, "blue");
+      colorLine(waypoint.xPos - camera.drawPosition.x, waypoint.yPos - camera.drawPosition.y, waypointPrev.xPos - camera.drawPosition.x, waypointPrev.yPos - camera.drawPosition.y, "black");
+      colorLine(waypointPosVector.x - camera.drawPosition.x, waypointPosVector.y - camera.drawPosition.y, widthVectorUpper.x - camera.drawPosition.x, widthVectorUpper.y - camera.drawPosition.y, "blue");
+      colorLine(waypointPosVector.x - camera.drawPosition.x, waypointPosVector.y - camera.drawPosition.y, widthVectorLower.x - camera.drawPosition.x, widthVectorLower.y - camera.drawPosition.y, "blue");
+      
     }
   } else if (TRACKS[courseIndex].waypoints.length == 1) {
       waypoint = TRACKS[courseIndex].waypoints[0];
@@ -137,10 +146,9 @@ function WaypointEditorClick(e) {
   if (!foundMatchingWaypoint) {
 
   
-  
-    angleToAdd = 0;
-    widthToAdd = 0;
-    radiusToAdd = Number(prompt("enter radius"));
+    radiusToAdd = Number(prompt("enter radius"));    
+    widthToAdd = Number(prompt("enter width"));
+    angleToAdd = Number(prompt("enter angle"));
 
     if(radiusToAdd < 50) {
       radiusToAdd = 50;
@@ -156,9 +164,13 @@ function WaypointEditorClick(e) {
     }
     p2.resetWaypoints();
   } else {
-    // modify the radius
+    // modify 
     radiusToAdd = Number(prompt("enter radius"));
+    widthToAdd = Number(prompt("enter width"));
+    angleToAdd = Number(prompt("enter angle"));
     TRACKS[courseIndex].waypoints[lastMatchedWaypoint].radiusVal = radiusToAdd;
+    TRACKS[courseIndex].waypoints[lastMatchedWaypoint].widthVal = widthToAdd;
+    TRACKS[courseIndex].waypoints[lastMatchedWaypoint].angleVal = angleToAdd;
   }
 }
 
