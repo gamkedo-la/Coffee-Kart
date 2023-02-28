@@ -55,7 +55,7 @@ class CountdownTimer{
         var timestr = (timeToDisplay).toFixed(0);
         
         // play a sound only when the number changes
-        if (timestr != this.lastCountDown) { 
+        if (timestr != this.lastCountDown && timestr != '4') { 
             console.log("Countdown: "+timestr);
             this.lastCountDown = timestr;
             if (actualTime <= 0.3) {
