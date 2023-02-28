@@ -140,6 +140,9 @@ if (DECAL_EDITOR_MODE) {
     var decalNumber = 0;
     
     function rememberThisClick(e) {
+        if (gGameState == GS_TITLE_SCREEN) {
+          return;
+        }
         if (trackEditorOn || waypointEditorOn) {
           // FIXME this is wrong, we need the track editor to accept decal clicks
           // (note - Cooper) maybe we can have different modes,
