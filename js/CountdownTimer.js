@@ -67,13 +67,15 @@ class CountdownTimer{
             }
         }
         
-        canvasContext.drawImage(timerBGPic,0,0);
-        canvasContext.font = this.font;
-        canvasContext.fillStyle = this.shadowColor
-        canvasContext.fillText(timestr,(SCREEN_WIDTH / 2)+1,(SCREEN_HEIGHT / 2)+1);
-        canvasContext.fillStyle = this.countdownColor;
-        canvasContext.fillText(timestr,(SCREEN_WIDTH / 2),(SCREEN_HEIGHT / 2));
-        canvasContext.fillStyle = 'white'; // reset just in case
+        if (timestr != '4') {
+            canvasContext.drawImage(timerBGPic,0,0);
+            canvasContext.font = this.font;
+            canvasContext.fillStyle = this.shadowColor
+            canvasContext.fillText(timestr,(SCREEN_WIDTH / 2)+1,(SCREEN_HEIGHT / 2)+1);
+            canvasContext.fillStyle = this.countdownColor;
+            canvasContext.fillText(timestr,(SCREEN_WIDTH / 2),(SCREEN_HEIGHT / 2));
+            canvasContext.fillStyle = 'white'; // reset just in case
+        }
     }
     addTime(timeToAdd){
         this.remainingTime += timeToAdd;
