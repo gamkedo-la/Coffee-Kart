@@ -5,6 +5,7 @@ const AI_DEBUG_MODE = false; // console.log spam
 const AI_WAYPOINT_TRIGGER_DISTANCE = 350; // how close we need to get to each waypoint
 const FAST_FINISH_DEBUG = false;
 const DEBUG_LINE_WAYPOINT = true;
+const ENGINE_SOUND_AUDIBLE_DISTANCE = 500; // ai car engines get quiet when far away from player
 
 const turnSpeed = 360.0;
 const wheelDeadSpot = 15;
@@ -192,18 +193,12 @@ function carClass() {
     return Vec2PointPastLine(waypointStartVec, waypointEndVec, this.position);
   }
 
-  this.carMove = function() {
+  this.updateEngineSounds = function() {
 
-    if (this.isPlayer) {
-      this.carMovePlayer();
-      if (DEBUG_RANK_LOG) console.log("player rank is " + this.ranking);
-    } else {
-      this.carMoveAi();
-    }
-
+    if (!this.engineSound) this.startEngineSound(); // does not work on the first frame...
+    
     // change the pitch of the motor sound loop
     if (this.engineSound) {
-        
         // gear shifting simulation based on speed
         this.engineSoundRPM = 1000 * (0.25+6*(this.carSpeed/500)); // sound loop speed scale * 1000
         let prevGear = this.engineSoundGear;
@@ -218,7 +213,7 @@ function carClass() {
             if (this.gearShiftUpSFX) this.gearShiftUpSFX.play();
         }
 
-        document.getElementById("debugText").innerHTML = "ENGINE SOUND DEBUG: speed: "+this.carSpeed.toFixed(0)+" gear:"+this.engineSoundGear+" rpm:"+this.engineSoundRPM.toFixed(0);
+        // document.getElementById("debugText").innerHTML = "ENGINE SOUND DEBUG: speed: "+this.carSpeed.toFixed(0)+" gear:"+this.engineSoundGear+" rpm:"+this.engineSoundRPM.toFixed(0);
         
         this.engineSound.playbackRate = this.engineSoundRPM / 1000; // so that 1000 rpm is 100% playback speed when idling
         
@@ -241,6 +236,30 @@ function carClass() {
         }
     }
 
+    // reduce volume on distant AI cars
+    if (this != p1) {
+        let distanceToPlayer = Vec2Distance(this.position,p1.position);
+        let volumeScale = 0;
+        if (distanceToPlayer < ENGINE_SOUND_AUDIBLE_DISTANCE) {
+            volumeScale = 1 - (distanceToPlayer/ENGINE_SOUND_AUDIBLE_DISTANCE);
+        }
+        if (this.driftSound) this.driftSound.volume *= volumeScale;
+        if (this.engineSound) this.engineSound.volume *= volumeScale;
+        if (this.gearShiftUpSFX) this.gearShiftUpSFX.volume *= volumeScale;
+    }
+
+  }
+
+  this.carMove = function() {
+
+    if (this.isPlayer) {
+      this.carMovePlayer();
+      if (DEBUG_RANK_LOG) console.log("player rank is " + this.ranking);
+    } else {
+      this.carMoveAi();
+    }
+
+    this.updateEngineSounds();
 
   }
 
@@ -398,6 +417,7 @@ function carClass() {
     // now that we've updated, check the friction of the tile to use next update
     this.carFriction = tileFriction(getTrackAtPixelCoord(this.position.x, this.position.y));
 
+    this.updateEngineSounds();
 
   }
 
