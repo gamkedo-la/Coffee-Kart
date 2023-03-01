@@ -6,6 +6,7 @@ const AI_WAYPOINT_TRIGGER_DISTANCE = 350; // how close we need to get to each wa
 const FAST_FINISH_DEBUG = false;
 const DEBUG_LINE_WAYPOINT = true;
 const ENGINE_SOUND_AUDIBLE_DISTANCE = 500; // ai car engines get quiet when far away from player
+const CAR_CRASH_VOLUME = 0.15; // quiet
 
 const turnSpeed = 360.0;
 const wheelDeadSpot = 15;
@@ -246,6 +247,7 @@ function carClass() {
         if (this.driftSound) this.driftSound.volume *= volumeScale;
         if (this.engineSound) this.engineSound.volume *= volumeScale;
         if (this.gearShiftUpSFX) this.gearShiftUpSFX.volume *= volumeScale;
+        if (this.carCrashSFX) this.carCrashSFX.volume *= volumeScale;
     }
 
   }
@@ -422,6 +424,9 @@ function carClass() {
   }
 
   this.carCollidesTrack = function(nextPos) {
+
+    let we_crashed = false;
+
     var drivingIntoTileType = getTrackAtPixelCoord(nextPos.x,nextPos.y);
     
     if( tileIsDriveable(drivingIntoTileType) ) {
@@ -464,7 +469,7 @@ function carClass() {
       
       
       
-    } else {
+    } else { // not goal? then it is a wall:
     
       var actualHeading = Vec2Init(0, 0);
       if (Vec2Mag(this.carVelocity) > 1) {
@@ -477,26 +482,37 @@ function carClass() {
       var trackHorizontal = getTrackAtPixelCoord(nextPosHorizontal.x, nextPosHorizontal.y);
       var trackVertical = getTrackAtPixelCoord(nextPosVertical.x, nextPosVertical.y);
     
-      if (tileIsDriveable(trackHorizontal)) {
-    
-        this.position = Vec2Add(this.position, Vec2Scale(headingHorizontal, fixedDt * this.carSpeed));
-        this.carVelocity = Vec2Scale(this.carVelocity, collisionDecay);
-        this.engineForce *= collisionDecay;
-      } else if (tileIsDriveable(trackVertical)) {
-    
-        this.position = Vec2Add(this.position, Vec2Scale(headingVertical, fixedDt * this.carSpeed));
-        this.carVelocity = Vec2Scale(this.carVelocity, collisionDecay);
-        this.engineForce *= collisionDecay;
-      } else if (!tileIsDriveable(trackVertical) && !tileIsDriveable(trackHorizontal)) {
-    
-    
+      let hit_horiz = !tileIsDriveable(trackHorizontal);
+      let hit_vert = !tileIsDriveable(trackVertical);
+
+      if (hit_horiz && hit_vert) {
         this.position = Vec2Add(this.position, Vec2Scale(actualHeading, -0.1*this.carSpeed*fixedDt));
         this.carVelocity = Vec2Scale(this.carVelocity, -0.5);
         this.engineForce = 0;
+      } else if (!hit_horiz) {
+        this.position = Vec2Add(this.position, Vec2Scale(headingHorizontal, fixedDt * this.carSpeed));
+        this.carVelocity = Vec2Scale(this.carVelocity, collisionDecay);
+        this.engineForce *= collisionDecay;
+      } else if (!hit_vert) {
+        this.position = Vec2Add(this.position, Vec2Scale(headingVertical, fixedDt * this.carSpeed));
+        this.carVelocity = Vec2Scale(this.carVelocity, collisionDecay);
+        this.engineForce *= collisionDecay;
       }
-
       
+      we_crashed = hit_horiz || hit_vert;
+      if (we_crashed && this.carCrashSFX) {
+        // console.log("CRASHED INTO THE WALL!");
+        // this ignores sounds if a previous one is still playing
+        if (this.carCrashSFX.currentTime == 0 || this.carCrashSFX.currentTime > 0.5 || this.carCrashSFX.ended || this.carCrashSFX.paused) {
+            this.carCrashSFX.volume = CAR_CRASH_VOLUME;
+            this.carCrashSFX.currentTime = 0;
+            this.carCrashSFX.play();
+        }
     }
+
+  
+    }
+
   }  
   
   this.startEngineSound = function() {
@@ -504,6 +520,7 @@ function carClass() {
     // note: the user MUST have already clicked mouse or keyboard
     // or the browser will NOT let the sound play! won't work on frame 1
 
+    // engine loop sound
     this.engineSound = new Audio('sounds/engine_loop.ogg');
     this.engineSound.loop = true;
     this.engineSound.volume = 0.1;
@@ -511,6 +528,12 @@ function carClass() {
     this.engineSound.preservesPitch = false;
     this.engineSound.play();
 
+    // for when we collide with things
+    this.carCrashSFX = new Audio('sounds/car_crash.mp3');
+    this.carCrashSFX.loop = false;
+    this.carCrashSFX.volume = CAR_CRASH_VOLUME;
+
+    // sound when we shift up or down
     this.gearShiftUpSFX = new Audio('sounds/gear_shift_up.wav');
     this.gearShiftUpSFX.loop = false;
     this.gearShiftUpSFX.volume = 1;
@@ -807,6 +830,17 @@ function carClass() {
             // todo: use a value based on the strength of the collision?
             this.collisionForce = Vec2Scale(directionToCar, -10000);
             gCars[id].collisionForce = Vec2Scale(directionToCar, 10000);
+
+            if (this.carCrashSFX) {
+                // console.log("CRASHED INTO ANOTHER CAR!");
+                // don't play too often
+                if (this.carCrashSFX.currentTime == 0 || this.carCrashSFX.currentTime > 0.5 || this.carCrashSFX.ended || this.carCrashSFX.paused) {
+                    this.carCrashSFX.volume = CAR_CRASH_VOLUME;
+                    this.carCrashSFX.currentTime = 0;   
+                    this.carCrashSFX.play();
+                }
+            }
+
             return; // I guess return here? although we limit to colliding with just one car in this way for now
           }
         }
