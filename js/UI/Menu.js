@@ -4,8 +4,8 @@ let isSelecting = false;
 class Menu {
   constructor() {
     // general text properties
-    this.text_color_1 = "#FCEC5B";
-    this.text_color_2 = "#F87F7F";
+    this.text_color_1 = "#D19E79";
+    this.text_color_2 = "#78462C";
     this.font = `48px PressStart2P`;
 
     // main text
@@ -42,6 +42,9 @@ class Menu {
       { ...this.background_flag },
       { ...this.background_flag, x: SCREEN_WIDTH },
     ];
+
+    // text outline
+    this.outline_color = "#20130E";
 
     // controls
     this.keyHeld_Down = false;
@@ -93,6 +96,7 @@ class Menu {
       0.2
     );
     canvasContext.lineWidth = this.currentOptionLineWidth;
+    canvasContext.lineColor = this.outline_color;
     canvasContext.strokeText(option.text, option.x, option.y);
   }
 
@@ -189,6 +193,7 @@ class Menu {
     canvasContext.fillStyle = "#00000088";
     canvasContext.fillText(this.text, main_text_x + 16, main_text_y + 15);
 
+    // text outline
     canvasContext.fillStyle = gradient;
     canvasContext.shadowColor = "black";
     canvasContext.shadowBlur = 0;

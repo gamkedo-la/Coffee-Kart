@@ -2,8 +2,6 @@ class PauseUI extends Menu {
   constructor() {
     super();
     // general text properties
-    this.text_color_1 = "#FCEC5B";
-    this.text_color_2 = "#F87F7F";
     this.font = `48px PressStart2P`;
 
     // pause text
@@ -44,6 +42,7 @@ class PauseUI extends Menu {
     paused = false;
   }
   quitGame() {
+    reset();
     paused = false;
     onTitleScreen = true;
   }
