@@ -20,8 +20,7 @@ function rankCars() {
     var trackLength = currentCar.waypoints.length;
     var tDist =  Vec2Distance(currentCar.position, currentCar.waypoints[currentCar.waypointCounter % currentCar.waypoints.length].position);
     //console.log("tdist is " + tDist);
-    var distToAdd;
-    // todo: refine this to allow for multiple laps etc
+    var distToAdd;    
     distToAdd = (trackLength * currentCar.lap * 10000) + currentCar.waypointCounter*500 - tDist;    
     if (DEBUG_RANK) {
       console.log("car " + i + " has distance " + distToAdd);
@@ -60,27 +59,31 @@ function waypointInitWithConfig(config) {
 
 function drawWaypoints() {
   if (TRACKS[courseIndex].waypoints.length > 1) {    
-    for (let i = 1; i < TRACKS[courseIndex].waypoints.length; i++) {
+    for (let i = 0; i < TRACKS[courseIndex].waypoints.length; i++) {
       // some overdraw here
       waypoint = TRACKS[courseIndex].waypoints[i];
       // check for angle adjustment?
       var waypointPosVector = Vec2Init(waypoint.xPos, waypoint.yPos);
-      console.log("waypoint pos vector is " + waypointPosVector.x + "," + waypointPosVector.y);
+      //console.log("waypoint pos vector is " + waypointPosVector.x + "," + waypointPosVector.y);
       var widthVectorUpper = Vec2Add(waypointPosVector, Vec2PolarInit(waypoint.angleVal, waypoint.widthVal));
-      console.log("width vector upper is " + widthVectorUpper.x + "," + widthVectorUpper.y);
+      //console.log("width vector upper is " + widthVectorUpper.x + "," + widthVectorUpper.y);
       var widthVectorLower = Vec2Add(waypointPosVector, Vec2PolarInit(waypoint.angleVal + 180, waypoint.widthVal));
       if (i == lastMatchedWaypoint) {
         colorCircle(waypoint.xPos - camera.drawPosition.x, waypoint.yPos - camera.drawPosition.y, waypoint.radiusVal, "red");
       } else {
         colorCircle(waypoint.xPos - camera.drawPosition.x, waypoint.yPos - camera.drawPosition.y, waypoint.radiusVal, "blue");
       }
-      waypointPrev = TRACKS[courseIndex].waypoints[i-1];
-      if (i - 1 == lastMatchedWaypoint) {
-        colorCircle(waypointPrev.xPos - camera.drawPosition.x, waypointPrev.yPos - camera.drawPosition.y, waypointPrev.radiusVal, "red");
-      } else {
-        colorCircle(waypointPrev.xPos - camera.drawPosition.x, waypointPrev.yPos - camera.drawPosition.y, waypointPrev.radiusVal, "blue");
+      if (i > 0) {
+        waypointPrev = TRACKS[courseIndex].waypoints[i-1];
+        if (i - 1 == lastMatchedWaypoint) {
+          colorCircle(waypointPrev.xPos - camera.drawPosition.x, waypointPrev.yPos - camera.drawPosition.y, waypointPrev.radiusVal, "red");
+        } else {
+          colorCircle(waypointPrev.xPos - camera.drawPosition.x, waypointPrev.yPos - camera.drawPosition.y, waypointPrev.radiusVal, "blue");
+        }
+        colorLine(waypoint.xPos - camera.drawPosition.x, waypoint.yPos - camera.drawPosition.y, waypointPrev.xPos - camera.drawPosition.x, waypointPrev.yPos - camera.drawPosition.y, "black");
       }
-      colorLine(waypoint.xPos - camera.drawPosition.x, waypoint.yPos - camera.drawPosition.y, waypointPrev.xPos - camera.drawPosition.x, waypointPrev.yPos - camera.drawPosition.y, "black");
+      
+      
       colorLine(waypointPosVector.x - camera.drawPosition.x, waypointPosVector.y - camera.drawPosition.y, widthVectorUpper.x - camera.drawPosition.x, widthVectorUpper.y - camera.drawPosition.y, "blue");
       colorLine(waypointPosVector.x - camera.drawPosition.x, waypointPosVector.y - camera.drawPosition.y, widthVectorLower.x - camera.drawPosition.x, widthVectorLower.y - camera.drawPosition.y, "blue");
       

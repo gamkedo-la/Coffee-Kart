@@ -1,4 +1,4 @@
-const DECAL_EDITOR_MODE = true; // if true, we record mouse clicks to the console log for later copy/pasting
+const DECAL_EDITOR_MODE = false; // if true, we record mouse clicks to the console log for later copy/pasting
 
 // decals by @mcfunkypants
 // this is one large offscreen canvas that we can draw onto

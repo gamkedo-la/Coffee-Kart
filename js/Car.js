@@ -180,18 +180,35 @@ function carClass() {
 
   this.carPassedWaypoint = function() {
     var currentWaypoint = this.waypoints[this.waypointCounter % this.waypoints.length];   
+
+    // let's instead treat it as a rect in space and just see if we intersect it
+
+    topLeftInitial = Vec2Add(this.position, Vec2Init(-this.carWidth/4, -this.carHeight/2));
+    topRightInitial = Vec2Add(this.position, Vec2Init(this.carWidth/4, -this.carHeight/2));
+    bottomLeftInitial = Vec2Add(this.position, Vec2Init(-this.carWidth/4, this.carHeight/2));
+    bottomRightInitial = Vec2Add(this.position, Vec2Init(this.carWidth/4, this.carHeight/2));
+
+    var usTopLeftRotated = Vec2Add(Vec2Rotate(Vec2Sub(topLeftInitial, this.position), this.carAng - currentWaypoint.angle + 90), this.position);
+    var usTopRightRotated = Vec2Add(Vec2Rotate(Vec2Sub(topRightInitial, this.position), this.carAng - currentWaypoint.angle + 90), this.position);
+    var usBottomLeftRotated = Vec2Add(Vec2Rotate(Vec2Sub(bottomLeftInitial, this.position), this.carAng - currentWaypoint.angle+ 90), this.position);
+    var usBottomRightRotated = Vec2Add(Vec2Rotate(Vec2Sub(bottomRightInitial, this.position), this.carAng - currentWaypoint.angle + 90), this.position);
+    var ourCorners = [usTopLeftRotated, usTopRightRotated, usBottomLeftRotated, usBottomRightRotated];
     
-    var currentWaypointPos = currentWaypoint.position;
-    
-    var upperWidthVec = Vec2PolarInit(currentWaypoint.angle, currentWaypoint.width);
-    
-    var lowerWidthVec = Vec2PolarInit(currentWaypoint.angle + 180, currentWaypoint.width);
-    
-    var waypointStartVec = Vec2Add(currentWaypointPos, upperWidthVec);
-    
-    var waypointEndVec = Vec2Add(currentWaypointPos, lowerWidthVec);
-    
-    return Vec2PointPastLine(waypointStartVec, waypointEndVec, this.position);
+    var waypointLength = 20.0;
+
+    // these are axis aligned
+    var candidateTopLeft = Vec2Add(currentWaypoint.position, Vec2Init(-waypointLength, -currentWaypoint.width));
+    var candidateTopRight = Vec2Add(currentWaypoint.position, Vec2Init(waypointLength, -currentWaypoint.width));
+    var candidateBottomLeft = Vec2Add(currentWaypoint.position, Vec2Init(-waypointLength, currentWaypoint.width));
+    var candidateBottomRight = Vec2Add(currentWaypoint.position, Vec2Init(waypointLength, currentWaypoint.width));
+
+    for (var i = 0; i < ourCorners.length; i++) {
+      if (Vec2InRect(ourCorners[i], candidateTopLeft, candidateTopRight, candidateBottomLeft, candidateBottomRight)) {
+        return true;
+      }
+    }
+
+    return false;
   }
 
   this.updateEngineSounds = function() {
