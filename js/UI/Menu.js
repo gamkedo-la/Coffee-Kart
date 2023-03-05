@@ -91,6 +91,14 @@ class Menu {
   }
 
   highlightMenuOption(option, gradient) {
+    // option text shadow
+    canvasContext.fillStyle = this.shadow_color;
+    canvasContext.fillText(
+      option.text,
+      option.x + this.currentOptionLineWidth + 1,
+      option.y + this.currentOptionLineWidth + 1
+    );
+
     canvasContext.fillStyle = gradient;
     this.currentOptionLineWidth = lerp(
       this.currentOptionLineWidth,
@@ -99,7 +107,11 @@ class Menu {
     );
     canvasContext.lineWidth = this.currentOptionLineWidth;
     canvasContext.lineColor = this.outline_color;
-    canvasContext.strokeText(option.text, option.x, option.y);
+    canvasContext.strokeText(
+      option.text,
+      option.x - this.currentOptionLineWidth,
+      option.y - this.currentOptionLineWidth
+    );
   }
 
   update() {
@@ -156,8 +168,8 @@ class Menu {
     canvasContext.font = `${this.main_text_size}px PressStart2P`;
 
     // dark transparent overlay on the game
-    canvasContext.globalAlpha = 0.5;
-    canvasContext.fillStyle = "black";
+    canvasContext.globalAlpha = 0.9;
+    canvasContext.fillStyle = "#20130E";
     canvasContext.fillRect(0, 0, canvas.width, canvas.height);
     canvasContext.globalAlpha = 1;
 
@@ -233,11 +245,17 @@ class Menu {
       canvasContext.fillStyle = this.text_color_1;
 
       // highlight the currently selected menu item
+      let text_float = 0;
       if (i === this.cursor) {
         this.highlightMenuOption(option_object, gradient);
+        text_float = this.currentOptionLineWidth;
       }
 
-      canvasContext.fillText(option.text, option_x, option_y);
+      canvasContext.fillText(
+        option.text,
+        option_x - text_float,
+        option_y - text_float
+      );
     });
   }
 }
