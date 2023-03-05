@@ -20,11 +20,13 @@ class Menu {
 
     // cursor flag
     this.cursor = 0;
+    this.cursor_float = 0;
     this.max_cursor_float_height = 2;
     this.cursor_y = 0;
     this.cursor_x = -300;
     this.time = 0; // will used for animations
     this.current_option = this.options[this.cursor];
+    this.shadow_color = "#00000088";
 
     // line width
     this.currentOptionLineWidth = 0;
@@ -133,12 +135,12 @@ class Menu {
     this.current_option = this.options[this.cursor];
 
     // animate cursor floating
-    let cursor_float = Math.sin(this.time / 4) * this.max_cursor_float_height;
+    this.cursor_float = Math.sin(this.time / 4) * this.max_cursor_float_height;
     this.cursor_y =
       this.menu_start_y +
       this.margin_y * this.cursor -
       this.option_font_size +
-      cursor_float;
+      this.cursor_float;
 
     // progress time value for animations
     this.time++;
@@ -174,7 +176,16 @@ class Menu {
       this.background_flag.height / 2 +
       this.main_text_size / 2;
 
-    // cursor flag -- render test
+    // cursor flag shadow
+    canvasContext.fillStyle = this.shadow_color;
+    canvasContext.fillRect(
+      canvas.width / 2 + this.cursor_x + 8,
+      this.cursor_y + 8 - this.cursor_float,
+      cursor_flag.width - this.cursor_float,
+      cursor_flag.height - this.cursor_float
+    );
+
+    // cursor flag
     canvasContext.drawImage(
       cursor_flag,
       canvas.width / 2 + this.cursor_x,
@@ -190,7 +201,7 @@ class Menu {
     );
 
     // main text shadow
-    canvasContext.fillStyle = "#00000088";
+    canvasContext.fillStyle = this.shadow_color;
     canvasContext.fillText(this.text, main_text_x + 16, main_text_y + 15);
 
     // text outline
