@@ -82,11 +82,11 @@ class Menu {
     }
   }
 
-  createTextGradient(x, y, width, height) {
-    var gradient = canvasContext.createLinearGradient(x, y, width, height);
+  createTextGradient(x1, y1, x2, y2) {
+    var gradient = canvasContext.createLinearGradient(x1, y1, x2, y2);
     gradient.addColorStop(0, this.text_color_1);
     gradient.addColorStop(1, this.text_color_2);
-    gradient.textBaseline = "top";
+    canvasContext.textBaseline = "middle";
     return gradient;
   }
 
@@ -185,8 +185,7 @@ class Menu {
     // vertically center the main text within the background flag
     let main_text_y =
       this.background_flag.y +
-      this.background_flag.height / 2 +
-      this.main_text_size / 2;
+      this.background_flag.height / 2;
 
     // cursor flag shadow
     canvasContext.fillStyle = this.shadow_color;
@@ -208,8 +207,8 @@ class Menu {
     var gradient = this.createTextGradient(
       main_text_x,
       main_text_y,
-      main_text_x + text_width,
-      main_text_y + 48
+      main_text_x,
+      main_text_y + 24
     );
 
     // main text shadow
