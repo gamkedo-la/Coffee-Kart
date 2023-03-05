@@ -376,8 +376,12 @@ function carClass() {
 
     }
 
-    if (hitTheGas && this.engineForce > drivePowerMax) {
-      this.engineForce = drivePowerMax;
+    // experiment with
+    // giving a.i a slight bonus
+    // since they drive so poorly
+    const aiPowerBonus = 1.25;
+    if (hitTheGas && this.engineForce > drivePowerMax*aiPowerBonus) {
+      this.engineForce = drivePowerMax * aiPowerBonus;
       this.drawTireTracks = true;
     }
     if (this.engineForce < (drivePowerMaxReverse)) {
@@ -399,8 +403,8 @@ function carClass() {
     
     var longForce = Vec2Add(Vec2Add(Vec2Add(Vec2Add(tractionForce, rollingResistanceForce), dragForce), brakingForce), this.collisionForce);
 
-
-    var accel = Vec2Scale(longForce , 1.0 / this.carMass);
+    const aiAccelBonus = 1.1;
+    var accel = Vec2Scale(longForce , aiAccelBonus * (1.0 / this.carMass));
     this.carVelocity = Vec2Add(this.carVelocity, Vec2Scale(accel, fixedDt));
     
     if (Vec2Mag(this.carVelocity) < 1) {
