@@ -90,7 +90,7 @@ class Menu {
     return gradient;
   }
 
-  highlightMenuOption(option, gradient) {
+  highlightMenuOption(option) {
     // option text shadow
     canvasContext.fillStyle = this.shadow_color;
     canvasContext.fillText(
@@ -99,7 +99,7 @@ class Menu {
       option.y + this.currentOptionLineWidth + 1
     );
 
-    canvasContext.fillStyle = gradient;
+    canvasContext.fillStyle = this.createTextGradient(option.x, option.y - 8, option.x, option.y + 8);
     this.currentOptionLineWidth = lerp(
       this.currentOptionLineWidth,
       this.maxLineWidth,
@@ -217,6 +217,7 @@ class Menu {
 
     // text outline
     canvasContext.fillStyle = gradient;
+    canvasContext.strokeStyle = "#20130E";
     canvasContext.shadowColor = "black";
     canvasContext.shadowBlur = 0;
     canvasContext.lineWidth = 8;
@@ -242,6 +243,7 @@ class Menu {
 
       // default fill style for menu items
       canvasContext.fillStyle = this.text_color_1;
+      canvasContext.strokeStyle = "#241D2D";
 
       // highlight the currently selected menu item
       let text_float = 0;
