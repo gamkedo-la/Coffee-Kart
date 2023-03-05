@@ -183,6 +183,7 @@ function updatePowerups()
         TRACKS[courseIndex].powerups[i].timer += fixedDt;
         if (TRACKS[courseIndex].powerups[i].timer > powerupRefresh) {
           TRACKS[courseIndex].powerups[i].active = true;
+          TRACKS[courseIndex].powerups[i].timer = 0;
         }
       } 
     }
