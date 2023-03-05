@@ -21,6 +21,14 @@ var snow_level_pic = document.createElement("img");
 var cafe_level_pic = document.createElement("img");
 var jungle_level_pic = document.createElement("img");
 
+// portraits
+
+var clown_portrait = document.createElement("img");
+var farmer_portrait = document.createElement("img");
+var hipster_portrait = document.createElement("img");
+var office_guy_portrait = document.createElement("img");
+
+
 // decals
 var tireTracksPic = document.createElement("img");
 var decal_oilstain = document.createElement("img");
@@ -75,6 +83,10 @@ function beginLoadingImage(imgVar, fileName) {
 
 function loadImages() {
   var imageList = [
+    { varName: clown_portrait, theFile: "clownxcf.png" },
+    { varName: hipster_portrait, theFile: "hipster.png" },
+    { varName: farmer_portrait, theFile: "farmer.png" },
+    { varName: office_guy_portrait, theFile: "officeGuyWithShadow.png" },
     { varName: you_won_pic, theFile: "you_won.png" },
     { varName: better_luck_pic, theFile: "better_luck.png" },
     { varName: press_enter_continue_pic, theFile: "press_enter_continue.png" },

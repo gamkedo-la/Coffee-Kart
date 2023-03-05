@@ -50,6 +50,7 @@ class ScoreBoard {
     
     drawScoreboard() {
         colorRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, "#6f4e37");
+        let portraits = [clown_portrait, farmer_portrait, office_guy_portrait, hipster_portrait];
         for (var i = 0; i < carsToUpdate; i++) {
             var carId = this.scores[i]; 
             canvasContext.drawImage(placingSheet,
@@ -66,8 +67,9 @@ class ScoreBoard {
                 drawBitmapCenteredAtLocationWithRotation(player_arrow, SCREEN_WIDTH / 2 + 150, SCREEN_HEIGHT / 4 + i*100);
             }       
             drawBitmapCenteredAtLocationWithRotation(gCars[carId].myBitmap, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 4 + i*100);
-            drawBitmapCenteredAtLocationWithRotation(press_enter_continue_pic, SCREEN_WIDTH / 2, 3*SCREEN_HEIGHT/4 + 40 );
+            drawBitmapCenteredAtLocationWithRotation(portraits[i], SCREEN_WIDTH / 2 + 66, SCREEN_HEIGHT / 4 + i*100);
+            
         }
-
+        drawBitmapCenteredAtLocationWithRotation(press_enter_continue_pic, SCREEN_WIDTH / 2, 3*SCREEN_HEIGHT/4 + 40 );
     }
 }

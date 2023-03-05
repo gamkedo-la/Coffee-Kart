@@ -79,6 +79,6 @@ class LevelSelect {
         }
         drawBitmapCenteredAtLocationWithRotation(player_arrow, SCREEN_WIDTH / 4, SCREEN_HEIGHT / 2, degToRad(0));
         drawBitmapCenteredAtLocationWithRotation(player_arrow, 3 * SCREEN_WIDTH / 4, SCREEN_HEIGHT / 2, degToRad(180));
-        drawBitmapCenteredAtLocationWithRotation(press_enter_pic, SCREEN_WIDTH / 2, 3 * SCREEN_HEIGHT / 4, degToRad(0));
+        drawBitmapCenteredAtLocationWithRotation(press_enter_pic, SCREEN_WIDTH / 2, 3 * SCREEN_HEIGHT / 4 + 75, degToRad(0));
     }
 }
