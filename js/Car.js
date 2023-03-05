@@ -1,4 +1,5 @@
-const DEBUG_DRAW = false;
+const DEBUG_DRAW = true;
+const DEBUG_WAYPOINT_VISUALISER = true;
 const DEBUG_RANK_LOG = false; // output car rank every frame in debug log 
 const DEBUG_LAP_LOG = false;
 const AI_DEBUG_MODE = false; // console.log spam
@@ -194,13 +195,22 @@ function carClass() {
     var usBottomRightRotated = Vec2Add(Vec2Rotate(Vec2Sub(bottomRightInitial, this.position), this.carAng - currentWaypoint.angle + 90), this.position);
     var ourCorners = [usTopLeftRotated, usTopRightRotated, usBottomLeftRotated, usBottomRightRotated];
     
-    var waypointLength = 20.0;
+    var waypointLength = 150;
+    var waypointWidth = currentWaypoint.width;
 
     // these are axis aligned
-    var candidateTopLeft = Vec2Add(currentWaypoint.position, Vec2Init(-waypointLength, -currentWaypoint.width));
-    var candidateTopRight = Vec2Add(currentWaypoint.position, Vec2Init(waypointLength, -currentWaypoint.width));
-    var candidateBottomLeft = Vec2Add(currentWaypoint.position, Vec2Init(-waypointLength, currentWaypoint.width));
-    var candidateBottomRight = Vec2Add(currentWaypoint.position, Vec2Init(waypointLength, currentWaypoint.width));
+    var candidateTopLeft = Vec2Add(currentWaypoint.position, Vec2Init(-waypointWidth, -waypointLength));
+    var candidateTopRight = Vec2Add(currentWaypoint.position, Vec2Init(waypointWidth, -waypointLength));
+    var candidateBottomLeft = Vec2Add(currentWaypoint.position, Vec2Init(-waypointWidth, waypointLength));
+    var candidateBottomRight = Vec2Add(currentWaypoint.position, Vec2Init(waypointWidth, waypointLength));
+
+    //var candidateTopLeftRotated = Vec2Rotate(candidateTopLeft, currentWaypoint.angle);
+    //var candidateTopRightRotated = Vec2Rotate(candidateTopRight, currentWaypoint.angle);
+    //var candidateBottomLeftRotated = Vec2Rotate(candidateBottomLeft, currentWaypoint.angle);
+    //var candidateBottomRightRotated = Vec2Rotate(candidateBottomRight, currentWaypoint.angle);
+
+    
+    // need to visualize this
 
     for (var i = 0; i < ourCorners.length; i++) {
       if (Vec2InRect(ourCorners[i], candidateTopLeft, candidateTopRight, candidateBottomLeft, candidateBottomRight)) {
@@ -878,8 +888,31 @@ function carClass() {
     if (DEBUG_DRAW) {      
       for (let i = 0; i < this.waypoints.length; i++) {
         waypoint = this.waypoints[i];
-        colorCircle(waypoint.position.x - camera.drawPosition.x, waypoint.position.y - camera.drawPosition.y, waypoint.radius, "blue");
+        //colorCircle(waypoint.position.x - camera.drawPosition.x, waypoint.position.y - camera.drawPosition.y, waypoint.radius, "blue");
       }
+
+      if (DEBUG_WAYPOINT_VISUALISER) {
+        var currentWaypoint = this.waypoints[this.waypointCounter % this.waypoints.length];   
+        var waypointLength = 20;
+        var waypointWidth = currentWaypoint.width;
+
+        var candidateTopLeft = Vec2Add(currentWaypoint.position, Vec2Init(-waypointWidth, -waypointLength));
+        var candidateTopRight = Vec2Add(currentWaypoint.position, Vec2Init(waypointWidth, -waypointLength));
+        var candidateBottomLeft = Vec2Add(currentWaypoint.position, Vec2Init(-waypointWidth, waypointLength));
+        var candidateBottomRight = Vec2Add(currentWaypoint.position, Vec2Init(waypointWidth, waypointLength));
+
+        var candidateTopLeftRotated = Vec2Rotate(candidateTopLeft, currentWaypoint.angle + 90);
+        var candidateTopRightRotated = Vec2Rotate(candidateTopRight, currentWaypoint.angle + 90);
+        var candidateBottomLeftRotated = Vec2Rotate(candidateBottomLeft, currentWaypoint.angle + 90);
+        var candidateBottomRightRotated = Vec2Rotate(candidateBottomRight, currentWaypoint.angle + 90);
+        //colorCircle(candidateTopLeftRotated.x - camera.drawPosition.x, candidateTopLeftRotated.y - camera.drawPosition.y, 5, "blue");
+        //colorCircle(candidateTopRightRotated.x - camera.drawPosition.x, candidateTopRightRotated.y - camera.drawPosition.y, 5, "red");
+        //colorCircle(candidateBottomLeftRotated.x - camera.drawPosition.x, candidateBottomLeftRotated.y - camera.drawPosition.y, 5, "green");
+        //colorCircle(candidateBottomRightRotated.x - camera.drawPosition.x, candidateBottomRightRotated.y - camera.drawPosition.y, 5, "yellow");
+        if (this.isPlayer) {
+          colorRectRotated(candidateTopLeft.x - camera.drawPosition.x, candidateTopLeft.y - camera.drawPosition.y, waypointWidth, waypointLength, "red", currentWaypoint.angle);
+        }
+        }
     }
     
     // headlights and tail lights

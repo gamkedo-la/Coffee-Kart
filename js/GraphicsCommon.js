@@ -8,6 +8,14 @@ function colorRect(topLeftX, topLeftY, boxWidth, boxHeight, fillColor) {
   canvasContext.restore();
 }
 
+function colorRectRotated(topLeftX, topLeftY, boxWidth, boxHeight, fillColor, withAngle) {
+  canvasContext.save();
+  canvasContext.rotate(withAngle); // sets the rotation
+  canvasContext.fillStyle = fillColor;
+  canvasContext.fillRect(topLeftX, topLeftY, boxWidth, boxHeight);
+  canvasContext.restore();
+}
+
 function colorCircle(centerX, centerY, radius, fillColor) {
   canvasContext.save();
   canvasContext.fillStyle = fillColor;
