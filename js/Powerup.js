@@ -67,7 +67,7 @@ function PowerupRadius(type) {
 
 function PowerupInit(xPosVal, yPosVal, typeVal) {
     var radiusToAdd = PowerupRadius(typeVal);
-    var result = {type: typeVal, xPos: xPosVal, yPos : yPosVal, radiusVal : radiusToAdd, active : true};
+    var result = {type: typeVal, xPos: xPosVal, yPos : yPosVal, radiusVal : radiusToAdd, active : true, timer : 0};
     return result;
 }
 
@@ -77,7 +77,8 @@ function PowerupInitWithConfig(config) {
         angle: config.angleVal,
         width: config.widthVal,
         radius: config.radiusVal,
-        active : config.activeVal
+        active : config.activeVal,
+        timer : 0
     };
 
     return result;
@@ -123,6 +124,12 @@ function PowerupTimer(powerupType)
   if (powerupType == POWERUP_FRENCH_PRESS) {
     return 5;
   }
+  if (powerupType == POWERUP_CROISSANT) {
+    return 5;
+  }
+  if (powerupType == POWERUP_TAKEAWAY) {
+    return 5;
+  }
   return 0;
 }
 
@@ -138,7 +145,13 @@ function PowerupPower(powerupType)
     return drivePower * 2.75;
   }
   if (powerupType == POWERUP_FRENCH_PRESS) {
-    return drivePower * 3;
+    return drivePower * 3.6;
+  }
+  if (powerupType == POWERUP_CROISSANT) {
+    return drivePower * 2.8;
+  }
+  if (powerupType == POWERUP_TAKEAWAY) {
+    return drivePower * 3.1;
   }
   
 
@@ -153,6 +166,7 @@ function PowerupPowerMax(powerupType)
 
 function updatePowerups()
 {
+    const powerupRefresh = 20.0;
     for (i = 0; i < TRACKS[courseIndex].powerups.length; i++) {
       var powerup = TRACKS[courseIndex].powerups[i];
       var powerupPos = Vec2Init(powerup.xPos, powerup.yPos);
@@ -164,6 +178,11 @@ function updatePowerups()
             gCars[j].powerupTimer = PowerupTimer(powerup.type);
             TRACKS[courseIndex].powerups[i].active = false;
           }
+        }
+      } else {
+        TRACKS[courseIndex].powerups[i].timer += fixedDt;
+        if (TRACKS[courseIndex].powerups[i].timer > powerupRefresh) {
+          TRACKS[courseIndex].powerups[i].active = true;
         }
       } 
     }

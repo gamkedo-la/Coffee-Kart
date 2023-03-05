@@ -90,8 +90,44 @@ const TRACKS = [
       { xPos: 279, yPos: 937, angleVal: 0, widthVal: 300, radiusVal: 50},
     ],
     powerups: [
-      { type: POWERUP_ESPRESSO, xPos: 175, yPos: 300, radiusVal: 20, active: false },
-      { type: POWERUP_ESPRESSO, xPos: 275, yPos: 300, radiusVal: 20, active: false },
+      
+      
+      { type: POWERUP_COFFEE_BEAN, xPos: 227, yPos: 337, radiusVal: 20, active: true, timer : 0},
+      { type: POWERUP_COFFEE_BEAN, xPos: 361, yPos: 214, radiusVal: 20, active: true, timer : 0},
+      { type: POWERUP_CROISSANT, xPos: 608, yPos: 212, radiusVal: 20, active: true, timer : 0},
+      { type: POWERUP_CROISSANT, xPos: 858, yPos: 334, radiusVal: 20, active: true, timer : 0},
+      { type: POWERUP_MUFFIN, xPos: 936, yPos: 212, radiusVal: 20, active: true, timer : 0},
+      { type: POWERUP_MUFFIN, xPos: 1112, yPos: 284, radiusVal: 20, active: true, timer : 0},
+      { type: POWERUP_FRENCH_PRESS, xPos: 1357, yPos: 293, radiusVal: 20, active: true, timer : 0},
+      { type: POWERUP_FRENCH_PRESS, xPos: 1315, yPos: 534, radiusVal: 20, active: true, timer : 0},
+      { type: POWERUP_TAKEAWAY, xPos: 1073, yPos: 522, radiusVal: 20, active: true, timer : 0},
+      { type: POWERUP_TAKEAWAY, xPos: 747, yPos: 611, radiusVal: 20, active: true, timer : 0},
+      { type: POWERUP_ESPRESSO, xPos: 443, yPos: 529, radiusVal: 20, active: true, timer : 0},
+      { type: POWERUP_ESPRESSO, xPos: 387, yPos: 371, radiusVal: 20, active: true, timer : 0},
+      { type: POWERUP_ESPRESSO, xPos: 151, yPos: 262, radiusVal: 20, active: true, timer : 0},
+      { type: POWERUP_ESPRESSO, xPos: 548, yPos: 696, radiusVal: 20, active: true, timer : 0},
+      { type: POWERUP_FRENCH_PRESS, xPos: 477, yPos: 777, radiusVal: 20, active: true, timer : 0},
+      { type: POWERUP_FRENCH_PRESS, xPos: 999, yPos: 932, radiusVal: 20, active: true, timer : 0},
+      { type: POWERUP_FRENCH_PRESS, xPos: 1333, yPos: 825, radiusVal: 20, active: true, timer : 0},
+      { type: POWERUP_MUFFIN, xPos: 1298, yPos: 1185, radiusVal: 20, active: true, timer : 0},
+      { type: POWERUP_ESPRESSO, xPos: 1084, yPos: 1350, radiusVal: 20, active: true, timer : 0},
+      { type: POWERUP_ESPRESSO, xPos: 752, yPos: 1347, radiusVal: 20, active: true, timer : 0},
+      { type: POWERUP_MUFFIN, xPos: 889, yPos: 1662, radiusVal: 20, active: true, timer : 0},
+      { type: POWERUP_COFFEE_BEAN, xPos: 1387, yPos: 1810, radiusVal: 20, active: true, timer : 0},
+      { type: POWERUP_COFFEE_BEAN, xPos: 1172, yPos: 1754, radiusVal: 20, active: true, timer : 0},
+      { type: POWERUP_COFFEE_BEAN, xPos: 1121, yPos: 2122, radiusVal: 20, active: true, timer : 0},
+      { type: POWERUP_FRENCH_PRESS, xPos: 536, yPos: 2103, radiusVal: 20, active: true, timer : 0},
+      { type: POWERUP_FRENCH_PRESS, xPos: 840, yPos: 1885, radiusVal: 20, active: true, timer : 0},
+      { type: POWERUP_FRENCH_PRESS, xPos: 272, yPos: 2043, radiusVal: 20, active: true, timer : 0},
+      { type: POWERUP_ESPRESSO, xPos: 162, yPos: 1892, radiusVal: 20, active: true, timer : 0},
+      { type: POWERUP_ESPRESSO, xPos: 602, yPos: 1654, radiusVal: 20, active: true, timer : 0},
+      { type: POWERUP_ESPRESSO, xPos: 444, yPos: 1470, radiusVal: 20, active: true, timer : 0},
+      { type: POWERUP_CROISSANT, xPos: 155, yPos: 1456, radiusVal: 20, active: true, timer : 0},
+      { type: POWERUP_CROISSANT, xPos: 354, yPos: 1158, radiusVal: 20, active: true, timer : 0},
+      { type: POWERUP_CROISSANT, xPos: 769, yPos: 782, radiusVal: 20, active: true, timer : 0},
+      { type: POWERUP_CROISSANT, xPos: 1393, yPos: 1006, radiusVal: 20, active: true, timer : 0},
+      { type: POWERUP_CROISSANT, xPos: 287, yPos: 539, radiusVal: 20, active: true, timer : 0},
+      { type: POWERUP_COFFEE_BEAN, xPos: 204, yPos: 1010, radiusVal: 20, active: true, timer : 0},
     ]
   }
   ,
@@ -157,8 +193,54 @@ const TRACKS = [
       { xPos: 1426, yPos: 2269, angleVal: 30, widthVal: 250, radiusVal: 40},
     ],
     powerups: [
-      { type: POWERUP_ESPRESSO, xPos: 175, yPos: 300, radiusVal: 20, active: false },
-      { type: POWERUP_ESPRESSO, xPos: 275, yPos: 300, radiusVal: 20, active: true },
+      
+      { type: POWERUP_ESPRESSO, xPos: 275, yPos: 300, radiusVal: 20, active: true, timer : 0},
+      { type: POWERUP_MUFFIN, xPos: 1504, yPos: 1812, radiusVal: 20, active: true, timer : 0},
+      { type: POWERUP_MUFFIN, xPos: 1395, yPos: 1743, radiusVal: 20, active: true, timer : 0},
+      { type: POWERUP_FRENCH_PRESS, xPos: 1388, yPos: 1943, radiusVal: 20, active: true, timer : 0},
+
+      { type: POWERUP_TAKEAWAY, xPos: 1426, yPos: 1505, radiusVal: 20, active: true, timer : 0},
+
+      { type: POWERUP_ESPRESSO, xPos: 1021, yPos: 1522, radiusVal: 20, active: true, timer : 0},
+      { type: POWERUP_ESPRESSO, xPos: 1108, yPos: 1642, radiusVal: 20, active: true, timer : 0},
+
+      { type: POWERUP_CROISSANT, xPos: 918, yPos: 1749, radiusVal: 20, active: true, timer : 0},
+      { type: POWERUP_CROISSANT, xPos: 1003, yPos: 1927, radiusVal: 20, active: true, timer : 0},
+      { type: POWERUP_COFFEE_BEAN, xPos: 930, yPos: 2038, radiusVal: 20, active: true, timer : 0},
+
+      { type: POWERUP_COFFEE_BEAN, xPos: 398, yPos: 2020, radiusVal: 20, active: true, timer : 0},
+      { type: POWERUP_FRENCH_PRESS, xPos: 378, yPos: 1882, radiusVal: 20, active: true, timer : 0},
+
+      { type: POWERUP_ESPRESSO, xPos: 697, yPos: 1511, radiusVal: 20, active: true, timer : 0},
+      { type: POWERUP_ESPRESSO, xPos: 606, yPos: 1387, radiusVal: 20, active: true, timer : 0},
+
+      { type: POWERUP_ESPRESSO, xPos: 626, yPos: 1256, radiusVal: 20, active: true, timer : 0},
+      { type: POWERUP_CROISSANT, xPos: 520, yPos: 1069, radiusVal: 20, active: true, timer : 0},
+      { type: POWERUP_CROISSANT, xPos: 715, yPos: 959, radiusVal: 20, active: true, timer : 0},
+      { type: POWERUP_CROISSANT, xPos: 561, yPos: 878, radiusVal: 20, active: true, timer : 0},
+
+      { type: POWERUP_CROISSANT, xPos: 1343, yPos: 1075, radiusVal: 20, active: true, timer : 0},
+      { type: POWERUP_CROISSANT, xPos: 1401, yPos: 837, radiusVal: 20, active: true, timer : 0},
+
+      { type: POWERUP_MUFFIN, xPos: 1120, yPos: 788, radiusVal: 20, active: true, timer : 0},
+
+      { type: POWERUP_MUFFIN, xPos: 1124, yPos: 154, radiusVal: 20, active: true, timer : 0},
+      { type: POWERUP_FRENCH_PRESS, xPos: 884, yPos: 177, radiusVal: 20, active: true, timer : 0},
+
+      { type: POWERUP_ESPRESSO, xPos: 146, yPos: 834, radiusVal: 20, active: true, timer : 0},
+
+      { type: POWERUP_ESPRESSO, xPos: 140, yPos: 1175, radiusVal: 20, active: true, timer : 0},
+      { type: POWERUP_TAKEAWAY, xPos: 272, yPos: 1380, radiusVal: 20, active: true, timer : 0},
+      { type: POWERUP_TAKEAWAY, xPos: 185, yPos: 1780, radiusVal: 20, active: true, timer : 0},
+
+      { type: POWERUP_TAKEAWAY, xPos: 271, yPos: 2265, radiusVal: 20, active: true, timer : 0},
+
+      { type: POWERUP_ESPRESSO, xPos: 169, yPos: 2186, radiusVal: 20, active: true, timer : 0},
+      { type: POWERUP_ESPRESSO, xPos: 823, yPos: 2271, radiusVal: 20, active: true, timer : 0},
+
+
+      { type: POWERUP_COFFEE_BEAN, xPos: 1214, yPos: 2293, radiusVal: 20, active: true, timer : 0},
+      { type: POWERUP_FRENCH_PRESS, xPos: 1438, yPos: 2268, radiusVal: 20, active: true, timer : 0},
     ]
   }
   
@@ -231,8 +313,49 @@ const TRACKS = [
       { xPos: 1313, yPos: 2206, angleVal: 30, widthVal: 300, radiusVal: 40},
     ],
     powerups: [
-      { type: POWERUP_ESPRESSO, xPos: 175, yPos: 300, radiusVal: 20, active: false },
-      { type: POWERUP_ESPRESSO, xPos: 275, yPos: 300, radiusVal: 20, active: false },
+
+      { type: POWERUP_MUFFIN, xPos: 1341, yPos: 1702, radiusVal: 20, active: true, timer : 0},
+
+      { type: POWERUP_FRENCH_PRESS, xPos: 742, yPos: 1627, radiusVal: 20, active: true, timer : 0},
+      { type: POWERUP_ESPRESSO, xPos: 1166, yPos: 1666, radiusVal: 20, active: true, timer : 0},
+      { type: POWERUP_ESPRESSO, xPos: 904, yPos: 1398, radiusVal: 20, active: true, timer : 0},
+
+      { type: POWERUP_TAKEAWAY, xPos: 774, yPos: 1481, radiusVal: 20, active: true, timer : 0},
+      { type: POWERUP_TAKEAWAY, xPos: 1018, yPos: 1244, radiusVal: 20, active: true, timer : 0},
+      { type: POWERUP_COFFEE_BEAN, xPos: 1407, yPos: 1241, radiusVal: 20, active: true, timer : 0},
+
+      { type: POWERUP_COFFEE_BEAN, xPos: 1117, yPos: 1248, radiusVal: 20, active: true, timer : 0},
+      { type: POWERUP_FRENCH_PRESS, xPos: 1426, yPos: 984, radiusVal: 20, active: true, timer : 0},
+
+      { type: POWERUP_TAKEAWAY, xPos: 1350, yPos: 740, radiusVal: 20, active: true, timer : 0},
+      { type: POWERUP_COFFEE_BEAN, xPos: 1147, yPos: 702, radiusVal: 20, active: true, timer : 0},
+
+      { type: POWERUP_COFFEE_BEAN, xPos: 1196, yPos: 810, radiusVal: 20, active: true, timer : 0},
+      { type: POWERUP_MUFFIN, xPos: 664, yPos: 763, radiusVal: 20, active: true, timer : 0},
+
+      { type: POWERUP_FRENCH_PRESS, xPos: 572, yPos: 630, radiusVal: 20, active: true, timer : 0},
+
+      { type: POWERUP_FRENCH_PRESS, xPos: 1352, yPos: 461, radiusVal: 20, active: true, timer : 0},
+
+      { type: POWERUP_TAKEAWAY, xPos: 1317, yPos: 262, radiusVal: 20, active: true, timer : 0},
+
+      { type: POWERUP_COFFEE_BEAN, xPos: 957, yPos: 202, radiusVal: 20, active: true, timer : 0},            
+      { type: POWERUP_CROISSANT, xPos: 1235, yPos: 218, radiusVal: 20, active: true, timer : 0},
+
+      { type: POWERUP_ESPRESSO, xPos: 374, yPos: 276, radiusVal: 20, active: true, timer : 0},
+      { type: POWERUP_ESPRESSO, xPos: 250, yPos: 438, radiusVal: 20, active: true, timer : 0},
+
+      { type: POWERUP_CROISSANT, xPos: 282, yPos: 327, radiusVal: 20, active: true, timer : 0},
+
+      { type: POWERUP_MUFFIN, xPos: 327, yPos: 847, radiusVal: 20, active: true, timer : 0},
+
+
+      { type: POWERUP_TAKEAWAY, xPos: 172, yPos: 1499, radiusVal: 20, active: true, timer : 0},
+
+      { type: POWERUP_TAKEAWAY, xPos: 305, yPos: 2012, radiusVal: 20, active: true, timer : 0},
+      { type: POWERUP_COFFEE_BEAN, xPos: 738, yPos: 2195, radiusVal: 20, active: true, timer : 0},
+
+      { type: POWERUP_FRENCH_PRESS, xPos: 1202, yPos: 2208, radiusVal: 20, active: true, timer : 0},
     ]
   }
 

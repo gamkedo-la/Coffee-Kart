@@ -4,7 +4,7 @@ const DEBUG_RANK_LOG = false; // output car rank every frame in debug log
 const DEBUG_LAP_LOG = false;
 const AI_DEBUG_MODE = false; // console.log spam
 const AI_WAYPOINT_TRIGGER_DISTANCE = 350; // how close we need to get to each waypoint
-const FAST_FINISH_DEBUG = true;
+const FAST_FINISH_DEBUG = false;
 const DEBUG_LINE_WAYPOINT = true;
 const ENGINE_SOUND_AUDIBLE_DISTANCE = 500; // ai car engines get quiet when far away from player
 const CAR_CRASH_VOLUME = 0.15; // quiet
@@ -597,26 +597,13 @@ function carClass() {
     var currentWaypoint = this.waypoints[this.waypointCounter % this.waypoints.length];        
     var distanceToWaypoint = Vec2Distance(this.position, currentWaypoint.position);
     waypointEpsilon = currentWaypoint.radius + 80;    
-    if (DEBUG_LINE_WAYPOINT) {
-      if (this.carPassedWaypoint()) {
+  
+    if (this.carPassedWaypoint()) {
         console.log("passed waypoint");
         this.waypointCounter++;
         currentWaypoint = this.waypoints[this.waypointCounter % this.waypoints.length];    
-      } else {
-        //console.log("not passed current waypoint");
-      }
-    } else {
-      if (distanceToWaypoint < waypointEpsilon) {
-        
-        if (AI_DEBUG_MODE) console.log("AI REACHED ("+Math.round(distanceToWaypoint)+" away) waypoint "+this.waypointCounter+" of " +this.waypoints.length);
-
-        // update our waypoint to the next
-        this.waypointCounter++;
-        
-        currentWaypoint = this.waypoints[this.waypointCounter % this.waypoints.length];    
-        
-      }    
-    }
+    } 
+    
 
     var currentDrivePower = drivePower;
     var currentDrivePowerMax = drivePowerMax;
