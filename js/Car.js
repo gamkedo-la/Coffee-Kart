@@ -1,5 +1,5 @@
-const DEBUG_DRAW = true;
-const DEBUG_WAYPOINT_VISUALISER = true;
+const DEBUG_DRAW = false;
+const DEBUG_WAYPOINT_VISUALISER = false;
 const DEBUG_RANK_LOG = false; // output car rank every frame in debug log 
 const DEBUG_LAP_LOG = false;
 const AI_DEBUG_MODE = false; // console.log spam
