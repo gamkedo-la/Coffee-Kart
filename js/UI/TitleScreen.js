@@ -26,6 +26,12 @@ class TitleScreenUI extends Menu {
           this.showControls();
         },
       },
+      {
+        text: "Credits",
+        onSelect: () => {
+          this.showCredits();
+        },
+      },
     ];
   }
 
@@ -35,5 +41,9 @@ class TitleScreenUI extends Menu {
 
   showControls() {
     gGameState = GS_SHOW_INSTRUCTIONS;
+  }
+
+  showCredits() {
+    gGameState = GS_SHOW_CREDITS;
   }
 }

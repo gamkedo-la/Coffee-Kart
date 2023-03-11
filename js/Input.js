@@ -110,6 +110,11 @@ function setKeyHoldState(thisKey, thisCar, setTo) {
 }
 
 function keyPressed(evt) {
+  evt.preventDefault(); // without this, arrow keys scroll the browser!
+  if(gGameState == GS_SHOW_CREDITS) {
+    gGameState = GS_TITLE_SCREEN;
+    return;
+  }
   setKeyHoldState(evt.keyCode, p1, true);
   //setKeyHoldState(evt.keyCode, p2, true);
   editorCamera.setKeyHoldState(evt.keyCode, true);
@@ -118,7 +123,6 @@ function keyPressed(evt) {
   controlsUI.setKeyHoldState(evt.keyCode, true);
   levelSelect.setKeyHoldState(evt.keyCode, true);
   scoreBoard.setKeyHoldState(evt.keyCode, true);
-  evt.preventDefault(); // without this, arrow keys scroll the browser!
 
   // we've pressed the pause key, so pause the game and only listen to this first press
   if (evt.keyCode == KEY_LETTER_P && canChangePauseState) {

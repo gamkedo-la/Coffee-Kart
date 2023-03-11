@@ -12,6 +12,7 @@ const GS_RACING = 2;
 const GS_SHOW_SCORES = 3;
 const GS_SHOW_INSTRUCTIONS = 4;
 const GS_EDITING = 5;
+const GS_SHOW_CREDITS = 6;
 
 var gGameState = GS_TITLE_SCREEN;
 
@@ -106,6 +107,8 @@ function updateEverything() {
     // update race results
     scoreBoard.updateScoreboard();
     return;
+  } else if(gGameState == GS_SHOW_CREDITS) {
+    return;
   }
 
   updateEditor();
@@ -146,6 +149,11 @@ function drawEverything() {
     levelSelect.drawLevelSelect();
     return; // exit and do not draw anything else
     // draw level select screen
+  }
+
+  if(gGameState == GS_SHOW_CREDITS) {
+    drawCredits();
+    return;
   }
 
   if (gGameState == GS_SHOW_SCORES) {
