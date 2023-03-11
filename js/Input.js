@@ -74,10 +74,7 @@ function initInput() {
 
 function mousePressed() {
   if (!clickedYet) {
-    if (allImagesLoaded) {
-      clickedYet = true;
-      loadingDoneSoStartGame();      
-    }
+    clickedYet = true;    
   }
 }
 

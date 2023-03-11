@@ -65,14 +65,9 @@ function countLoadedImageAndLaunchIfReady() {
   if (picsToLoad == 0) {
     // last image loaded?
     allImagesLoaded = true;
-    //loadingDoneSoStartGame();
+    loadingDoneSoStartGame();
     
-    var message = "Click to start the game!";
-    var messageWidth = canvasContext.measureText(message).width;
-    canvasContext.drawImage(instructions_pic, 0, 0, 256, 256, SCREEN_WIDTH / 2 - messageWidth / 2, 48, 256, 256);
-    canvasContext.fillStyle = "black";
-    canvasContext.fillText(message, SCREEN_WIDTH / 2 - messageWidth /2,
-    SCREEN_HEIGHT / 2 + 30);
+    
   }
 }
 
