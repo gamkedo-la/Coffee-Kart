@@ -156,6 +156,9 @@ class Menu {
 
     // progress time value for animations
     this.time++;
+    if (this.time > 500) {
+      this.time = 0;
+    }
 
     //   select the current menu item if the selecy key was pressed
     if (this.keyHeld_Select && !isSelecting) {
