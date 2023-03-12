@@ -943,8 +943,15 @@ function carClass() {
         32, 32, // get full tile size from source
         SCREEN_WIDTH - 128, 48, // x,y top-left corner for image destination
         TRACK_W, TRACK_H); // draw full full tile size for destination
+        canvasContext.fillStyle = 'white';
+      canvasContext.font = '20px Helvetica';    
+      var lapToWrite = this.lap + 1;
+      colorRect(SCREEN_WIDTH-128,140,80,20,"black");
+      canvasContext.fillText("lap " + lapToWrite + " / 3", SCREEN_WIDTH - 128,150);
       
     }
+    
+    
   }
 
 } // end of car class
