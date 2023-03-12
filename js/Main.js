@@ -110,10 +110,9 @@ function updateEverything() {
     // update race results
     scoreBoard.updateScoreboard();
     return;
-  } else if(gGameState == GS_SHOW_CREDITS) {
+  } else if (gGameState == GS_SHOW_CREDITS) {
     return;
   }
-  
 
   updateEditor();
   updateWaypointEditor();
@@ -155,7 +154,7 @@ function drawEverything() {
     // draw level select screen
   }
 
-  if(gGameState == GS_SHOW_CREDITS) {
+  if (gGameState == GS_SHOW_CREDITS) {
     drawCredits();
     return;
   }
@@ -175,6 +174,17 @@ function drawEverything() {
   drawPowerups();
 
   decals.draw(-camera.drawPosition.x, -camera.drawPosition.y); // tire tracks etc
+
+  if (paused) {
+    pauseUI.draw();
+    return;
+  } else if (gGameState == GS_TITLE_SCREEN) {
+    titleUI.draw();
+    return;
+  } else if (gGameState == GS_SHOW_INSTRUCTIONS) {
+    controlsUI.draw();
+    return;
+  }
 
   particles.draw(-camera.drawPosition.x, -camera.drawPosition.y);
 
@@ -198,14 +208,6 @@ function drawEverything() {
     timer.drawCountdown();
   } else {
     timer.draw();
-  }
-
-  if (paused) {
-    pauseUI.draw();
-  } else if (gGameState == GS_TITLE_SCREEN) {
-    titleUI.draw();
-  } else if (gGameState == GS_SHOW_INSTRUCTIONS) {
-    controlsUI.draw();
   }
 
   if (trackEditorOn) {
