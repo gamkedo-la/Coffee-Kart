@@ -1,4 +1,4 @@
-const TIME_DEFAULT = 360;
+const TIME_DEFAULT = 60;
 
 class CountdownTimer{
     constructor(){

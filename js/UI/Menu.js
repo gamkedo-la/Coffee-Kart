@@ -122,16 +122,18 @@ class Menu {
     });
 
     // move the cursor up or down
-    if (this.keyHeld_Down && !this.cursor_moving) {
+    if (this.keyHeld_Down && !this.cursor_moving) {      
       this.cursor++;
       this.cursor_moving = true;
       this.currentOptionLineWidth = 0;
+      beans_pour_sound.play();
     }
 
     if (this.keyHeld_Up && !this.cursor_moving) {
       this.cursor--;
       this.cursor_moving = true;
       this.currentOptionLineWidth = 0;
+      beans_pour_sound.play();
     }
 
     // loop the menu cursor
@@ -164,6 +166,7 @@ class Menu {
     if (this.keyHeld_Select && !isSelecting) {
       isSelecting = true;
       this.current_option.onSelect();
+      aero_eject_sound.play();
     }
   }
 

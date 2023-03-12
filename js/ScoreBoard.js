@@ -37,6 +37,7 @@ class ScoreBoard {
             timer.reset();
             gGameState = GS_SELECT_LEVEL;
             this.canSelect = false;
+            aero_eject_sound.play();
             
         }
         if (!this.keyHeld_Select) {

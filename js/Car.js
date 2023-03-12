@@ -4,7 +4,7 @@ const DEBUG_RANK_LOG = false; // output car rank every frame in debug log
 const DEBUG_LAP_LOG = false;
 const AI_DEBUG_MODE = false; // console.log spam
 const AI_WAYPOINT_TRIGGER_DISTANCE = 350; // how close we need to get to each waypoint
-const FAST_FINISH_DEBUG = true;
+const FAST_FINISH_DEBUG = false;
 const DEBUG_LINE_WAYPOINT = true;
 const ENGINE_SOUND_AUDIBLE_DISTANCE = 500; // ai car engines get quiet when far away from player
 const CAR_CRASH_VOLUME = 0.15; // quiet
@@ -463,11 +463,7 @@ function carClass() {
     if( tileIsDriveable(drivingIntoTileType) ) {
       this.position = nextPos;
       this.canIncLap = true;
-    } else if( drivingIntoTileType == TRACK_GOAL ) {
-      document.getElementById("debugText").innerHTML = this.myName + " won the race";
-
-      // TODO: handle placings!
-      
+    } else if( drivingIntoTileType == TRACK_GOAL ) {            
       var maxLaps = 3;
       if (FAST_FINISH_DEBUG) {
         maxLaps = 1;
@@ -478,8 +474,9 @@ function carClass() {
         decals.clear();
         resetAllCars();
         timer.reset();
-        // show scores currently bugged
+        // show scores currently bugged        
         gGameState = GS_SHOW_SCORES;
+        beans_grind_sound.play();
         //gGameState = GS_SELECT_LEVEL;
         return;
       } else {
@@ -493,6 +490,7 @@ function carClass() {
           
           this.lap++;
           this.canIncLap = false;
+          timer.remainingTime = TIME_DEFAULT;
         }
         this.position = nextPos;
       }

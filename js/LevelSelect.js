@@ -41,12 +41,14 @@ class LevelSelect {
             } else {
                 courseIndex = TRACKS.length-1;
             }
+            beans_scoop_sound.play();
             
         }
         if (this.keyHeld_Right && this.canSelect) {
             console.log("pressed right");
             courseIndex = (courseIndex + 1) % TRACKS.length;
             this.canSelect = false;
+            beans_scoop_sound.play();
         }
         if (this.keyHeld_Select && this.canSelect) {
             this.canSelect = false;
@@ -55,6 +57,7 @@ class LevelSelect {
             timer.reset();
             decals.clear();
             gGameState = GS_RACING;
+            beans_grind_sound.play();
         }
         if (!this.keyHeld_Select && 
             !this.keyHeld_Left &&

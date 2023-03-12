@@ -177,6 +177,9 @@ function updatePowerups()
             gCars[j].powerupType = powerup.type;
             gCars[j].powerupTimer = PowerupTimer(powerup.type);
             TRACKS[courseIndex].powerups[i].active = false;
+            if (gCars[j].isPlayer) {
+              playPowerupSound(powerup.type);
+            }
           }
         }
       } else {
@@ -189,6 +192,18 @@ function updatePowerups()
     }
 }
 
+
+function playPowerupSound(powerupType) {
+  if (powerupType == POWERUP_ESPRESSO || 
+    powerupType == POWERUP_TAKEAWAY ||
+    powerupType == POWERUP_FRENCH_PRESS) {
+      sip_sound.play();
+  } else if (powerupType == POWERUP_COFFEE_BEAN) {
+    aero_eject_sound.play();
+  } else {
+    beans_pour_sound.play();
+  }
+}
 
 
 

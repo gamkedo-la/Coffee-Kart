@@ -42,8 +42,9 @@ class PauseUI extends Menu {
     paused = false;
   }
   quitGame() {
+
     reset();
     paused = false;
-    onTitleScreen = true;
+    gGameState = GS_TITLE_SCREEN;
   }
 }
