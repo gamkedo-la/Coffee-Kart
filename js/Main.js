@@ -46,6 +46,8 @@ var canChangePauseState = true;
 gCars = [];
 carCount = 0;
 
+var jukeBox = null;
+
 window.onload = function () {
   canvas = document.getElementById("gameCanvas");
   canvasContext = canvas.getContext("2d");
@@ -90,6 +92,7 @@ function loadingDoneSoStartGame() {
   //initInput();
 }
 function updateEverything() {
+  updateSounds();
   if (paused) {
     pauseUI.update();
     return;
@@ -110,6 +113,7 @@ function updateEverything() {
   } else if(gGameState == GS_SHOW_CREDITS) {
     return;
   }
+  
 
   updateEditor();
   updateWaypointEditor();
